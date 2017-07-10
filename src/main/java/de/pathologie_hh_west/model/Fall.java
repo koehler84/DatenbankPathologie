@@ -1,6 +1,7 @@
 package de.pathologie_hh_west.model;
 
-import javax.persistence.*;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
 
 /**
  *
@@ -10,6 +11,7 @@ import javax.persistence.*;
 public class Fall {
     @EmbeddedId
     private FallID fallID;
+    private String befundtext;
 
     public Fall() {
     }
@@ -20,5 +22,13 @@ public class Fall {
 
     public void setFallID(FallID fallID) {
         this.fallID = fallID;
+    }
+
+    public String getBefundtext() {
+        return befundtext;
+    }
+
+    public void setBefundtext(String befundtext) {
+        this.befundtext = befundtext;
     }
 }

@@ -28,8 +28,9 @@ public class FallID implements Serializable {
     }
 
     public void seteNummer(ENummer eNummer) {
-        //TODO Hurensohn
+
         this.eNummer = eNummer;
+
     }
 
     public BefundTyp getBefundTyp() {

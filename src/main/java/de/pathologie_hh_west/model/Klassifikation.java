@@ -1,5 +1,7 @@
 package de.pathologie_hh_west.model;
 
+import javax.persistence.Embedded;
+
 /**
  * Created by VaniR on 10.07.2017.
  */
@@ -20,5 +22,7 @@ public class Klassifikation {
     private Integer her2neu;
     private Integer her2neuScore;
     private Integer ki67;
+    @Embedded
+    private TumorArt tumorArt;
 
 }
