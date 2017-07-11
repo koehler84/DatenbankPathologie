@@ -5,6 +5,7 @@ import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
 import de.pathologie_hh_west.data.FallRepository;
 import de.pathologie_hh_west.data.PatientRepository;
 import de.pathologie_hh_west.model.*;
+import de.pathologie_hh_west.service.ExcelOeffnenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -106,6 +107,9 @@ class Test implements CommandLineRunner{
 		patient.setFaelle(objects);
 //		fallRepository.save(fall);
 		patientRepository.save(patient);
+		String dateiPfad = "C:\\Users\\VaniR\\test.xlsx";
+		ExcelOeffnenService test = new ExcelOeffnenService(dateiPfad);
+		test.getUeberschriftenVonExcel(0);
 
 //		patient.setNachname("Gollum");
 //		patient.setId(2L);
