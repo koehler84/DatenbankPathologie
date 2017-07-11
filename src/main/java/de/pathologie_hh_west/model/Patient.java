@@ -28,6 +28,8 @@ public class Patient {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "patientID", referencedColumnName = "ID", nullable = false)
     private Set<Fall> faelle;
+    @OneToOne(fetch = FetchType.LAZY)
+    private PatientenZusatzdaten patientenZusatzdaten;
 
     public Patient() {
     }
@@ -86,5 +88,13 @@ public class Patient {
 
     public void setFaelle(Set<Fall> faelle) {
         this.faelle = faelle;
+    }
+
+    public PatientenZusatzdaten getPatientenZusatzdaten() {
+        return patientenZusatzdaten;
+    }
+
+    public void setPatientenZusatzdaten(PatientenZusatzdaten patientenZusatzdaten) {
+        this.patientenZusatzdaten = patientenZusatzdaten;
     }
 }
