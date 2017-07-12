@@ -21,6 +21,7 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 
 @SpringBootApplication
@@ -110,6 +111,12 @@ class Test implements CommandLineRunner{
 		String dateiPfad = "C:\\Users\\VaniR\\test.xlsx";
 		ExcelOeffnenService test = new ExcelOeffnenService(dateiPfad);
 		test.getUeberschriftenVonExcel(0);
+		HashMap<Integer, String> testMapPatientenZuExcelIndex = new HashMap<>();
+		testMapPatientenZuExcelIndex.put(1, "Vorname");
+		testMapPatientenZuExcelIndex.put(3, "altName");
+		testMapPatientenZuExcelIndex.put(2, "Nachname");
+		patient = test.patientenDatenAusExcelBefuellen(testMapPatientenZuExcelIndex, 2);
+		patientRepository.save(patient);
 
 //		patient.setNachname("Gollum");
 //		patient.setId(2L);
