@@ -31,6 +31,14 @@ public class Patient {
     @OneToOne(fetch = FetchType.LAZY)
     private PatientenZusatzdaten patientenZusatzdaten;
 
+    private Patient(PatientBuilder builder) {
+        this.vorname = builder.vorname;
+        this.nachname = builder.nachname;
+        this.geburtsDatum = builder.geburtsDatum;
+        this.alternativName = builder.alternativName;
+        this.adresse = builder.adresse;
+    }
+
     public Patient() {
     }
 
@@ -96,5 +104,86 @@ public class Patient {
 
     public void setPatientenZusatzdaten(PatientenZusatzdaten patientenZusatzdaten) {
         this.patientenZusatzdaten = patientenZusatzdaten;
+    }
+
+    public static class PatientBuilder {
+        private String vorname;
+        private String nachname;
+        private LocalDate geburtsDatum;
+        private String alternativName;
+        private Adresse adresse;
+
+        public PatientBuilder() {
+        }
+
+        public PatientBuilder vorname(String vorname) {
+            this.vorname = vorname;
+            return this;
+        }
+
+        public PatientBuilder nachname(String nachname) {
+            this.nachname = nachname;
+            return this;
+        }
+
+        public PatientBuilder geburtsDatum(LocalDate geburtsdatum) {
+            this.geburtsDatum = geburtsdatum;
+            return this;
+        }
+
+        public PatientBuilder alternativName(String alternativName) {
+            this.alternativName = alternativName;
+            return this;
+        }
+
+        public PatientBuilder strasse(String strasse) {
+            if (this.adresse == null) {
+                this.adresse = new Adresse();
+            }
+            this.adresse.setStrasse(strasse);
+            return this;
+        }
+
+        public PatientBuilder hausnummer(String hausnummer) {
+            if (this.adresse == null) {
+                this.adresse = new Adresse();
+            }
+            this.adresse.setHausnummer(hausnummer);
+            return this;
+        }
+
+        public PatientBuilder plz(String plz) {
+            if (this.adresse == null) {
+                this.adresse = new Adresse();
+            }
+            this.adresse.setPlz(plz);
+            return this;
+        }
+
+        public PatientBuilder ort(String ort) {
+            if (this.adresse == null) {
+                this.adresse = new Adresse();
+            }
+            this.adresse.setOrt(ort);
+            return this;
+        }
+
+        public PatientBuilder land(String land) {
+            if (this.adresse == null) {
+                this.adresse = new Adresse();
+            }
+            this.adresse.setLand(land);
+            return this;
+        }
+
+        public PatientBuilder adresse(Adresse adresse) {
+            this.adresse = adresse;
+            return this;
+        }
+
+        public Patient build() {
+            return new Patient(this);
+        }
+
     }
 }

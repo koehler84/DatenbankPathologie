@@ -9,33 +9,54 @@ import java.time.LocalDate;
  * Created by VaniR on 12.07.2017.
  */
 public class AttributAuswahl {
-    private Patient patient;
+    private Patient.PatientBuilder patient;
 
-    public AttributAuswahl(String zellenWert, String attributName, Patient patient) {
+    public AttributAuswahl(String zellenWert, String attributName, Patient.PatientBuilder patient) {
         switch (attributName) {
             case "Vorname":
-                patient.setVorname(attributName);
+                patient.vorname(zellenWert);
                 break;
             case "Nachname":
-                patient.setNachname(attributName);
+                patient.nachname(zellenWert);
                 break;
             case "altName":
-                patient.setAlternativName(attributName);
+                patient.alternativName(zellenWert);
                 break;
+            case "Strasse":
+                patient.strasse(zellenWert);
+                break;
+            case "Hausnummer":
+                patient.hausnummer(zellenWert);
+                break;
+            case "PLZ":
+                patient.plz(zellenWert);
+                break;
+            case "Ort":
+                patient.ort(zellenWert);
+                break;
+            case "Land":
+                patient.land(zellenWert);
+                break;
+
 
         }
         this.patient = patient;
     }
 
-    public AttributAuswahl(BigDecimal zellenWert, String attributName, Patient patient) {
+    public AttributAuswahl(BigDecimal zellenWert, String attributName, Patient.PatientBuilder patient) {
         this.patient = patient;
     }
 
-    public AttributAuswahl(LocalDate zellenWert, String attributName, Patient patient) {
+    public AttributAuswahl(LocalDate zellenWert, String attributName, Patient.PatientBuilder patient) {
+        switch (attributName) {
+            case "Geburtsdatum":
+                patient.geburtsDatum(zellenWert);
+                break;
+        }
         this.patient = patient;
     }
 
-    public Patient getPatient() {
+    public Patient.PatientBuilder getPatient() {
         return patient;
     }
 }

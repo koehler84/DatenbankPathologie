@@ -112,10 +112,12 @@ class Test implements CommandLineRunner{
 		ExcelOeffnenService test = new ExcelOeffnenService(dateiPfad);
 		test.getUeberschriftenVonExcel(0);
 		HashMap<Integer, String> testMapPatientenZuExcelIndex = new HashMap<>();
-		testMapPatientenZuExcelIndex.put(1, "Vorname");
-		testMapPatientenZuExcelIndex.put(3, "altName");
-		testMapPatientenZuExcelIndex.put(2, "Nachname");
-		patient = test.patientenDatenAusExcelBefuellen(testMapPatientenZuExcelIndex, 2);
+		testMapPatientenZuExcelIndex.put(0, "Vorname");
+		testMapPatientenZuExcelIndex.put(2, "altName");
+		testMapPatientenZuExcelIndex.put(1, "Nachname");
+		testMapPatientenZuExcelIndex.put(3, "Strasse");
+		testMapPatientenZuExcelIndex.put(4, "Geburtsdatum");
+		patient = test.patientenDatenAusExcelBefuellen(testMapPatientenZuExcelIndex, 1);
 		patientRepository.save(patient);
 
 //		patient.setNachname("Gollum");

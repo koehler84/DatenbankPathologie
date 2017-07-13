@@ -89,7 +89,7 @@ public class ExcelOeffnenService {
 
 
         XSSFRow zeile = arbeitsblatt.getRow(aktuelleZeile);
-        Patient patient = new Patient();
+        Patient.PatientBuilder patient = new Patient.PatientBuilder();
         for (Integer zellenIndex : excelIndexZuPatientenAttributZuordnung.keySet()) {
             XSSFCell zelle = zeile.getCell(zellenIndex);
             if (zelle != null) {
@@ -134,7 +134,7 @@ public class ExcelOeffnenService {
         }
 
 
-        return patient;
+        return patient.build();
     }
 
 }
