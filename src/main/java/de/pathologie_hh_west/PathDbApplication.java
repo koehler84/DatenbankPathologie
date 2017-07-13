@@ -6,6 +6,7 @@ import de.pathologie_hh_west.data.FallRepository;
 import de.pathologie_hh_west.data.PatientRepository;
 import de.pathologie_hh_west.model.*;
 import de.pathologie_hh_west.service.ExcelOeffnenService;
+import de.pathologie_hh_west.service.ModelAttribute;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -111,14 +112,17 @@ class Test implements CommandLineRunner{
 		String dateiPfad = "C:\\Users\\VaniR\\test.xlsx";
 		ExcelOeffnenService test = new ExcelOeffnenService(dateiPfad);
 		test.getUeberschriftenVonExcel(0);
-		HashMap<Integer, String> testMapPatientenZuExcelIndex = new HashMap<>();
-		testMapPatientenZuExcelIndex.put(0, "Vorname");
-		testMapPatientenZuExcelIndex.put(2, "altName");
-		testMapPatientenZuExcelIndex.put(1, "Nachname");
-		testMapPatientenZuExcelIndex.put(3, "Strasse");
-		testMapPatientenZuExcelIndex.put(4, "Geburtsdatum");
-		patient = test.patientenDatenAusExcelBefuellen(testMapPatientenZuExcelIndex, 1);
-		patientRepository.save(patient);
+		HashMap<Integer, ModelAttribute> testMapPatientenZuExcelIndex = new HashMap<>();
+		testMapPatientenZuExcelIndex.put(0, ModelAttribute.VORNAME);
+		testMapPatientenZuExcelIndex.put(2, ModelAttribute.ALTERNATIVNAME);
+		testMapPatientenZuExcelIndex.put(1, ModelAttribute.NACHNAME);
+		testMapPatientenZuExcelIndex.put(3, ModelAttribute.STRASSE);
+		testMapPatientenZuExcelIndex.put(4, ModelAttribute.GEBURTSDATUM);
+		testMapPatientenZuExcelIndex.put(5, ModelAttribute.PLZ);
+		for (int aktuelleZeile = 1; aktuelleZeile < test.getMaximaleAnzahlZeilen(); aktuelleZeile++) {
+			patient = test.patientenDatenAusExcelBefuellen(testMapPatientenZuExcelIndex, aktuelleZeile);
+			patientRepository.save(patient);
+		}
 
 //		patient.setNachname("Gollum");
 //		patient.setId(2L);

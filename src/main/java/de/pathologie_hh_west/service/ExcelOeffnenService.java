@@ -20,9 +20,11 @@ import java.util.HashMap;
  */
 public class ExcelOeffnenService {
     private XSSFWorkbook excelTabelle;
-    private int anzahlArbeitsblaetter;
     private HashMap<Integer, String> namenArbeitsblaetter;
+    private int anzahlArbeitsblaetter;
+    //existieren erst nach Auswahl des zu bearbeitenden Arbeitsblattes
     private XSSFSheet arbeitsblatt;
+    private Integer maximaleAnzahlZeilen;
 
     public ExcelOeffnenService(String dateiPfad) throws IOException {
         this.namenArbeitsblaetter = new HashMap<>();
@@ -32,8 +34,11 @@ public class ExcelOeffnenService {
             for (int i = 0; i < anzahlArbeitsblaetter; i++) {
                 this.namenArbeitsblaetter.put(i, excelTabelle.getSheetName(i));
             }
-
         }
+    }
+
+    public Integer getMaximaleAnzahlZeilen() {
+        return maximaleAnzahlZeilen;
     }
 
     private String getStringZellenInhalt(XSSFCell zelle) {
@@ -74,6 +79,7 @@ public class ExcelOeffnenService {
 
     public HashMap<Integer, String> getUeberschriftenVonExcel(Integer indexArbeitsblatt) {
         this.arbeitsblatt = excelTabelle.getSheetAt(indexArbeitsblatt);
+        maximaleAnzahlZeilen = arbeitsblatt.getPhysicalNumberOfRows();
         HashMap<Integer, String> ueberschriften = new HashMap<>();
         XSSFRow zeile = arbeitsblatt.getRow(0);
         int spaltenAnzahl = zeile.getPhysicalNumberOfCells();
@@ -84,8 +90,7 @@ public class ExcelOeffnenService {
         return ueberschriften;
     }
 
-    //TODO: geht der String für das Attribut besser?
-    public Patient patientenDatenAusExcelBefuellen(HashMap<Integer, String> excelIndexZuPatientenAttributZuordnung, Integer aktuelleZeile) {
+    public Patient patientenDatenAusExcelBefuellen(HashMap<Integer, ModelAttribute> excelIndexZuPatientenAttributZuordnung, Integer aktuelleZeile) {
 
 
         XSSFRow zeile = arbeitsblatt.getRow(aktuelleZeile);
@@ -132,7 +137,6 @@ public class ExcelOeffnenService {
                 }
             }
         }
-
 
         return patient.build();
     }

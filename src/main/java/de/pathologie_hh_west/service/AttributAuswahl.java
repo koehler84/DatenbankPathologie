@@ -11,47 +11,60 @@ import java.time.LocalDate;
 public class AttributAuswahl {
     private Patient.PatientBuilder patient;
 
-    public AttributAuswahl(String zellenWert, String attributName, Patient.PatientBuilder patient) {
+    public AttributAuswahl(String zellenWert, ModelAttribute attributName, Patient.PatientBuilder patient) {
         switch (attributName) {
-            case "Vorname":
+            case VORNAME:
                 patient.vorname(zellenWert);
                 break;
-            case "Nachname":
+            case NACHNAME:
                 patient.nachname(zellenWert);
                 break;
-            case "altName":
+            case ALTERNATIVNAME:
                 patient.alternativName(zellenWert);
                 break;
-            case "Strasse":
+            case STRASSE:
                 patient.strasse(zellenWert);
                 break;
-            case "Hausnummer":
+            case HAUSNUMMER:
                 patient.hausnummer(zellenWert);
                 break;
-            case "PLZ":
+            case PLZ:
                 patient.plz(zellenWert);
                 break;
-            case "Ort":
+            case ORT:
                 patient.ort(zellenWert);
                 break;
-            case "Land":
+            case LAND:
                 patient.land(zellenWert);
                 break;
-
+            default:
+                throw new IllegalArgumentException(attributName + " sollte keine Zeichenkette sein");
 
         }
         this.patient = patient;
     }
 
-    public AttributAuswahl(BigDecimal zellenWert, String attributName, Patient.PatientBuilder patient) {
+    public AttributAuswahl(BigDecimal zellenWert, ModelAttribute attributName, Patient.PatientBuilder patient) {
+        switch (attributName) {
+            case PLZ:
+                patient.plz(zellenWert.setScale(0, BigDecimal.ROUND_HALF_UP).toString());
+                break;
+            case HAUSNUMMER:
+                patient.hausnummer(zellenWert.setScale(0, BigDecimal.ROUND_HALF_UP).toString());
+                break;
+            default:
+                throw new IllegalArgumentException(attributName + " sollte keine Zahl sein");
+        }
         this.patient = patient;
     }
 
-    public AttributAuswahl(LocalDate zellenWert, String attributName, Patient.PatientBuilder patient) {
+    public AttributAuswahl(LocalDate zellenWert, ModelAttribute attributName, Patient.PatientBuilder patient) {
         switch (attributName) {
-            case "Geburtsdatum":
+            case GEBURTSDATUM:
                 patient.geburtsDatum(zellenWert);
                 break;
+            default:
+                throw new IllegalArgumentException(attributName + " sollte kein Datum sein");
         }
         this.patient = patient;
     }
