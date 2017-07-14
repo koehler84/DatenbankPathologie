@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -37,10 +38,16 @@ public class Test implements CommandLineRunner {
 		e4321.setBefundTyp(BefundTyp.NACHBEFUND);
 		e4321.setIndex(1);
 		fall1.setFallID(e4321);
+		Klassifikation klassifikation = new Klassifikation();
+		klassifikation.setTumorArt(new TumorArt());
+		fall1.setKlassifikation(klassifikation);
+		
 		FallID e1234 = new FallID(new ENummer("A/1996/200591"));
 		e1234.setBefundTyp(BefundTyp.HAUPTBEFUND);
 		e1234.setIndex(1);
 		fall.setFallID(e1234);
+		fall.setKlassifikation(klassifikation);
+		
 		adresse.setHausnummer("12");
 		adresse.setLand("Deutschland");
 		adresse.setOrt("Hamburg");
@@ -51,10 +58,16 @@ public class Test implements CommandLineRunner {
 		patient.setGeburtsDatum(date);
 		HashSet<Fall> objects = new HashSet<>(Arrays.asList(fall, fall1));
 		patient.setFaelle(objects);
+		
 //		fallRepository.save(fall);
 		patientRepository.save(patient);
 		String dateiPfad = "C:\\Users\\VaniR\\test.xlsx";
-		ExcelOeffnenService test = new ExcelOeffnenService(dateiPfad);
+		ExcelOeffnenService test = null;
+		try {
+			test = new ExcelOeffnenService(dateiPfad);
+		} catch (IOException e) {
+			return;
+		}
 		test.getUeberschriftenVonExcel(0);
 		HashMap<Integer, PatientModelAttribute> testMapPatientenZuExcelIndex = new HashMap<>();
 		testMapPatientenZuExcelIndex.put(0, PatientModelAttribute.VORNAME);

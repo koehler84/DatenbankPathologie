@@ -1,7 +1,8 @@
 package de.pathologie_hh_west.data;
 
-import antlr.NoViableAltException;
 import de.pathologie_hh_west.model.Fall;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
@@ -16,6 +17,7 @@ public class FallQueryExecutor {
 	
 	@PersistenceContext
 	private EntityManager entityManager;
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	public List<Fall> getItemsByFilter(List<Filter> filters) throws IllegalArgumentException {
 		if (filters.size() < 1) {
@@ -23,6 +25,7 @@ public class FallQueryExecutor {
 		}
 		
 		String query = createJPQLQuery(filters);
+		logger.info("Executing JPQL query: ".concat(query), query);
 		return entityManager.createQuery(query, Fall.class).getResultList();
 	}
 	
@@ -32,7 +35,7 @@ public class FallQueryExecutor {
 		for (Filter filter : filters) {
 			query = query.concat(" f." + filter.getFieldName());
 			query = query.concat(" " + filter.getEquality().getStringOperator());
-			query = query.concat(" " + filter.getFilterValue());
+			query = query.concat(" '" + filter.getFilterValue() + "'");
 			query = query.concat(" and");
 		}
 		query = query.substring(0, query.length() - " and".length());
