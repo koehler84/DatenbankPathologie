@@ -8,10 +8,10 @@ import java.time.LocalDate;
 /**
  * Created by VaniR on 12.07.2017.
  */
-public class AttributAuswahl {
+public class PatientAttributAuswahl {
     private Patient.PatientBuilder patient;
 
-    public AttributAuswahl(String zellenWert, ModelAttribute attributName, Patient.PatientBuilder patient) {
+    public PatientAttributAuswahl(String zellenWert, PatientModelAttribute attributName, Patient.PatientBuilder patient) {
         switch (attributName) {
             case VORNAME:
                 patient.vorname(zellenWert);
@@ -44,7 +44,7 @@ public class AttributAuswahl {
         this.patient = patient;
     }
 
-    public AttributAuswahl(BigDecimal zellenWert, ModelAttribute attributName, Patient.PatientBuilder patient) {
+    public PatientAttributAuswahl(BigDecimal zellenWert, PatientModelAttribute attributName, Patient.PatientBuilder patient) {
         switch (attributName) {
             case PLZ:
                 patient.plz(zellenWert.setScale(0, BigDecimal.ROUND_HALF_UP).toString());
@@ -58,7 +58,7 @@ public class AttributAuswahl {
         this.patient = patient;
     }
 
-    public AttributAuswahl(LocalDate zellenWert, ModelAttribute attributName, Patient.PatientBuilder patient) {
+    public PatientAttributAuswahl(LocalDate zellenWert, PatientModelAttribute attributName, Patient.PatientBuilder patient) {
         switch (attributName) {
             case GEBURTSDATUM:
                 patient.geburtsDatum(zellenWert);

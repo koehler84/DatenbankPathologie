@@ -90,7 +90,7 @@ public class ExcelOeffnenService {
         return ueberschriften;
     }
 
-    public Patient patientenDatenAusExcelBefuellen(HashMap<Integer, ModelAttribute> excelIndexZuPatientenAttributZuordnung, Integer aktuelleZeile) {
+    public Patient patientenDatenAusExcelBefuellen(HashMap<Integer, PatientModelAttribute> excelIndexZuPatientenAttributZuordnung, Integer aktuelleZeile) {
 
 
         XSSFRow zeile = arbeitsblatt.getRow(aktuelleZeile);
@@ -101,38 +101,38 @@ public class ExcelOeffnenService {
                 switch (zelle.getCellType()) {
 
                     case XSSFCell.CELL_TYPE_FORMULA:
-                        patient = new AttributAuswahl(zelle.getCellFormula(), excelIndexZuPatientenAttributZuordnung.
+                        patient = new PatientAttributAuswahl(zelle.getCellFormula(), excelIndexZuPatientenAttributZuordnung.
                                 get(zellenIndex), patient).getPatient();
                         break;
                     case XSSFCell.CELL_TYPE_NUMERIC:
                         if (DateUtil.isCellDateFormatted(zelle)) {
-                            patient = new AttributAuswahl(zelle.getDateCellValue().toInstant().atZone(ZoneId.systemDefault()).
+                            patient = new PatientAttributAuswahl(zelle.getDateCellValue().toInstant().atZone(ZoneId.systemDefault()).
                                     toLocalDate(), excelIndexZuPatientenAttributZuordnung.get(zellenIndex), patient).getPatient();
 
                         } else {
-                            new AttributAuswahl(BigDecimal.valueOf(zelle.getNumericCellValue()), excelIndexZuPatientenAttributZuordnung.
+                            new PatientAttributAuswahl(BigDecimal.valueOf(zelle.getNumericCellValue()), excelIndexZuPatientenAttributZuordnung.
                                     get(zellenIndex), patient).getPatient();
                         }
                         break;
                     case XSSFCell.CELL_TYPE_STRING:
-                        patient = new AttributAuswahl(zelle.getStringCellValue(), excelIndexZuPatientenAttributZuordnung.
+                        patient = new PatientAttributAuswahl(zelle.getStringCellValue(), excelIndexZuPatientenAttributZuordnung.
                                 get(zellenIndex), patient).getPatient();
                         break;
                     case XSSFCell.CELL_TYPE_BLANK:
-                        patient = new AttributAuswahl("", excelIndexZuPatientenAttributZuordnung.
+                        patient = new PatientAttributAuswahl("", excelIndexZuPatientenAttributZuordnung.
                                 get(zellenIndex), patient).getPatient();
                         break;
                     case XSSFCell.CELL_TYPE_BOOLEAN:
-                        patient = new AttributAuswahl(zelle.getBooleanCellValue() + "", excelIndexZuPatientenAttributZuordnung.
+                        patient = new PatientAttributAuswahl(zelle.getBooleanCellValue() + "", excelIndexZuPatientenAttributZuordnung.
                                 get(zellenIndex), patient).getPatient();
                         break;
                     case XSSFCell.CELL_TYPE_ERROR:
-                        patient = new AttributAuswahl(zelle.getErrorCellValue() + "", excelIndexZuPatientenAttributZuordnung.
+                        patient = new PatientAttributAuswahl(zelle.getErrorCellValue() + "", excelIndexZuPatientenAttributZuordnung.
                                 get(zellenIndex), patient).getPatient();
                         break;
 
                     default:
-                        patient = new AttributAuswahl("<FEHLER IM PROGRAMM>", excelIndexZuPatientenAttributZuordnung.
+                        patient = new PatientAttributAuswahl("<FEHLER IM PROGRAMM>", excelIndexZuPatientenAttributZuordnung.
                                 get(zellenIndex), patient).getPatient();
                 }
             }
