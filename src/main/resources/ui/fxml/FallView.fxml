@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.pathologie_hh_west.ui.FallViewController">
+   <children>
+      <VBox layoutX="25.0" layoutY="25.0" spacing="25.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0">
+         <children>
+            <AnchorPane>
+               <children>
+                  <VBox prefHeight="200.0" spacing="15.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <ScrollPane prefHeight="200.0" prefWidth="440.0" style="-fx-background-color: grey;" vbarPolicy="ALWAYS">
+                          <content>
+                            <AnchorPane style="-fx-background-color: grey;">
+                                 <children>
+                                    <VBox fx:id="filters" prefHeight="200.0" prefWidth="425.0" spacing="15.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </ScrollPane>
+                        <HBox alignment="CENTER_RIGHT" spacing="15.0">
+                           <children>
+                              <Button fx:id="btnAddFilter" mnemonicParsing="false" text="Filter hinzufügen" />
+                              <Button fx:id="btnSuchen" mnemonicParsing="false" text="Suchen" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+            <TableView fx:id="tableView" maxHeight="1000.0" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
