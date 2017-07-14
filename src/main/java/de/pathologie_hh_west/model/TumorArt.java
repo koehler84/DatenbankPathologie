@@ -14,16 +14,16 @@ public class TumorArt {
     private boolean adenoidZystisch;
     private boolean glykogenreich;
     private boolean kribriform;
-    private boolean mikropapillär;
-    private boolean lobulär;
-    private boolean muzinös;
-    private boolean papillär;
+    private boolean mikropapillaer;
+    private boolean lobulaer;
+    private boolean muzinoes;
+    private boolean papillaer;
     private boolean pleomorph;
-    private boolean tubulär;
-    private boolean medullär;
+    private boolean tubulaer;
+    private boolean medullaer;
     private boolean metaplastisch;
     private boolean intrazystisch;
-    private boolean intraduktalesPapilläresKarzinomMitInvasion;
+    private boolean intraduktalesPapillaeresKarzinomMitInvasion;
 
     public TumorArt() {
     }
@@ -56,26 +56,26 @@ public class TumorArt {
         if (kribriform) {
             tumorArt = tumorArt + "kribriform, ";
         }
-        if (mikropapillär) {
-            tumorArt = tumorArt + "mikropapillär, ";
+        if (mikropapillaer) {
+            tumorArt = tumorArt + "mikropapillaer, ";
         }
-        if (lobulär) {
-            tumorArt = tumorArt + "lobulär, ";
+        if (lobulaer) {
+            tumorArt = tumorArt + "lobulaer, ";
         }
-        if (muzinös) {
-            tumorArt = tumorArt + "muzinös, ";
+        if (muzinoes) {
+            tumorArt = tumorArt + "muzinoes, ";
         }
-        if (papillär) {
-            tumorArt = tumorArt + "papillär, ";
+        if (papillaer) {
+            tumorArt = tumorArt + "papillaer, ";
         }
         if (pleomorph) {
             tumorArt = tumorArt + "pleomorph, ";
         }
-        if (tubulär) {
-            tumorArt = tumorArt + "tubulär, ";
+        if (tubulaer) {
+            tumorArt = tumorArt + "tubulaer, ";
         }
-        if (medullär) {
-            tumorArt = tumorArt + "medullär, ";
+        if (medullaer) {
+            tumorArt = tumorArt + "medullaer, ";
         }
         if (metaplastisch) {
             tumorArt = tumorArt + "metaplastisch, ";
@@ -83,13 +83,13 @@ public class TumorArt {
         if (intrazystisch) {
             tumorArt = tumorArt + "intrazystisch, ";
         }
-        if (intraduktalesPapilläresKarzinomMitInvasion) {
-            tumorArt = tumorArt + "intraduktales papilläres Karzinom mit Invasion, ";
+        if (intraduktalesPapillaeresKarzinomMitInvasion) {
+            tumorArt = tumorArt + "intraduktales papillaeres Karzinom mit Invasion, ";
         }
         return tumorArt;
     }
 
-    //TODO Setter für alle Tumorarten auf einmal (binäre Zahl? String Array? String und patternMatch?
+    //TODO Setter fuer alle Tumorarten auf einmal (binaere Zahl? String Array? String und patternMatch?
     public void setTumorArt() {
 
     }
@@ -142,36 +142,36 @@ public class TumorArt {
         this.kribriform = kribriform;
     }
 
-    public boolean isMikropapillär() {
-        return mikropapillär;
+    public boolean isMikropapillaer() {
+        return mikropapillaer;
     }
 
-    public void setMikropapillär(boolean mikropapillär) {
-        this.mikropapillär = mikropapillär;
+    public void setMikropapillaer(boolean mikropapillaer) {
+        this.mikropapillaer = mikropapillaer;
     }
 
-    public boolean isLobulär() {
-        return lobulär;
+    public boolean isLobulaer() {
+        return lobulaer;
     }
 
-    public void setLobulär(boolean lobulär) {
-        this.lobulär = lobulär;
+    public void setLobulaer(boolean lobulaer) {
+        this.lobulaer = lobulaer;
     }
 
-    public boolean isMuzinös() {
-        return muzinös;
+    public boolean isMuzinoes() {
+        return muzinoes;
     }
 
-    public void setMuzinös(boolean muzinös) {
-        this.muzinös = muzinös;
+    public void setMuzinoes(boolean muzinoes) {
+        this.muzinoes = muzinoes;
     }
 
-    public boolean isPapillär() {
-        return papillär;
+    public boolean isPapillaer() {
+        return papillaer;
     }
 
-    public void setPapillär(boolean papillär) {
-        this.papillär = papillär;
+    public void setPapillaer(boolean papillaer) {
+        this.papillaer = papillaer;
     }
 
     public boolean isPleomorph() {
@@ -182,20 +182,20 @@ public class TumorArt {
         this.pleomorph = pleomorph;
     }
 
-    public boolean isTubulär() {
-        return tubulär;
+    public boolean isTubulaer() {
+        return tubulaer;
     }
 
-    public void setTubulär(boolean tubulär) {
-        this.tubulär = tubulär;
+    public void setTubulaer(boolean tubulaer) {
+        this.tubulaer = tubulaer;
     }
 
-    public boolean isMedullär() {
-        return medullär;
+    public boolean isMedullaer() {
+        return medullaer;
     }
 
-    public void setMedullär(boolean medullär) {
-        this.medullär = medullär;
+    public void setMedullaer(boolean medullaer) {
+        this.medullaer = medullaer;
     }
 
     public boolean isMetaplastisch() {
@@ -214,11 +214,11 @@ public class TumorArt {
         this.intrazystisch = intrazystisch;
     }
 
-    public boolean isIntraduktalesPapilläresKarzinomMitInvasion() {
-        return intraduktalesPapilläresKarzinomMitInvasion;
+    public boolean isIntraduktalesPapillaeresKarzinomMitInvasion() {
+        return intraduktalesPapillaeresKarzinomMitInvasion;
     }
 
-    public void setIntraduktalesPapilläresKarzinomMitInvasion(boolean intraduktalesPapilläresKarzinomMitInvasion) {
-        this.intraduktalesPapilläresKarzinomMitInvasion = intraduktalesPapilläresKarzinomMitInvasion;
+    public void setIntraduktalesPapillaeresKarzinomMitInvasion(boolean intraduktalesPapillaeresKarzinomMitInvasion) {
+        this.intraduktalesPapillaeresKarzinomMitInvasion = intraduktalesPapillaeresKarzinomMitInvasion;
     }
 }

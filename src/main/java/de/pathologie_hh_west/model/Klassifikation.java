@@ -1,10 +1,12 @@
 package de.pathologie_hh_west.model;
 
+import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 
 /**
  * Created by VaniR on 10.07.2017.
  */
+@Embeddable
 public class Klassifikation {
     private Integer g;
     private Integer t;

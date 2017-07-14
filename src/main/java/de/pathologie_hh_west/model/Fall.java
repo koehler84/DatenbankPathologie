@@ -1,5 +1,6 @@
 package de.pathologie_hh_west.model;
 
+import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 
@@ -12,6 +13,8 @@ public class Fall {
     @EmbeddedId
     private FallID fallID;
     private String befundtext;
+    @Embedded
+    private Klassifikation klassifikation;
 
     public Fall() {
     }
@@ -30,5 +33,13 @@ public class Fall {
 
     public void setBefundtext(String befundtext) {
         this.befundtext = befundtext;
+    }
+
+    public Klassifikation getKlassifikation() {
+        return klassifikation;
+    }
+
+    public void setKlassifikation(Klassifikation klassifikation) {
+        this.klassifikation = klassifikation;
     }
 }
