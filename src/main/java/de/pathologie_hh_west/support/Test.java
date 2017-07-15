@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -33,7 +34,7 @@ public class Test implements CommandLineRunner {
 		LocalDate date = LocalDate.now();
 		Fall fall = new Fall();
 		Fall fall1 = new Fall();
-
+		
 		FallID e4321 = new FallID(new ENummer("001/00146"));
 		e4321.setBefundTyp(BefundTyp.NACHBEFUND);
 		e4321.setIndex(1);
@@ -52,10 +53,16 @@ public class Test implements CommandLineRunner {
 		patient.setGeburtsDatum(date);
 		HashSet<Fall> objects = new HashSet<>(Arrays.asList(fall, fall1));
 		patient.setFaelle(objects);
+
 //		fallRepository.save(fall);
 		patientRepository.save(patient);
 		String dateiPfad = "src/test/testDaten/test.xlsx";
-		ExcelOeffnenService test = new ExcelOeffnenService(dateiPfad);
+		ExcelOeffnenService test = null;
+		try {
+			test = new ExcelOeffnenService(dateiPfad);
+		} catch (IOException e) {
+			return;
+		}
 		test.getUeberschriftenVonExcel(0);
 		HashMap<Integer, PatientModelAttribute> testMapPatientenZuExcelIndex = new HashMap<>();
 		testMapPatientenZuExcelIndex.put(0, PatientModelAttribute.VORNAME);

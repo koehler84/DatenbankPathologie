@@ -14,13 +14,14 @@ import org.controlsfx.glyphfont.Glyph;
 import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
 import org.controlsfx.validation.decoration.GraphicValidationDecoration;
-import org.controlsfx.validation.decoration.ValidationDecoration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
@@ -45,7 +46,8 @@ public class FallFilterSelectorController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		expression.setText("");
 		btnRemove.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.REMOVE));
-		columnSelection.setItems(FXCollections.observableList(Arrays.stream(Fall.class.getDeclaredFields()).map(Field::getName).collect(Collectors.toList())));
+//		columnSelection.setItems(FXCollections.observableList(Arrays.stream(Fall.class.getDeclaredFields()).map(Field::getName).collect(Collectors.toList())));
+		columnSelection.setItems(FXCollections.observableList(getFieldNames()));
 		
 		ValidationSupport vsExpression = new ValidationSupport();
 		vsExpression.registerValidator(expression, false, Validator.createEmptyValidator(""));
@@ -61,5 +63,27 @@ public class FallFilterSelectorController implements Initializable {
 			this.equality = this.equality.getNext();
 			btnEquality.setText(this.equality.getStringOperator());
 		});
+	}
+	
+	private List<String> getFieldNames() {
+		List<String> strings = new ArrayList<>();
+		try {
+			Field[] fallIDFields = Fall.class.getDeclaredField("fallID").getType().getDeclaredFields();
+			strings.addAll(Arrays.stream(fallIDFields)
+					.map(Field::getName)
+					.map("fallID."::concat)
+					.collect(Collectors.toList()));
+			
+			Field[] klassifikationFields = Fall.class.getDeclaredField("klassifikation").getType().getDeclaredFields();
+			strings.addAll(Arrays.stream(klassifikationFields)
+					.map(Field::getName)
+					.map("klassification."::concat)
+					.collect(Collectors.toList()));
+			
+		} catch (NoSuchFieldException e) {
+			e.printStackTrace();
+		}
+		
+		return strings;
 	}
 }
