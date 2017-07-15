@@ -3,16 +3,14 @@ package de.pathologie_hh_west.support;
 import de.pathologie_hh_west.data.FallRepository;
 import de.pathologie_hh_west.data.PatientRepository;
 import de.pathologie_hh_west.model.*;
+import de.pathologie_hh_west.service.ExcelFile;
 import de.pathologie_hh_west.service.ExcelOeffnenService;
-import de.pathologie_hh_west.service.PatientModelAttribute;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
@@ -57,27 +55,37 @@ public class Test implements CommandLineRunner {
 //		fallRepository.save(fall);
 		patientRepository.save(patient);
 		String dateiPfad = "src/test/testDaten/test.xlsx";
-		ExcelOeffnenService test = null;
-		try {
-			test = new ExcelOeffnenService(dateiPfad);
-		} catch (IOException e) {
-			return;
-		}
-		test.getUeberschriftenVonExcel(0);
-		HashMap<Integer, PatientModelAttribute> testMapPatientenZuExcelIndex = new HashMap<>();
-		testMapPatientenZuExcelIndex.put(0, PatientModelAttribute.VORNAME);
-		testMapPatientenZuExcelIndex.put(2, PatientModelAttribute.ALTERNATIVNAME);
-		testMapPatientenZuExcelIndex.put(1, PatientModelAttribute.NACHNAME);
-		testMapPatientenZuExcelIndex.put(3, PatientModelAttribute.STRASSE);
-		testMapPatientenZuExcelIndex.put(4, PatientModelAttribute.GEBURTSDATUM);
-		testMapPatientenZuExcelIndex.put(5, PatientModelAttribute.PLZ);
-		for (int aktuelleZeile = 1; aktuelleZeile < test.getMaximaleAnzahlZeilen(); aktuelleZeile++) {
-			patient = test.patientenDatenAusExcelBefuellen(testMapPatientenZuExcelIndex, aktuelleZeile);
-			patientRepository.save(patient);
-		}
+//		ExcelOeffnenService_OLD test = null;
+//		try {
+//			test = new ExcelOeffnenService_OLD(dateiPfad);
+//		} catch (IOException e) {
+//			return;
+//		}
+//		test.getUeberschriftenVonExcel(0);
+//		HashMap<Integer, PatientModelAttribute> testMapPatientenZuExcelIndex = new HashMap<>();
+//		testMapPatientenZuExcelIndex.put(0, PatientModelAttribute.VORNAME);
+//		testMapPatientenZuExcelIndex.put(2, PatientModelAttribute.ALTERNATIVNAME);
+//		testMapPatientenZuExcelIndex.put(1, PatientModelAttribute.NACHNAME);
+//		testMapPatientenZuExcelIndex.put(3, PatientModelAttribute.STRASSE);
+//		testMapPatientenZuExcelIndex.put(4, PatientModelAttribute.GEBURTSDATUM);
+//		testMapPatientenZuExcelIndex.put(5, PatientModelAttribute.PLZ);
+//		for (int aktuelleZeile = 1; aktuelleZeile < test.getMaximaleAnzahlZeilen(); aktuelleZeile++) {
+//			patient = test.patientenDatenAusExcelBefuellen(testMapPatientenZuExcelIndex, aktuelleZeile);
+//			patientRepository.save(patient);
+//		}
+
+		ExcelOeffnenService test2 = new ExcelOeffnenService();
+		ExcelFile excelFile = test2.openExcelFile(dateiPfad);
 
 		List<Patient> patienten = patientRepository.findByNachnameAndVornameAndGeburtsDatum("Apfel", "Klaudis", LocalDate.of(2000, 3, 1));
-		System.out.println();
+		if (!patienten.isEmpty()) {
+			if (patienten.size() == 1) {
+				Patient patientAusDatenbank = patienten.get(0);
+			} else {
+				throw new IllegalArgumentException("Eine eindeutige Zuordnung darf nicht mehr als einen PAtienten ausgeben");
+			}
+			//TODO Patient existiert nicht
+		}
 
 //		patient.setNachname("Gollum");
 //		patient.setId(2L);
