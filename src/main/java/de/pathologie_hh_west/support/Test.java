@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 
 /**
  * Created by eike on 10.07.2017.
@@ -32,7 +33,7 @@ public class Test implements CommandLineRunner {
 		LocalDate date = LocalDate.now();
 		Fall fall = new Fall();
 		Fall fall1 = new Fall();
-		
+
 		FallID e4321 = new FallID(new ENummer("001/00146"));
 		e4321.setBefundTyp(BefundTyp.NACHBEFUND);
 		e4321.setIndex(1);
@@ -53,7 +54,7 @@ public class Test implements CommandLineRunner {
 		patient.setFaelle(objects);
 //		fallRepository.save(fall);
 		patientRepository.save(patient);
-		String dateiPfad = "C:\\Users\\VaniR\\test.xlsx";
+		String dateiPfad = "src/test/testDaten/test.xlsx";
 		ExcelOeffnenService test = new ExcelOeffnenService(dateiPfad);
 		test.getUeberschriftenVonExcel(0);
 		HashMap<Integer, PatientModelAttribute> testMapPatientenZuExcelIndex = new HashMap<>();
@@ -67,6 +68,9 @@ public class Test implements CommandLineRunner {
 			patient = test.patientenDatenAusExcelBefuellen(testMapPatientenZuExcelIndex, aktuelleZeile);
 			patientRepository.save(patient);
 		}
+
+		List<Patient> patienten = patientRepository.findByNachnameAndVornameAndGeburtsDatum("Apfel", "Klaudis", LocalDate.of(2000, 3, 1));
+		System.out.println();
 
 //		patient.setNachname("Gollum");
 //		patient.setId(2L);

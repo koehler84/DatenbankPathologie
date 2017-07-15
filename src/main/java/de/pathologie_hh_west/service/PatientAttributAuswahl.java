@@ -1,5 +1,6 @@
 package de.pathologie_hh_west.service;
 
+import de.pathologie_hh_west.model.Adresse;
 import de.pathologie_hh_west.model.Patient;
 
 import java.math.BigDecimal;
@@ -9,33 +10,36 @@ import java.time.LocalDate;
  * Created by VaniR on 12.07.2017.
  */
 public class PatientAttributAuswahl {
-    private Patient.PatientBuilder patient;
+    private Patient patient;
 
-    public PatientAttributAuswahl(String zellenWert, PatientModelAttribute attributName, Patient.PatientBuilder patient) {
+    public PatientAttributAuswahl(String zellenWert, PatientModelAttribute attributName, Patient patient) {
+        if (patient.getAdresse() == null) {
+            patient.setAdresse(new Adresse());
+        }
         switch (attributName) {
             case VORNAME:
-                patient.vorname(zellenWert);
+                patient.setVorname(zellenWert);
                 break;
             case NACHNAME:
-                patient.nachname(zellenWert);
+                patient.setNachname(zellenWert);
                 break;
             case ALTERNATIVNAME:
-                patient.alternativName(zellenWert);
+                patient.setAlternativName(zellenWert);
                 break;
             case STRASSE:
-                patient.strasse(zellenWert);
+                patient.getAdresse().setStrasse(zellenWert);
                 break;
             case HAUSNUMMER:
-                patient.hausnummer(zellenWert);
+                patient.getAdresse().setHausnummer(zellenWert);
                 break;
             case PLZ:
-                patient.plz(zellenWert);
+                patient.getAdresse().setPlz(zellenWert);
                 break;
             case ORT:
-                patient.ort(zellenWert);
+                patient.getAdresse().setOrt(zellenWert);
                 break;
             case LAND:
-                patient.land(zellenWert);
+                patient.getAdresse().setLand(zellenWert);
                 break;
             default:
                 throw new IllegalArgumentException(attributName + " sollte keine Zeichenkette sein");
@@ -44,13 +48,13 @@ public class PatientAttributAuswahl {
         this.patient = patient;
     }
 
-    public PatientAttributAuswahl(BigDecimal zellenWert, PatientModelAttribute attributName, Patient.PatientBuilder patient) {
+    public PatientAttributAuswahl(BigDecimal zellenWert, PatientModelAttribute attributName, Patient patient) {
         switch (attributName) {
             case PLZ:
-                patient.plz(zellenWert.setScale(0, BigDecimal.ROUND_HALF_UP).toString());
+                patient.getAdresse().setPlz(zellenWert.setScale(0, BigDecimal.ROUND_HALF_UP).toString());
                 break;
             case HAUSNUMMER:
-                patient.hausnummer(zellenWert.setScale(0, BigDecimal.ROUND_HALF_UP).toString());
+                patient.getAdresse().setHausnummer(zellenWert.setScale(0, BigDecimal.ROUND_HALF_UP).toString());
                 break;
             default:
                 throw new IllegalArgumentException(attributName + " sollte keine Zahl sein");
@@ -58,10 +62,10 @@ public class PatientAttributAuswahl {
         this.patient = patient;
     }
 
-    public PatientAttributAuswahl(LocalDate zellenWert, PatientModelAttribute attributName, Patient.PatientBuilder patient) {
+    public PatientAttributAuswahl(LocalDate zellenWert, PatientModelAttribute attributName, Patient patient) {
         switch (attributName) {
             case GEBURTSDATUM:
-                patient.geburtsDatum(zellenWert);
+                patient.setGeburtsDatum(zellenWert);
                 break;
             default:
                 throw new IllegalArgumentException(attributName + " sollte kein Datum sein");
@@ -69,7 +73,7 @@ public class PatientAttributAuswahl {
         this.patient = patient;
     }
 
-    public Patient.PatientBuilder getPatient() {
+    public Patient getPatient() {
         return patient;
     }
 }

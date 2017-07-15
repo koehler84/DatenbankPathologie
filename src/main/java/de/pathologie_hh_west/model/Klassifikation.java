@@ -28,6 +28,7 @@ public class Klassifikation {
     private TumorArt tumorArt;
 
     public Klassifikation() {
+        this.tumorArt = new TumorArt();
     }
 
     public Integer getG() {

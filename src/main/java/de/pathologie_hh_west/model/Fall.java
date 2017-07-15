@@ -17,6 +17,7 @@ public class Fall {
     private Klassifikation klassifikation;
 
     public Fall() {
+        this.klassifikation = new Klassifikation();
     }
 
     public FallID getFallID() {
