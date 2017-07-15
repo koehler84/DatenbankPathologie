@@ -24,10 +24,4 @@ public class SpringConfig {
 		return ResourceBundle.getBundle("ui.resourcebundles.Bundle");
 	}
 	
-	@Bean
-	@Lazy(true)
-	public StageManager stageManager(Stage stage) {
-		return new StageManager(springFXMLLoader, stage);
-	}
-
 }

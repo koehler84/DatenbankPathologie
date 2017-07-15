@@ -1,6 +1,6 @@
 package de.pathologie_hh_west;
 
-import de.pathologie_hh_west.ui.util.FMXLView;
+import de.pathologie_hh_west.ui.util.FXMLView;
 import de.pathologie_hh_west.ui.util.StageManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -24,8 +24,10 @@ public class PathDbApplication extends Application {
 	}
 	
 	public void start(Stage primaryStage) throws Exception {
-		StageManager stageManager = springContext.getBean(StageManager.class, primaryStage);
-		stageManager.switchScene(FMXLView.MAIN);
+		StageManager stageManager = springContext.getBean(StageManager.class);
+		String stageName = "primaryStage";
+		stageManager.registerStage(stageName, primaryStage);
+		stageManager.switchScene(stageName, FXMLView.MAIN);
 	}
 	
 	@Override

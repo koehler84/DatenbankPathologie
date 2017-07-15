@@ -3,7 +3,7 @@ package de.pathologie_hh_west.ui.util;
 /**
  * Created by eike on 10.07.2017.
  */
-public enum FMXLView {
+public enum FXMLView {
 
 	MAIN {
 		@Override
@@ -15,15 +15,25 @@ public enum FMXLView {
 		String getFXMLFile() {
 			return "/ui/fxml/MainWindow.fxml";
 		}
-	}, FALL {
+	}, OPENEXCEL_FILEDIALOG {
 		@Override
 		String getTitle() {
-			return "PHHW Datenbank";
+			return "Excel einlesen";
 		}
 		
 		@Override
 		String getFXMLFile() {
-			return "/ui/fxml/FallView.fxml";
+			return "/ui/fxml/openexcel/SelectFile.fxml";
+		}
+	}, OPENEXCEL_WORKSHEETDIALOG {
+		@Override
+		String getTitle() {
+			return "Excel einlesen";
+		}
+		
+		@Override
+		String getFXMLFile() {
+			return "/ui/fxml/openexcel/SelectWorksheet.fxml";
 		}
 	};
 	

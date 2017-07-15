@@ -46,7 +46,6 @@ public class FallFilterSelectorController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		expression.setText("");
 		btnRemove.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.REMOVE));
-//		columnSelection.setItems(FXCollections.observableList(Arrays.stream(Fall.class.getDeclaredFields()).map(Field::getName).collect(Collectors.toList())));
 		columnSelection.setItems(FXCollections.observableList(getFieldNames()));
 		
 		ValidationSupport vsExpression = new ValidationSupport();

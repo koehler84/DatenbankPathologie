@@ -139,5 +139,8 @@ public class ExcelOeffnenService {
         }
         return patient;
     }
-
+    
+    public HashMap<Integer, String> getNamenArbeitsblaetter() {
+        return namenArbeitsblaetter;
+    }
 }

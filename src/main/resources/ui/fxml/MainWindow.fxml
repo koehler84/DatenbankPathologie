@@ -13,12 +13,13 @@
       <MenuBar fx:id="menuBar" prefHeight="25.0" prefWidth="900.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <menus>
             <Menu mnemonicParsing="false" text="Datei">
-              <items>
-              </items>
+               <items>
+                  <MenuItem fx:id="mnExcelEinlesen" mnemonicParsing="false" text="Excel einlesen" />
+               </items>
             </Menu>
           <Menu mnemonicParsing="false" text="Ansicht">
             <items>
-              <MenuItem mnemonicParsing="false" text="Fall Tabelle" />
+              <MenuItem fx:id="mnFallView" mnemonicParsing="false" text="Fall Tabelle" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Bearbeiten">
