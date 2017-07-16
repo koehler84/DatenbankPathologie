@@ -18,10 +18,12 @@ public class StageManager {
 	
 	private final Map<String, Stage> stageMap;
 	private final SpringFXMLLoader fxmlLoader;
+	private HashMap<String, Object> attributes;
 
 	public StageManager(SpringFXMLLoader fxmlLoader) {
 		this.stageMap = new HashMap<>();
 		this.fxmlLoader = fxmlLoader;
+		this.attributes = new HashMap<>();
 	}
 	
 	public void registerStage(String stageName, Stage stage) {
@@ -74,4 +76,19 @@ public class StageManager {
 		return this.stageMap.get(stageName);
 	}
 	
+	public boolean hasAttribute(String key) {
+		return attributes.containsKey(key);
+	}
+	
+	public void removeAttribute(String key) {
+		attributes.remove(key);
+	}
+	
+	public Object getAttribute(Object key) {
+		return attributes.get(key);
+	}
+	
+	public Object addAttribute(String key, Object value) {
+		return attributes.put(key, value);
+	}
 }

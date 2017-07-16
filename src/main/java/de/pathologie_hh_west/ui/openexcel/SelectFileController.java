@@ -39,6 +39,14 @@ public class SelectFileController implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		if (stageManager.hasAttribute("openExcelSelectedFile")) {
+			Object obj = stageManager.getAttribute("openExcelSelectedFile");
+			selectedFile = obj instanceof File ? ((File) obj) : null;
+			if (selectedFile != null) {
+				filePath.setText(selectedFile.getPath());
+			}
+		}
+		
 		btnChooseFile.setOnAction(event -> {
 			FileChooser fileChooser = new FileChooser();
 			fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Excel Datei", "*.xlsx"));
@@ -56,6 +64,7 @@ public class SelectFileController implements Initializable {
 				alert.show();
 				return;
 			}
+			stageManager.addAttribute("openExcelSelectedFile", selectedFile);
 			
 			HashMap<Integer, String> arbeitsblaetter;
 			try {
@@ -69,7 +78,7 @@ public class SelectFileController implements Initializable {
 			}
 			
 			try {
-				stageManager.getStage("openExcelStage").setUserData(arbeitsblaetter);
+				stageManager.addAttribute("openExcelWorksheets", arbeitsblaetter);
 				stageManager.switchScene("openExcelStage", FXMLView.OPENEXCEL_WORKSHEETDIALOG);
 			} catch (StageNotFoundException e) {
 				e.printStackTrace();
@@ -77,6 +86,7 @@ public class SelectFileController implements Initializable {
 		});
 		
 		btnCancel.setOnAction(event -> {
+			stageManager.removeAttribute("openExcelSelectedFile");
 			stageManager.getStage("openExcelStage").close();
 		});
 	}
