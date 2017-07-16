@@ -1,12 +1,17 @@
 package de.pathologie_hh_west.ui;
 
+import de.pathologie_hh_west.ui.util.FXMLView;
 import de.pathologie_hh_west.ui.util.SpringFXMLLoader;
+import de.pathologie_hh_west.ui.util.StageManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -23,17 +28,21 @@ import java.util.ResourceBundle;
 public class MainWindowController implements Initializable {
 	
 	@FXML private MenuBar menuBar;
+	@FXML private MenuItem mnFallView;
+	@FXML private MenuItem mnExcelEinlesen;
 	@FXML private GridPane mainContainer;
 	private SpringFXMLLoader springFXMLLoader;
+	private StageManager stageManager;
 	
 	@Autowired
-	public MainWindowController(SpringFXMLLoader springFXMLLoader) {
+	public MainWindowController(SpringFXMLLoader springFXMLLoader, StageManager stageManager) {
 		this.springFXMLLoader = springFXMLLoader;
+		this.stageManager = stageManager;
 	}
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		menuBar.getMenus().filtered(m -> m.getText().equals("Ansicht")).get(0).getItems().get(0).addEventHandler(ActionEvent.ANY, event -> {
+		mnFallView.addEventHandler(ActionEvent.ANY, event -> {
 			try {
 				Parent parent = springFXMLLoader.getCachedOrLoad("/ui/fxml/FallView.fxml");
 				mainContainer.getChildren().clear();
@@ -42,6 +51,14 @@ public class MainWindowController implements Initializable {
 				//TODO
 				e.printStackTrace();
 			}
+		});
+		
+		mnExcelEinlesen.addEventHandler(ActionEvent.ANY, event -> {
+			String stageName = "openExcelStage";
+			Stage stage = new Stage();
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stageManager.registerStage(stageName, stage);
+			stageManager.switchScene(stageName, FXMLView.OPENEXCEL_FILEDIALOG);
 		});
 	}
 }

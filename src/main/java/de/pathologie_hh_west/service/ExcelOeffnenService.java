@@ -11,5 +11,8 @@ public class ExcelOeffnenService {
     public ExcelFile openExcelFile(String dateiPfad) {
         return new ExcelFile(dateiPfad);
     }
-
+    
+    public HashMap<Integer, String> getNamenArbeitsblaetter() {
+        return namenArbeitsblaetter;
+    }
 }
