@@ -8,6 +8,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.ZoneId;
 import java.util.HashMap;
@@ -15,22 +16,29 @@ import java.util.HashMap;
 /**
  * Created by VaniR on 15.07.2017.
  */
-public class ExcelFile extends XSSFWorkbook {
+public class ExcelFile {
+    private XSSFWorkbook workbook;
 
-    public ExcelFile(FileInputStream fis) {
+    public ExcelFile(String filePath) {
+        try {
+            FileInputStream fis = new FileInputStream(filePath);
+            this.workbook = new XSSFWorkbook(fis);
+        } catch (IOException e) {
+            //TODO
+        }
     }
 
     public HashMap<Integer, String> getSheetsWithIndex() {
-        Integer numberOfSheets = this.getNumberOfSheets();
+        Integer numberOfSheets = workbook.getNumberOfSheets();
         HashMap<Integer, String> sheetNamesWithIndex = new HashMap<>();
         for (int i = 0; i < numberOfSheets; i++) {
-            sheetNamesWithIndex.put(i, this.getSheetName(i));
+            sheetNamesWithIndex.put(i, workbook.getSheetName(i));
         }
         return sheetNamesWithIndex;
     }
 
     public HashMap<Integer, String> getHeadlines(Integer indexWorksheet) {
-        XSSFSheet sheet = this.getSheetAt(indexWorksheet);
+        XSSFSheet sheet = workbook.getSheetAt(indexWorksheet);
         HashMap<Integer, String> headlines = new HashMap<>();
         XSSFRow row = sheet.getRow(0);
         int numberOfRows = row.getPhysicalNumberOfCells();
