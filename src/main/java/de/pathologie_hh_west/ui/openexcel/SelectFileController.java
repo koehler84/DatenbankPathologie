@@ -1,6 +1,7 @@
 package de.pathologie_hh_west.ui.openexcel;
 
-import de.pathologie_hh_west.service.ExcelOeffnenService;
+import de.pathologie_hh_west.service.ExcelFile;
+import de.pathologie_hh_west.service.ExcelService;
 import de.pathologie_hh_west.ui.util.FXMLView;
 import de.pathologie_hh_west.ui.util.StageManager;
 import de.pathologie_hh_west.ui.util.StageNotFoundException;
@@ -11,13 +12,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
@@ -68,9 +67,10 @@ public class SelectFileController implements Initializable {
 			
 			HashMap<Integer, String> arbeitsblaetter;
 			try {
-				ExcelOeffnenService excelOeffnenService = new ExcelOeffnenService(selectedFile.getPath());
-				arbeitsblaetter = excelOeffnenService.getNamenArbeitsblaetter();
-			} catch (IOException e) {
+				ExcelService excelOeffnenService = new ExcelService();
+				ExcelFile excelFile = excelOeffnenService.openExcelFile(selectedFile.getPath());
+				arbeitsblaetter = excelFile.getSheetsWithIndex();
+			} catch (Exception e) {
 				e.printStackTrace();
 				Alert alert = new Alert(Alert.AlertType.ERROR, "Es ist ein Fehler beim einlesen der Datei aufgetreten.", ButtonType.OK);
 				alert.show();
