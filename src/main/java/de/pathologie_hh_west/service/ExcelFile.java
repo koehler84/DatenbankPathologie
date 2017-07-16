@@ -15,6 +15,7 @@ import java.util.HashMap;
 
 /**
  * Created by VaniR on 15.07.2017.
+ * Project: path_db
  */
 public class ExcelFile {
     private XSSFWorkbook workbook;
@@ -35,6 +36,11 @@ public class ExcelFile {
             sheetNamesWithIndex.put(i, workbook.getSheetName(i));
         }
         return sheetNamesWithIndex;
+    }
+
+    public Integer getNumberOfRows(Integer indexWorksheet) {
+        XSSFSheet sheet = workbook.getSheetAt(indexWorksheet);
+        return sheet.getPhysicalNumberOfRows();
     }
 
     public HashMap<Integer, String> getHeadlines(Integer indexWorksheet) {
@@ -85,9 +91,8 @@ public class ExcelFile {
         return cellValue;
     }
 
-    public Patient patientDataFromExcel(HashMap<Integer, PatientModelAttribute> excelIndexPatientMapping, Integer currentRow, XSSFSheet sheet) {
-
-
+    public Patient patientDataFromExcel(HashMap<Integer, PatientModelAttribute> excelIndexPatientMapping, Integer currentRow, Integer indexWorksheet) {
+        XSSFSheet sheet = workbook.getSheetAt(indexWorksheet);
         XSSFRow row = sheet.getRow(currentRow);
         Patient patient = new Patient();
         for (Integer cellIndex : excelIndexPatientMapping.keySet()) {
