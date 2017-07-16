@@ -4,7 +4,7 @@ import de.pathologie_hh_west.data.FallRepository;
 import de.pathologie_hh_west.data.PatientRepository;
 import de.pathologie_hh_west.model.*;
 import de.pathologie_hh_west.service.ExcelFile;
-import de.pathologie_hh_west.service.ExcelOeffnenService;
+import de.pathologie_hh_west.service.ExcelService;
 import de.pathologie_hh_west.service.PatientModelAttribute;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -26,10 +26,11 @@ public class Test implements CommandLineRunner {
 	private PatientRepository patientRepository;
 	@Autowired
 	private FallRepository fallRepository;
+//	@Autowired
+//	private PatientZusatzdatenRepository patientZusatzdatenRepository;
 	
 	@Override
 	public void run(String... strings) throws Exception {
-		Adresse adresse = new Adresse();
 		Patient patient = new Patient();
 		LocalDate date = LocalDate.now();
 		Fall fall = new Fall();
@@ -43,11 +44,10 @@ public class Test implements CommandLineRunner {
 		e1234.setBefundTyp(BefundTyp.HAUPTBEFUND);
 		e1234.setIndex(1);
 		fall.setFallID(e1234);
-		adresse.setHausnummer("12");
-		adresse.setLand("Deutschland");
-		adresse.setOrt("Hamburg");
-		adresse.setPlz("12345");
-		patient.setAdresse(adresse);
+		patient.getAdresse().setHausnummer("12");
+		patient.getAdresse().setLand("Deutschland");
+		patient.getAdresse().setOrt("Hamburg");
+		patient.getAdresse().setPlz("12345");
 		patient.setVorname("Klaus");
 		patient.setNachname("Kleber");
 		patient.setGeburtsDatum(date);
@@ -55,10 +55,11 @@ public class Test implements CommandLineRunner {
 		patient.setFaelle(objects);
 
 //		fallRepository.save(fall);
+
 		patientRepository.save(patient);
 		String dateiPfad = "src/test/testDaten/test.xlsx";
-		ExcelOeffnenService excelOeffnen = new ExcelOeffnenService();
-		ExcelFile excelFile = excelOeffnen.openExcelFile(dateiPfad);
+		ExcelService excelService = new ExcelService();
+		ExcelFile excelFile = excelService.openExcelFile(dateiPfad);
 
 		excelFile.getHeadlines(0);
 		Integer indexWorksheet = 0;
@@ -70,7 +71,7 @@ public class Test implements CommandLineRunner {
 		testMapPatientenZuExcelIndex.put(4, PatientModelAttribute.GEBURTSDATUM);
 		testMapPatientenZuExcelIndex.put(5, PatientModelAttribute.PLZ);
 		for (int aktuelleZeile = 1; aktuelleZeile < excelFile.getNumberOfRows(indexWorksheet); aktuelleZeile++) {
-			patient = excelFile.patientDataFromExcel(testMapPatientenZuExcelIndex, aktuelleZeile, indexWorksheet);
+			patient = excelService.patientDataFromExcel(testMapPatientenZuExcelIndex, aktuelleZeile, excelFile.getSheet(indexWorksheet));
 			patientRepository.save(patient);
 		}
 

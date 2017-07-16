@@ -17,7 +17,7 @@ public class EE2015 {
     private String welle;
     private String rawid;
     private String source;
-    private LocalDate zeit;
+    private String zeit;
     private String chemo;
     private String chemo_zeitpunkt;
     private String medikamente;
@@ -123,11 +123,11 @@ public class EE2015 {
         this.source = source;
     }
 
-    public LocalDate getZeit() {
+    public String getZeit() {
         return zeit;
     }
 
-    public void setZeit(LocalDate zeit) {
+    public void setZeit(String zeit) {
         this.zeit = zeit;
     }
 
@@ -167,7 +167,7 @@ public class EE2015 {
         return med_anithormon;
     }
 
-    public void setMed_anithormon(Boolean med_anithormon) {
+    public void setMed_antihormon(Boolean med_anithormon) {
         this.med_anithormon = med_anithormon;
     }
 

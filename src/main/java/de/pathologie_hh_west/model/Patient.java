@@ -8,9 +8,9 @@ import java.util.Set;
  * Created by VaniR on 10.07.2017.
  */
 @Entity
-@Table(
-        uniqueConstraints = @UniqueConstraint(columnNames = {"geburtsDatum", "vorname", "nachname"})
-)
+//@Table(
+//        uniqueConstraints = @UniqueConstraint(columnNames = {"geburtsDatum", "vorname", "nachname"})
+//)
 public class Patient {
     @Id
     @GeneratedValue
@@ -28,11 +28,12 @@ public class Patient {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "patientID", referencedColumnName = "ID", nullable = false)
     private Set<Fall> faelle;
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL)
     private PatientenZusatzdaten patientenZusatzdaten;
 
     public Patient() {
         this.adresse = new Adresse();
+        this.patientenZusatzdaten = new PatientenZusatzdaten();
     }
 
     public Long getId() {
