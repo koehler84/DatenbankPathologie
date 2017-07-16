@@ -26,8 +26,6 @@ public class Test implements CommandLineRunner {
 	private PatientRepository patientRepository;
 	@Autowired
 	private FallRepository fallRepository;
-//	@Autowired
-//	private PatientZusatzdatenRepository patientZusatzdatenRepository;
 	
 	@Override
 	public void run(String... strings) throws Exception {
@@ -71,11 +69,12 @@ public class Test implements CommandLineRunner {
 		testMapPatientenZuExcelIndex.put(4, PatientModelAttribute.GEBURTSDATUM);
 		testMapPatientenZuExcelIndex.put(5, PatientModelAttribute.PLZ);
 		for (int aktuelleZeile = 1; aktuelleZeile < excelFile.getNumberOfRows(indexWorksheet); aktuelleZeile++) {
-			patient = excelService.patientDataFromExcel(testMapPatientenZuExcelIndex, aktuelleZeile, excelFile.getSheet(indexWorksheet));
+			patient = excelService.getPatientwithDBCheck(testMapPatientenZuExcelIndex, aktuelleZeile, excelFile.getSheet(indexWorksheet), patientRepository);
 			patientRepository.save(patient);
 		}
 
-		List<Patient> patienten = patientRepository.findByNachnameAndVornameAndGeburtsDatum("Apfel", "Klaudis", LocalDate.of(2000, 3, 1));
+//		List<Patient> patienten = patientRepository.findByNachnameAndVornameAndGeburtsDatum("Apfel", "Klaudis", LocalDate.of(2000, 3, 1));
+		List<Patient> patienten = patientRepository.findByNachnameAndVornameAndGeburtsDatum("Kleber", "Klaus", LocalDate.of(2017, 7, 16));
 		if (!patienten.isEmpty()) {
 			if (patienten.size() == 1) {
 				Patient patientAusDatenbank = patienten.get(0);
@@ -84,7 +83,7 @@ public class Test implements CommandLineRunner {
 			}
 			//TODO Patient existiert nicht
 		}
-
+		System.out.println();
 //		patient.setNachname("Gollum");
 //		patient.setId(2L);
 //		patientRepository.save(patient);

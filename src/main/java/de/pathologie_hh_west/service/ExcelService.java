@@ -1,5 +1,6 @@
 package de.pathologie_hh_west.service;
 
+import de.pathologie_hh_west.data.PatientRepository;
 import de.pathologie_hh_west.model.Patient;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.xssf.usermodel.XSSFCell;
@@ -13,6 +14,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.ZoneId;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by VaniR on 15.07.2017.
@@ -20,7 +22,6 @@ import java.util.HashMap;
  */
 @Service
 public class ExcelService {
-    
     public ExcelService() {
     }
 
@@ -35,7 +36,22 @@ public class ExcelService {
         return new ExcelFile(workbook);
     }
 
-    public Patient patientDataFromExcel(HashMap<Integer, PatientModelAttribute> excelIndexPatientMapping, Integer currentRow, XSSFSheet sheet) {
+    public Patient getPatientwithDBCheck(HashMap<Integer, PatientModelAttribute> excelIndexPatientMapping, Integer currentRow, XSSFSheet sheet, PatientRepository patientRepository) {
+        Patient patient = patientDataFromExcel(excelIndexPatientMapping, currentRow, sheet);
+        List<Patient> patienten = patientRepository.findByNachnameAndVornameAndGeburtsDatum(patient.getNachname(), patient.getVorname(), patient.getGeburtsDatum());
+        if (!patienten.isEmpty()) {
+            if (patienten.size() == 1) {
+                Patient patientAusDatenbank = patienten.get(0);
+                //TODO vernünftiges mergen (Bestimmte Daten aus DB beistimmte aus Excel etc.)
+                patient = patientAusDatenbank;
+            } else {
+                throw new IllegalArgumentException("Datenbank Inkonsistenz - Patient existiert doppelt");
+            }
+        }
+        return patient;
+    }
+
+    private Patient patientDataFromExcel(HashMap<Integer, PatientModelAttribute> excelIndexPatientMapping, Integer currentRow, XSSFSheet sheet) {
         XSSFRow row = sheet.getRow(currentRow);
         Patient patient = new Patient();
         for (Integer cellIndex : excelIndexPatientMapping.keySet()) {
