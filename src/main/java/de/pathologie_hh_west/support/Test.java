@@ -2,6 +2,7 @@ package de.pathologie_hh_west.support;
 
 import de.pathologie_hh_west.data.FallRepository;
 import de.pathologie_hh_west.data.PatientRepository;
+import de.pathologie_hh_west.data.support.IndexMapper;
 import de.pathologie_hh_west.model.*;
 import de.pathologie_hh_west.service.ExcelFile;
 import de.pathologie_hh_west.service.ExcelService;
@@ -12,9 +13,9 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by eike on 10.07.2017.
@@ -30,7 +31,7 @@ public class Test implements CommandLineRunner {
 	@Override
 	public void run(String... strings) throws Exception {
 		Patient patient = new Patient();
-		LocalDate date = LocalDate.now();
+		LocalDate date = LocalDate.of(2017, 7, 16);
 		Fall fall = new Fall();
 		Fall fall1 = new Fall();
 		
@@ -61,15 +62,15 @@ public class Test implements CommandLineRunner {
 
 		excelFile.getHeadlines(0);
 		Integer indexWorksheet = 0;
-		HashMap<Integer, PatientModelAttribute> testMapPatientenZuExcelIndex = new HashMap<>();
-		testMapPatientenZuExcelIndex.put(0, PatientModelAttribute.VORNAME);
-		testMapPatientenZuExcelIndex.put(2, PatientModelAttribute.ALTERNATIVNAME);
-		testMapPatientenZuExcelIndex.put(1, PatientModelAttribute.NACHNAME);
-		testMapPatientenZuExcelIndex.put(3, PatientModelAttribute.STRASSE);
-		testMapPatientenZuExcelIndex.put(4, PatientModelAttribute.GEBURTSDATUM);
-		testMapPatientenZuExcelIndex.put(5, PatientModelAttribute.PLZ);
+		Set<IndexMapper> testMapPatientenZuExcelIndex = new HashSet<>();
+		testMapPatientenZuExcelIndex.add(new IndexMapper(0, PatientModelAttribute.VORNAME, false));
+		testMapPatientenZuExcelIndex.add(new IndexMapper(2, PatientModelAttribute.ALTERNATIVNAME, true));
+		testMapPatientenZuExcelIndex.add(new IndexMapper(1, PatientModelAttribute.NACHNAME, false));
+		testMapPatientenZuExcelIndex.add(new IndexMapper(3, PatientModelAttribute.STRASSE, true));
+		testMapPatientenZuExcelIndex.add(new IndexMapper(4, PatientModelAttribute.GEBURTSDATUM, true));
+		testMapPatientenZuExcelIndex.add(new IndexMapper(5, PatientModelAttribute.PLZ, false));
 		for (int aktuelleZeile = 1; aktuelleZeile < excelFile.getNumberOfRows(indexWorksheet); aktuelleZeile++) {
-			patient = excelService.getPatientwithDBCheck(testMapPatientenZuExcelIndex, aktuelleZeile, excelFile.getSheet(indexWorksheet), patientRepository);
+			patient = excelService.getPatientWithDBCheck(testMapPatientenZuExcelIndex, aktuelleZeile, excelFile.getSheet(indexWorksheet), patientRepository);
 			patientRepository.save(patient);
 		}
 
