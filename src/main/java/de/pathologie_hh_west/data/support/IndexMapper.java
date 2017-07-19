@@ -9,18 +9,18 @@ import de.pathologie_hh_west.service.PatientModelAttribute;
 public class IndexMapper {
     private Integer excelIndex;
     private PatientModelAttribute patientAttribut;
-    private Boolean overwriteDbValue;
+    private Boolean overwriteExcelValue;
 
-    public IndexMapper(Integer excelIndex, PatientModelAttribute patientAttribut, Boolean overwriteDbValue) {
+    public IndexMapper(Integer excelIndex, PatientModelAttribute patientAttribut, Boolean overwriteExcelValue) {
         this.excelIndex = excelIndex;
         this.patientAttribut = patientAttribut;
-        this.overwriteDbValue = overwriteDbValue;
+        this.overwriteExcelValue = overwriteExcelValue;
     }
 
-    public void setIndexMapper(Integer excelIndex, PatientModelAttribute patientAttribut, Boolean overwriteDbValue) {
+    public void setIndexMapper(Integer excelIndex, PatientModelAttribute patientAttribut, Boolean overwriteExcelValue) {
         this.excelIndex = excelIndex;
         this.patientAttribut = patientAttribut;
-        this.overwriteDbValue = overwriteDbValue;
+        this.overwriteExcelValue = overwriteExcelValue;
     }
 
     public Integer getExcelIndex() {
@@ -39,11 +39,11 @@ public class IndexMapper {
         this.patientAttribut = patientAttribut;
     }
 
-    public Boolean getOverwriteDbValue() {
-        return overwriteDbValue;
+    public Boolean getOverwriteExcelValue() {
+        return overwriteExcelValue;
     }
 
-    public void setOverwriteDbValue(Boolean overwriteDbValue) {
-        this.overwriteDbValue = overwriteDbValue;
+    public void setOverwriteExcelValue(Boolean overwriteExcelValue) {
+        this.overwriteExcelValue = overwriteExcelValue;
     }
 }

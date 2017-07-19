@@ -11,13 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.Method;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * Created by eike on 10.07.2017.
@@ -66,10 +64,10 @@ public class Test implements CommandLineRunner {
 		Integer indexWorksheet = 0;
 		Set<IndexMapper> testMapPatientenZuExcelIndex = new HashSet<>();
 		testMapPatientenZuExcelIndex.add(new IndexMapper(0, PatientModelAttribute.VORNAME, false));
-		testMapPatientenZuExcelIndex.add(new IndexMapper(2, PatientModelAttribute.ALTERNATIVNAME, true));
+		testMapPatientenZuExcelIndex.add(new IndexMapper(2, PatientModelAttribute.ALTERNATIVNAME, false));
 		testMapPatientenZuExcelIndex.add(new IndexMapper(1, PatientModelAttribute.NACHNAME, false));
-		testMapPatientenZuExcelIndex.add(new IndexMapper(3, PatientModelAttribute.STRASSE, true));
-		testMapPatientenZuExcelIndex.add(new IndexMapper(4, PatientModelAttribute.GEBURTSDATUM, true));
+		testMapPatientenZuExcelIndex.add(new IndexMapper(3, PatientModelAttribute.STRASSE, false));
+		testMapPatientenZuExcelIndex.add(new IndexMapper(4, PatientModelAttribute.GEBURTSDATUM, false));
 		testMapPatientenZuExcelIndex.add(new IndexMapper(5, PatientModelAttribute.PLZ, false));
 		for (int aktuelleZeile = 1; aktuelleZeile < excelFile.getNumberOfRows(indexWorksheet); aktuelleZeile++) {
 			patient = excelService.getPatientWithDBCheck(testMapPatientenZuExcelIndex, aktuelleZeile, excelFile.getSheet(indexWorksheet), patientRepository);

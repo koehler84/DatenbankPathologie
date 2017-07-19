@@ -1,8 +1,6 @@
 package de.pathologie_hh_west.service;
 
-import de.pathologie_hh_west.model.Adresse;
-import de.pathologie_hh_west.model.EE2011;
-import de.pathologie_hh_west.model.Patient;
+import de.pathologie_hh_west.model.*;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -13,14 +11,8 @@ import java.util.Arrays;
 public enum PatientModelAttribute {
 	VORNAME, NACHNAME, GEBURTSDATUM, ALTERNATIVNAME, STRASSE, HAUSNUMMER, PLZ, ORT, LAND, EE2011STATUS, EE2011DATUM,
 	EE2011REZIDIV_METASTASE, EE2011R, EE2011RDATUM, EE2011RDATUM2, EE2011NOTIZEN, EE2011CHEMO, EE2011RADIATIO,
-	EE2011AH {
-		@Override
-		public Class<?> getWrappingClass() {
-			return EE2011.class;
-		}
-	},
-	EE2011HAUSARZT, EE2011FRAUENARZT, EE2015PSEUDONYM2, EE2015STATUS, EE2015DATUM, EE2015TODQUELLE, EE2015TODDATUM,
-	EE2015NOTIZEN, EE2015WELLE, EE2015RAWID, EE2015SOURCE, EE2015ZEIT, EE2015CHEMO, EE2015CHEMO_ZEITPUNKT,
+    EE2011AH, EE2011HAUSARZT, EE2011FRAUENARZT, EE2015PSEUDONYM2, EE2015STATUS, EE2015DATUM, EE2015TODQUELLE, EE2015TODDATUM,
+    EE2015NOTIZEN, EE2015WELLE, EE2015RAWID, EE2015SOURCE, EE2015ZEIT, EE2015CHEMO, EE2015CHEMO_ZEITPUNKT,
 	EE2015MEDIKAMENTE, EE2015BESTRAHLUNG, EE2015MED_ANITHORMON, EE2015MED_ANTIHORMON_UNBEKANNT,
 	EE2015MED_ANTIHORMON_TAMOXIFEN, EE2015MED_ANTIHORMON_ARIMIDEX, EE2015MED_ANTIHORMON_AROMASIN,
 	EE2015MED_ANTIHORMON_FE03A, EE2015HERCEPTIN, EE2015BIOPHOSPHONATEN, EE2015BIOPHOSPHATEN_TEXT,
@@ -32,9 +24,9 @@ public enum PatientModelAttribute {
 	EXPARZT;
 	
 	public Class<?> getWrappingClass() {
-		Class[] classes = new Class[]{Patient.class, Adresse.class};
-		
-		return Arrays.stream(classes)
+        Class[] classes = new Class[]{Patient.class, Adresse.class, Exprimage.class, EE2015.class, EE2011.class};
+
+        return Arrays.stream(classes)
 				.flatMap(clazz -> Arrays.stream(clazz.getDeclaredFields()))
 				.filter(fields -> fields.getName().equalsIgnoreCase(this.name()))
 				.limit(1)

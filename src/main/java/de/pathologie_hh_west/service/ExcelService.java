@@ -24,10 +24,9 @@ import java.util.Set;
  */
 @Service
 public class ExcelService {
-    
-    public ExcelService() {
-        
-    }
+
+    //    @Autowired
+    PatientAttributAuswahl patientAttributAuswahl = new PatientAttributAuswahl();
 
     public ExcelFile openExcelFile(String filePath) {
         XSSFWorkbook workbook = null;
@@ -46,8 +45,12 @@ public class ExcelService {
         if (!patienten.isEmpty()) {
             if (patienten.size() == 1) {
                 Patient patientAusDatenbank = patienten.get(0);
-                //TODO vernünftiges mergen (Bestimmte Daten aus DB beistimmte aus Excel etc.)
-                patient = patientAusDatenbank;
+                patient.setId(patientAusDatenbank.getId());
+                for (IndexMapper im : excelIndexPatientMapping) {
+                    if (im.getOverwriteExcelValue()) {
+                        patient = patientAttributAuswahl.setValueFromDbToExcelPatient(im.getPatientAttribut(), patientAusDatenbank, patient);
+                    }
+                }
             } else {
                 throw new IllegalArgumentException("Datenbank Inkonsistenz - Patient existiert doppelt");
             }
@@ -66,40 +69,40 @@ public class ExcelService {
             if (cell != null) {
                 switch (cell.getCellType()) {
                     case XSSFCell.CELL_TYPE_FORMULA:
-                        patient = new PatientAttributAuswahl(cell.getCellFormula(), indexMapper.getPatientAttribut(),
-                                patient).getPatient();
+                        patient = patientAttributAuswahl.mapExcelValueToPatient(cell.getCellFormula(), indexMapper.getPatientAttribut(),
+                                patient);
                         break;
                     case XSSFCell.CELL_TYPE_NUMERIC:
                         if (DateUtil.isCellDateFormatted(cell)) {
-                            patient = new PatientAttributAuswahl(cell.getDateCellValue().toInstant().
+                            patient = patientAttributAuswahl.mapExcelValueToPatient(cell.getDateCellValue().toInstant().
                                     atZone(ZoneId.systemDefault()).toLocalDate(), indexMapper.getPatientAttribut(),
-                                    patient).getPatient();
+                                    patient);
 
                         } else {
-                            new PatientAttributAuswahl(BigDecimal.valueOf(cell.getNumericCellValue()), indexMapper.
-                                    getPatientAttribut(), patient).getPatient();
+                            patient = patientAttributAuswahl.mapExcelValueToPatient(BigDecimal.valueOf(cell.getNumericCellValue()), indexMapper.
+                                    getPatientAttribut(), patient);
                         }
                         break;
                     case XSSFCell.CELL_TYPE_STRING:
-                        patient = new PatientAttributAuswahl(cell.getStringCellValue(), indexMapper.getPatientAttribut(),
-                                patient).getPatient();
+                        patient = patientAttributAuswahl.mapExcelValueToPatient(cell.getStringCellValue(), indexMapper.getPatientAttribut(),
+                                patient);
                         break;
                     case XSSFCell.CELL_TYPE_BLANK:
-                        patient = new PatientAttributAuswahl("", indexMapper.getPatientAttribut(),
-                                patient).getPatient();
+                        patient = patientAttributAuswahl.mapExcelValueToPatient("", indexMapper.getPatientAttribut(),
+                                patient);
                         break;
                     case XSSFCell.CELL_TYPE_BOOLEAN:
-                        patient = new PatientAttributAuswahl(cell.getBooleanCellValue(), indexMapper.getPatientAttribut(),
-                                patient).getPatient();
+                        patient = patientAttributAuswahl.mapExcelValueToPatient(cell.getBooleanCellValue(), indexMapper.getPatientAttribut(),
+                                patient);
                         break;
                     case XSSFCell.CELL_TYPE_ERROR:
-                        patient = new PatientAttributAuswahl(cell.getErrorCellValue() + "", indexMapper.getPatientAttribut(),
-                                patient).getPatient();
+                        patient = patientAttributAuswahl.mapExcelValueToPatient(cell.getErrorCellValue() + "", indexMapper.getPatientAttribut(),
+                                patient);
                         break;
 
                     default:
-                        patient = new PatientAttributAuswahl("<FEHLER IM PROGRAMM>", indexMapper.getPatientAttribut(),
-                                patient).getPatient();
+                        patient = patientAttributAuswahl.mapExcelValueToPatient("<FEHLER IM PROGRAMM>", indexMapper.getPatientAttribut(),
+                                patient);
                 }
             }
         }

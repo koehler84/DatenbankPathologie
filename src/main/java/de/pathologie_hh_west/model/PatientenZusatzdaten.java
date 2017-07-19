@@ -20,6 +20,9 @@ public class PatientenZusatzdaten {
     private EE2011 ee2011;
 
     public PatientenZusatzdaten() {
+        this.ee2011 = new EE2011();
+        this.ee2015 = new EE2015();
+        this.exprimage = new Exprimage();
     }
 
     public Long getId() {

@@ -36,7 +36,7 @@ public class Exprimage {
     @Column(name = "EXPbemerkung")
     private String bemerkung;
     @Column(name = "EXParzt")
-    private String arzt;
+    private String expArzt;
 
     public Exprimage() {
     }
@@ -145,11 +145,11 @@ public class Exprimage {
         this.bemerkung = bemerkung;
     }
 
-    public String getArzt() {
-        return arzt;
+    public String getExpArzt() {
+        return expArzt;
     }
 
-    public void setArzt(String arzt) {
-        this.arzt = arzt;
+    public void setExpArzt(String expArzt) {
+        this.expArzt = expArzt;
     }
 }

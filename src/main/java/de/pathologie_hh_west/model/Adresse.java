@@ -1,6 +1,7 @@
 package de.pathologie_hh_west.model;
 
 import javax.persistence.Embeddable;
+import java.math.BigDecimal;
 
 /**
  * Created by VaniR on 10.07.2017.
@@ -32,8 +33,16 @@ public class Adresse {
         this.hausnummer = hausnummer;
     }
 
+    public void setHausnummer(BigDecimal hausnummer) {
+        this.hausnummer = hausnummer.intValueExact() + "";
+    }
+
     public String getPlz() {
         return plz;
+    }
+
+    public void setPLZ(BigDecimal plz) {
+        this.plz = plz.intValueExact() + "";
     }
 
     public void setPlz(String plz) {
