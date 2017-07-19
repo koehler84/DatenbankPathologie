@@ -27,6 +27,8 @@ public class Test implements CommandLineRunner {
 	private PatientRepository patientRepository;
 	@Autowired
 	private FallRepository fallRepository;
+	@Autowired
+	private ExcelService excelService;
 	
 	@Override
 	public void run(String... strings) throws Exception {
@@ -57,7 +59,6 @@ public class Test implements CommandLineRunner {
 
 		patientRepository.save(patient);
 		String dateiPfad = "src/test/testDaten/test.xlsx";
-		ExcelService excelService = new ExcelService();
 		ExcelFile excelFile = excelService.openExcelFile(dateiPfad);
 
 		excelFile.getHeadlines(0);

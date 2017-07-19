@@ -18,11 +18,11 @@ public class ExcelFile {
         this.workbook = workbook;
     }
 
-    public HashMap<Integer, String> getSheetsWithIndex() {
+    public HashMap<String, Integer> getSheetsWithIndex() {
         Integer numberOfSheets = workbook.getNumberOfSheets();
-        HashMap<Integer, String> sheetNamesWithIndex = new HashMap<>();
+        HashMap<String, Integer> sheetNamesWithIndex = new HashMap<>();
         for (int i = 0; i < numberOfSheets; i++) {
-            sheetNamesWithIndex.put(i, workbook.getSheetName(i));
+            sheetNamesWithIndex.put(workbook.getSheetName(i), i);
         }
         return sheetNamesWithIndex;
     }
@@ -32,17 +32,17 @@ public class ExcelFile {
         return sheet.getPhysicalNumberOfRows();
     }
 
-    public HashMap<Integer, String> getHeadlines(Integer indexWorksheet) {
-        XSSFSheet sheet = workbook.getSheetAt(indexWorksheet);
-        HashMap<Integer, String> headlines = new HashMap<>();
-        XSSFRow row = sheet.getRow(0);
-        int numberOfRows = row.getPhysicalNumberOfCells();
-        for (int i = 0; i < numberOfRows; i++) {
-            XSSFCell cell = row.getCell(i);
-            headlines.put(i, getStringCellValue(cell));
-        }
-        return headlines;
-    }
+    public HashMap<String, Integer> getHeadlines(Integer indexWorksheet) {
+		XSSFSheet sheet = workbook.getSheetAt(indexWorksheet);
+		HashMap<String, Integer> headlines = new HashMap<>();
+		XSSFRow row = sheet.getRow(0);
+		int numberOfRows = row.getPhysicalNumberOfCells();
+		for (int i = 0; i < numberOfRows; i++) {
+			XSSFCell cell = row.getCell(i);
+			headlines.put(getStringCellValue(cell), i);
+		}
+		return headlines;
+	}
 
     private String getStringCellValue(XSSFCell cell) {
         String cellValue = null;

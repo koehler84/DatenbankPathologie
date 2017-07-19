@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<HBox alignment="TOP_CENTER" spacing="15.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.pathologie_hh_west.ui.openexcel.MapColumnNode">
+   <children>
+      <ChoiceBox fx:id="cbDatabaseField" prefWidth="150.0" />
+      <ChoiceBox fx:id="cbExcelColumn" prefWidth="150.0" />
+      <CheckBox mnemonicParsing="false" text="CheckBox" />
+   </children>
+</HBox>

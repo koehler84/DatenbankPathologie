@@ -34,6 +34,9 @@ public class SelectFileController implements Initializable {
 	@FXML private Button btnCancel;
 	@Autowired
 	private StageManager stageManager;
+	@Autowired
+	private ExcelService excelService;
+	
 	private File selectedFile;
 	
 	@Override
@@ -63,13 +66,12 @@ public class SelectFileController implements Initializable {
 				alert.show();
 				return;
 			}
-			stageManager.addAttribute("openExcelSelectedFile", selectedFile);
 			
-			HashMap<Integer, String> arbeitsblaetter;
+			HashMap<String, Integer> arbeitsblaetter;
 			try {
-				ExcelService excelOeffnenService = new ExcelService();
-				ExcelFile excelFile = excelOeffnenService.openExcelFile(selectedFile.getPath());
+				ExcelFile excelFile = excelService.openExcelFile(selectedFile.getPath());
 				arbeitsblaetter = excelFile.getSheetsWithIndex();
+				stageManager.addAttribute("openExcelSelectedFile", excelFile);
 			} catch (Exception e) {
 				e.printStackTrace();
 				Alert alert = new Alert(Alert.AlertType.ERROR, "Es ist ein Fehler beim einlesen der Datei aufgetreten.", ButtonType.OK);
@@ -87,6 +89,8 @@ public class SelectFileController implements Initializable {
 		
 		btnCancel.setOnAction(event -> {
 			stageManager.removeAttribute("openExcelSelectedFile");
+			stageManager.removeAttribute("openExcelWorksheets");
+			stageManager.removeAttribute("openExcelSelectedWorksheetIndex");
 			stageManager.getStage("openExcelStage").close();
 		});
 	}
