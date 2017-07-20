@@ -19,7 +19,7 @@ public class ExcelFile {
     }
 
     //TODO catch bei leeren Mappen etc
-    public HashMap<Integer, String> getSheetsWithIndex() {
+    public HashMap<String, Integer> getSheetsWithIndex() {
         Integer numberOfSheets = workbook.getNumberOfSheets();
         HashMap<String, Integer> sheetNamesWithIndex = new HashMap<>();
         for (int i = 0; i < numberOfSheets; i++) {
