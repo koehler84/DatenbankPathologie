@@ -100,4 +100,15 @@ public class Patient {
         this.patientenZusatzdaten = patientenZusatzdaten;
     }
 
+    private Fall getFallByID(ENummer eNummer, BefundTyp befundTyp, Integer index) {
+        for (Fall fall : this.getFaelle()) {
+            if (fall.getFallID().geteNummer().getValue().equals(eNummer.getValue())
+                    && fall.getFallID().getBefundTyp().equals(befundTyp)
+                    && (index == null || fall.getFallID().getIndex() == null || fall.getFallID().getIndex().equals(index))) {
+                return fall;
+            }
+        }
+
+        return null;
+    }
 }

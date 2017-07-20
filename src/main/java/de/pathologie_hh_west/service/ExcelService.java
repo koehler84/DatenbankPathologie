@@ -47,7 +47,7 @@ public class ExcelService {
                 Patient patientAusDatenbank = patienten.get(0);
                 patient.setId(patientAusDatenbank.getId());
                 for (IndexMapper im : excelIndexPatientMapping) {
-                    if (im.getOverwriteExcelValue()) {
+                    if (im.getOverwriteExcelValue() || !patientAttributAuswahl.isDbValueNull(im.getPatientAttribut(), patientAusDatenbank)) {
                         patient = patientAttributAuswahl.setValueFromDbToExcelPatient(im.getPatientAttribut(), patientAusDatenbank, patient);
                     }
                 }

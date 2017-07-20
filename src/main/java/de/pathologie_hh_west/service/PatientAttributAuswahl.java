@@ -35,32 +35,64 @@ public class PatientAttributAuswahl {
 	}
 
 
-	public Patient setValueFromDbToExcelPatient(PatientModelAttribute patientAttribut, Patient patientAusDatenbank, Patient patient) {
-		Object dbValue = new Object();
-		switch (patientAttribut.getWrappingClass().getSimpleName().toUpperCase()) {
-			case "PATIENT":
-				dbValue = patientAttributMethodenService.methodGetterPatient(patientAttribut, patientAusDatenbank);
-				patientAttributMethodenService.methodSetterPatient(patientAttribut, dbValue, patient);
-				break;
-			case "ADRESSE":
-				dbValue = patientAttributMethodenService.methodGetterAdresse(patientAttribut, patientAusDatenbank);
-				patientAttributMethodenService.methodSetterAdresse(patientAttribut, dbValue, patient);
-				break;
-			case "EE2011":
-				dbValue = patientAttributMethodenService.methodGetterEE2011(patientAttribut, patientAusDatenbank);
-				patientAttributMethodenService.methodSetterEE2011(patientAttribut, dbValue, patient);
-				break;
-			case "EE2015":
-				dbValue = patientAttributMethodenService.methodGetterEE2015(patientAttribut, patientAusDatenbank);
-				patientAttributMethodenService.methodSetterEE2015(patientAttribut, dbValue, patient);
-				break;
-			case "EXPRIMAGE":
-				dbValue = patientAttributMethodenService.methodGetterExprimage(patientAttribut, patientAusDatenbank);
-				patientAttributMethodenService.methodSetterExprimage(patientAttribut, dbValue, patient);
-				break;
+    public Patient setValueFromDbToExcelPatient(PatientModelAttribute patientAttribut, Patient patientAusDatenbank, Patient patient) {
+        Object dbValue = new Object();
+        switch (patientAttribut.getWrappingClass().getSimpleName().toUpperCase()) {
+            case "PATIENT":
+                dbValue = patientAttributMethodenService.methodGetterPatient(patientAttribut, patientAusDatenbank);
+                patientAttributMethodenService.methodSetterPatient(patientAttribut, dbValue, patient);
+                break;
+            case "ADRESSE":
+                dbValue = patientAttributMethodenService.methodGetterAdresse(patientAttribut, patientAusDatenbank);
+                patientAttributMethodenService.methodSetterAdresse(patientAttribut, dbValue, patient);
+                break;
+            case "EE2011":
+                dbValue = patientAttributMethodenService.methodGetterEE2011(patientAttribut, patientAusDatenbank);
+                patientAttributMethodenService.methodSetterEE2011(patientAttribut, dbValue, patient);
+                break;
+            case "EE2015":
+                dbValue = patientAttributMethodenService.methodGetterEE2015(patientAttribut, patientAusDatenbank);
+                patientAttributMethodenService.methodSetterEE2015(patientAttribut, dbValue, patient);
+                break;
+            case "EXPRIMAGE":
+                dbValue = patientAttributMethodenService.methodGetterExprimage(patientAttribut, patientAusDatenbank);
+                patientAttributMethodenService.methodSetterExprimage(patientAttribut, dbValue, patient);
+                break;
 
-		}
-		return patient;
+        }
+        return patient;
 
-	}
+    }
+
+    public boolean isDbValueNull(PatientModelAttribute patientAttribut, Patient patientAusDatenbank) {
+        switch (patientAttribut.getWrappingClass().getSimpleName().toUpperCase()) {
+            case "PATIENT":
+                if (patientAttributMethodenService.methodGetterPatient(patientAttribut, patientAusDatenbank) == null) {
+                    return true;
+                }
+                break;
+            case "ADRESSE":
+                if (patientAttributMethodenService.methodGetterAdresse(patientAttribut, patientAusDatenbank) == null) {
+                    return true;
+                }
+                break;
+            case "EE2011":
+                if (patientAttributMethodenService.methodGetterEE2011(patientAttribut, patientAusDatenbank) == null) {
+                    return true;
+                }
+                break;
+            case "EE2015":
+                if (patientAttributMethodenService.methodGetterEE2015(patientAttribut, patientAusDatenbank) == null) {
+                    return true;
+                }
+                break;
+            case "EXPRIMAGE":
+                if (patientAttributMethodenService.methodGetterExprimage(patientAttribut, patientAusDatenbank) == null) {
+                    return true;
+                }
+                break;
+
+        }
+        return false;
+    }
 }

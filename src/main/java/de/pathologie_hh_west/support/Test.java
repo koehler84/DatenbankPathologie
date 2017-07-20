@@ -13,8 +13,8 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -60,7 +60,7 @@ public class Test implements CommandLineRunner {
 		ExcelService excelService = new ExcelService();
 		ExcelFile excelFile = excelService.openExcelFile(dateiPfad);
 
-		excelFile.getHeadlines(0);
+		HashMap<Integer, String> headlines = excelFile.getHeadlines(0);
 		Integer indexWorksheet = 0;
 		Set<IndexMapper> testMapPatientenZuExcelIndex = new HashSet<>();
 		testMapPatientenZuExcelIndex.add(new IndexMapper(0, PatientModelAttribute.VORNAME, false));
@@ -74,16 +74,7 @@ public class Test implements CommandLineRunner {
 			patientRepository.save(patient);
 		}
 
-//		List<Patient> patienten = patientRepository.findByNachnameAndVornameAndGeburtsDatum("Apfel", "Klaudis", LocalDate.of(2000, 3, 1));
-		List<Patient> patienten = patientRepository.findByNachnameAndVornameAndGeburtsDatum("Kleber", "Klaus", LocalDate.of(2017, 7, 16));
-		if (!patienten.isEmpty()) {
-			if (patienten.size() == 1) {
-				Patient patientAusDatenbank = patienten.get(0);
-			} else {
-				throw new IllegalArgumentException("Eine eindeutige Zuordnung darf nicht mehr als einen Patienten ausgeben");
-			}
-			//TODO Patient existiert nicht
-		}
+
 		System.out.println();
 //		patient.setNachname("Gollum");
 //		patient.setId(2L);

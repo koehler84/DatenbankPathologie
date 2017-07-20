@@ -18,6 +18,7 @@ public class ExcelFile {
         this.workbook = workbook;
     }
 
+    //TODO catch bei leeren Mappen etc
     public HashMap<Integer, String> getSheetsWithIndex() {
         Integer numberOfSheets = workbook.getNumberOfSheets();
         HashMap<Integer, String> sheetNamesWithIndex = new HashMap<>();

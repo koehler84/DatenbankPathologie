@@ -48,4 +48,5 @@ public class FallID implements Serializable {
     public void setIndex(Integer index) {
         this.index = index;
     }
+
 }
