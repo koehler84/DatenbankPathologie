@@ -1,6 +1,7 @@
 package de.pathologie_hh_west;
 
 import de.pathologie_hh_west.model.*;
+import de.pathologie_hh_west.service.PatientModelAttribute;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -47,16 +48,22 @@ public class PathDbApplicationTests {
 		return null;
 	}
 
+	private String getTest(BefundTyp befundTyp) {
+		return befundTyp.toString();
+	}
+
+	private String getTest(PatientModelAttribute patientModelAttribute) {
+		return patientModelAttribute.toString();
+	}
+
 	@Test
 	public void contextLoads() {
-		FallID testFallID = new FallID(new ENummer("A/1996/200591"));
-		testFallID.setBefundTyp(BefundTyp.HAUPTBEFUND);
-		testFallID.setIndex(1);
+		Object test1 = BefundTyp.HAUPTBEFUND;
+		Object test2 = PatientModelAttribute.EE2011R;
 
-		Fall testFall = getFallByID(testFallID.geteNummer(), testFallID.getBefundTyp(), 1);
+		System.out.println(getTest((BefundTyp) test2));
 
 
-		System.out.println();
 
 
 	}

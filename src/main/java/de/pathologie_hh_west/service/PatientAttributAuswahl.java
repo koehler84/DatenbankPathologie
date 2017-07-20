@@ -3,7 +3,6 @@ package de.pathologie_hh_west.service;
 import de.pathologie_hh_west.model.Patient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 /**
  * Created by VaniR on 12.07.2017.
@@ -31,8 +30,19 @@ public class PatientAttributAuswahl {
 			case "EXPRIMAGE":
 				patientAttributMethodenService.methodSetterExprimage(attributName, zellenWert, patient);
 				break;
-
-		}
+            case "FALL":
+                patientAttributMethodenService.methodSetterFall(attributName, zellenWert, patient);
+                break;
+            case "FALLID":
+                patientAttributMethodenService.methodSetterFallID(attributName, zellenWert, patient);
+                break;
+            case "KLASSIFIKATION":
+                patientAttributMethodenService.methodSetterKlassifikation(attributName, zellenWert, patient);
+                break;
+            case "TUMORART":
+                patientAttributMethodenService.methodSetterTumorart(attributName, zellenWert, patient);
+                break;
+        }
 		return patient;
 	}
 

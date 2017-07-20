@@ -2,7 +2,6 @@ package de.pathologie_hh_west.service;
 
 import de.pathologie_hh_west.model.Patient;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -148,5 +147,17 @@ public class PatientAttributMethodenService {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void methodSetterTumorart(PatientModelAttribute attributName, Object zellenWert, Patient patient) {
+    }
+
+    public void methodSetterKlassifikation(PatientModelAttribute attributName, Object zellenWert, Patient patient) {
+    }
+
+    public void methodSetterFallID(PatientModelAttribute attributName, Object zellenWert, Patient patient) {
+    }
+
+    public void methodSetterFall(PatientModelAttribute attributName, Object zellenWert, Patient patient) {
     }
 }

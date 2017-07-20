@@ -2,10 +2,10 @@ package de.pathologie_hh_west.support;
 
 import de.pathologie_hh_west.data.FallRepository;
 import de.pathologie_hh_west.data.PatientRepository;
-import de.pathologie_hh_west.service.IndexMapper;
 import de.pathologie_hh_west.model.*;
 import de.pathologie_hh_west.service.ExcelFile;
 import de.pathologie_hh_west.service.ExcelService;
+import de.pathologie_hh_west.service.IndexMapper;
 import de.pathologie_hh_west.service.PatientModelAttribute;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -61,7 +61,7 @@ public class Test implements CommandLineRunner {
 		String dateiPfad = "src/test/testDaten/test.xlsx";
 		ExcelFile excelFile = excelService.openExcelFile(dateiPfad);
 
-		HashMap<Integer, String> headlines = excelFile.getHeadlines(0);
+		HashMap<String, Integer> headlines = excelFile.getHeadlines(0);
 		Integer indexWorksheet = 0;
 		Set<IndexMapper> testMapPatientenZuExcelIndex = new HashSet<>();
 		testMapPatientenZuExcelIndex.add(new IndexMapper(0, PatientModelAttribute.VORNAME, false));
