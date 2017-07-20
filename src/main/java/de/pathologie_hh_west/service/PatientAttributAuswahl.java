@@ -1,17 +1,19 @@
 package de.pathologie_hh_west.service;
 
 import de.pathologie_hh_west.model.Patient;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 /**
  * Created by VaniR on 12.07.2017.
  */
-@Service
+@Component
 public class PatientAttributAuswahl {
-
-	//	@Autowired
-	PatientAttributMethodenService patientAttributMethodenService = new PatientAttributMethodenService();
-
+	
+	@Autowired
+	private PatientAttributMethodenService patientAttributMethodenService;
+	
 	public Patient mapExcelValueToPatient(Object zellenWert, PatientModelAttribute attributName, Patient patient) {
 		switch (attributName.getWrappingClass().getSimpleName().toUpperCase()) {
 			case "PATIENT":
@@ -29,14 +31,14 @@ public class PatientAttributAuswahl {
 			case "EXPRIMAGE":
 				patientAttributMethodenService.methodSetterExprimage(attributName, zellenWert, patient);
 				break;
-
+			
 		}
 		return patient;
 	}
-
-
+	
+	
 	public Patient setValueFromDbToExcelPatient(PatientModelAttribute patientAttribut, Patient patientAusDatenbank, Patient patient) {
-		Object dbValue = new Object();
+		Object dbValue;
 		switch (patientAttribut.getWrappingClass().getSimpleName().toUpperCase()) {
 			case "PATIENT":
 				dbValue = patientAttributMethodenService.methodGetterPatient(patientAttribut, patientAusDatenbank);
@@ -58,9 +60,9 @@ public class PatientAttributAuswahl {
 				dbValue = patientAttributMethodenService.methodGetterExprimage(patientAttribut, patientAusDatenbank);
 				patientAttributMethodenService.methodSetterExprimage(patientAttribut, dbValue, patient);
 				break;
-
+			
 		}
 		return patient;
-
+		
 	}
 }

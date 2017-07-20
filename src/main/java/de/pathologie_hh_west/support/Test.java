@@ -2,7 +2,7 @@ package de.pathologie_hh_west.support;
 
 import de.pathologie_hh_west.data.FallRepository;
 import de.pathologie_hh_west.data.PatientRepository;
-import de.pathologie_hh_west.data.support.IndexMapper;
+import de.pathologie_hh_west.service.IndexMapper;
 import de.pathologie_hh_west.model.*;
 import de.pathologie_hh_west.service.ExcelFile;
 import de.pathologie_hh_west.service.ExcelService;

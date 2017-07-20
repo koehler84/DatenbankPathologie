@@ -1,6 +1,7 @@
 package de.pathologie_hh_west.service;
 
 import de.pathologie_hh_west.model.Patient;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.InvocationTargetException;
@@ -11,7 +12,7 @@ import java.util.Arrays;
  * Created by VaniR on 18.07.2017.
  * Project: path_db
  */
-@Service
+@Component
 public class PatientAttributMethodenService {
 
     private Method getGetterMethod(PatientModelAttribute modelAttribute) {
