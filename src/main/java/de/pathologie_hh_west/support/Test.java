@@ -2,7 +2,7 @@ package de.pathologie_hh_west.support;
 
 import de.pathologie_hh_west.data.FallRepository;
 import de.pathologie_hh_west.data.PatientRepository;
-import de.pathologie_hh_west.data.support.IndexMapper;
+import de.pathologie_hh_west.service.IndexMapper;
 import de.pathologie_hh_west.model.*;
 import de.pathologie_hh_west.service.ExcelFile;
 import de.pathologie_hh_west.service.ExcelService;
@@ -27,6 +27,8 @@ public class Test implements CommandLineRunner {
 	private PatientRepository patientRepository;
 	@Autowired
 	private FallRepository fallRepository;
+	@Autowired
+	private ExcelService excelService;
 	
 	@Override
 	public void run(String... strings) throws Exception {
@@ -57,7 +59,6 @@ public class Test implements CommandLineRunner {
 
 		patientRepository.save(patient);
 		String dateiPfad = "src/test/testDaten/test.xlsx";
-		ExcelService excelService = new ExcelService();
 		ExcelFile excelFile = excelService.openExcelFile(dateiPfad);
 
 		HashMap<Integer, String> headlines = excelFile.getHeadlines(0);

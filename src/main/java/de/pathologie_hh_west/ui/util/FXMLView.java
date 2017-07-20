@@ -35,6 +35,16 @@ public enum FXMLView {
 		String getFXMLFile() {
 			return "/ui/fxml/openexcel/SelectWorksheet.fxml";
 		}
+	}, OPENEXCEL_MAPPINGDIALOG {
+		@Override
+		String getTitle() {
+			return "Excel einlesen";
+		}
+		
+		@Override
+		String getFXMLFile() {
+			return "/ui/fxml/openexcel/MapColumns.fxml";
+		}
 	};
 	
 	abstract String getTitle();

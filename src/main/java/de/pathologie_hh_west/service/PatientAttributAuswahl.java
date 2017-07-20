@@ -1,16 +1,18 @@
 package de.pathologie_hh_west.service;
 
 import de.pathologie_hh_west.model.Patient;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 /**
  * Created by VaniR on 12.07.2017.
  */
-@Service
+@Component
 public class PatientAttributAuswahl {
 
-	//	@Autowired
-	PatientAttributMethodenService patientAttributMethodenService = new PatientAttributMethodenService();
+	@Autowired
+	private PatientAttributMethodenService patientAttributMethodenService;
 
 	public Patient mapExcelValueToPatient(Object zellenWert, PatientModelAttribute attributName, Patient patient) {
 		switch (attributName.getWrappingClass().getSimpleName().toUpperCase()) {
@@ -35,34 +37,34 @@ public class PatientAttributAuswahl {
 	}
 
 
-    public Patient setValueFromDbToExcelPatient(PatientModelAttribute patientAttribut, Patient patientAusDatenbank, Patient patient) {
-        Object dbValue = new Object();
-        switch (patientAttribut.getWrappingClass().getSimpleName().toUpperCase()) {
-            case "PATIENT":
-                dbValue = patientAttributMethodenService.methodGetterPatient(patientAttribut, patientAusDatenbank);
-                patientAttributMethodenService.methodSetterPatient(patientAttribut, dbValue, patient);
-                break;
-            case "ADRESSE":
-                dbValue = patientAttributMethodenService.methodGetterAdresse(patientAttribut, patientAusDatenbank);
-                patientAttributMethodenService.methodSetterAdresse(patientAttribut, dbValue, patient);
-                break;
-            case "EE2011":
-                dbValue = patientAttributMethodenService.methodGetterEE2011(patientAttribut, patientAusDatenbank);
-                patientAttributMethodenService.methodSetterEE2011(patientAttribut, dbValue, patient);
-                break;
-            case "EE2015":
-                dbValue = patientAttributMethodenService.methodGetterEE2015(patientAttribut, patientAusDatenbank);
-                patientAttributMethodenService.methodSetterEE2015(patientAttribut, dbValue, patient);
-                break;
-            case "EXPRIMAGE":
-                dbValue = patientAttributMethodenService.methodGetterExprimage(patientAttribut, patientAusDatenbank);
-                patientAttributMethodenService.methodSetterExprimage(patientAttribut, dbValue, patient);
-                break;
+	public Patient setValueFromDbToExcelPatient(PatientModelAttribute patientAttribut, Patient patientAusDatenbank, Patient patient) {
+		Object dbValue;
+		switch (patientAttribut.getWrappingClass().getSimpleName().toUpperCase()) {
+			case "PATIENT":
+				dbValue = patientAttributMethodenService.methodGetterPatient(patientAttribut, patientAusDatenbank);
+				patientAttributMethodenService.methodSetterPatient(patientAttribut, dbValue, patient);
+				break;
+			case "ADRESSE":
+				dbValue = patientAttributMethodenService.methodGetterAdresse(patientAttribut, patientAusDatenbank);
+				patientAttributMethodenService.methodSetterAdresse(patientAttribut, dbValue, patient);
+				break;
+			case "EE2011":
+				dbValue = patientAttributMethodenService.methodGetterEE2011(patientAttribut, patientAusDatenbank);
+				patientAttributMethodenService.methodSetterEE2011(patientAttribut, dbValue, patient);
+				break;
+			case "EE2015":
+				dbValue = patientAttributMethodenService.methodGetterEE2015(patientAttribut, patientAusDatenbank);
+				patientAttributMethodenService.methodSetterEE2015(patientAttribut, dbValue, patient);
+				break;
+			case "EXPRIMAGE":
+				dbValue = patientAttributMethodenService.methodGetterExprimage(patientAttribut, patientAusDatenbank);
+				patientAttributMethodenService.methodSetterExprimage(patientAttribut, dbValue, patient);
+				break;
 
-        }
-        return patient;
+		}
+		return patient;
 
-    }
+	}
 
     public boolean isDbValueNull(PatientModelAttribute patientAttribut, Patient patientAusDatenbank) {
         switch (patientAttribut.getWrappingClass().getSimpleName().toUpperCase()) {
