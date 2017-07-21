@@ -2,6 +2,7 @@ package de.pathologie_hh_west.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -34,6 +35,8 @@ public class Patient {
     public Patient() {
         this.adresse = new Adresse();
         this.patientenZusatzdaten = new PatientenZusatzdaten();
+        this.faelle = new HashSet<Fall>();
+        faelle.add(new Fall());
     }
 
     public Long getId() {

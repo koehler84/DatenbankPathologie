@@ -156,8 +156,31 @@ public class PatientAttributMethodenService {
     }
 
     public void methodSetterFallID(PatientModelAttribute attributName, Object zellenWert, Patient patient) {
+        Method[] setterMethods = getSetterMethod(attributName);
+        for (Method setterMethod : setterMethods) {
+            try {
+                //setter darf nur einen parameter haben
+                if (zellenWert == null || setterMethod.getParameterTypes()[0].equals(zellenWert.getClass())) {
+                    setterMethod.invoke(patient.getFaelle(), zellenWert);
+                }
+            } catch (IllegalAccessException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void methodSetterFall(PatientModelAttribute attributName, Object zellenWert, Patient patient) {
+        Method[] setterMethods = getSetterMethod(attributName);
+        for (Method setterMethod : setterMethods) {
+            try {
+                //setter darf nur einen parameter haben
+                if (zellenWert == null || setterMethod.getParameterTypes()[0].equals(zellenWert.getClass())) {
+                    //TODO mäh funktioniert nur bei setBefundtext, kann nicht benutzt werden um FallID Klassifikation etc zu setzen
+                    setterMethod.invoke(patient.getFaelle().toArray()[0], zellenWert);
+                }
+            } catch (IllegalAccessException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

@@ -17,6 +17,7 @@ public class FallID implements Serializable {
     private Integer index;
 
     public FallID() {
+        this.eNummer = new ENummer();
     }
 
     public FallID(ENummer eNummer) {
