@@ -57,14 +57,26 @@ public class ExcelService {
 						patient = patientAttributAuswahl.setValueFromDbToExcelPatient(im.getPatientAttribut(), patientAusDatenbank, patient);
 					}
 				}
-			} else {
+                final Patient patientFinal = patient;
+                patientAusDatenbank.getFaelle().stream()
+                        .filter(f -> !f.getFallID().geteNummer().equals(patientFinal.getFaelle().stream()
+                                .findFirst().get().getFallID().geteNummer()))
+                        .filter(g -> !g.getFallID().getBefundTyp().equals(patientFinal.getFaelle().stream()
+                                .findFirst().get().getFallID().getBefundTyp()))
+                        .forEach(patientFinal.getFaelle()::add);
+                patient = patientFinal;
+            } else {
 				throw new IllegalArgumentException("Datenbank Inkonsistenz - Patient existiert doppelt");
 			}
 		}
 		return patient;
 	}
 
-	public Fall getFallWithDBCHeck(Set<IndexMapper> excelIndexFallMapping, Integer currentRow){return null;}
+    public Fall getFallWithDBCHeck(Set<IndexMapper> excelIndexFallMapping, Integer currentRow, XSSFSheet sheet) {
+//		Fall fall = patientDataFromExcel(excelIndexFallMapping, currentRow, sheet);
+
+        return null;
+    }
 
 
 	private Patient patientDataFromExcel(Set<IndexMapper> excelIndexPatientMapping, Integer currentRow, XSSFSheet sheet) {

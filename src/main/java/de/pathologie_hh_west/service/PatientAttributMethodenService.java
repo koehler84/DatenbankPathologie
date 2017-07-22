@@ -1,5 +1,6 @@
 package de.pathologie_hh_west.service;
 
+import de.pathologie_hh_west.model.BefundTyp;
 import de.pathologie_hh_west.model.Patient;
 import org.springframework.stereotype.Component;
 
@@ -150,9 +151,31 @@ public class PatientAttributMethodenService {
     }
 
     public void methodSetterTumorart(PatientModelAttribute attributName, Object zellenWert, Patient patient) {
+        Method[] setterMethods = getSetterMethod(attributName);
+        for (Method setterMethod : setterMethods) {
+            try {
+                //setter darf nur einen parameter haben
+                if (zellenWert == null || setterMethod.getParameterTypes()[0].equals(zellenWert.getClass())) {
+                    setterMethod.invoke(patient.getFaelle().stream().findFirst().get().getKlassifikation().getTumorArt(), zellenWert);
+                }
+            } catch (IllegalAccessException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void methodSetterKlassifikation(PatientModelAttribute attributName, Object zellenWert, Patient patient) {
+        Method[] setterMethods = getSetterMethod(attributName);
+        for (Method setterMethod : setterMethods) {
+            try {
+                //setter darf nur einen parameter haben
+                if (zellenWert == null || setterMethod.getParameterTypes()[0].equals(zellenWert.getClass())) {
+                    setterMethod.invoke(patient.getFaelle().stream().findFirst().get().getKlassifikation(), zellenWert);
+                }
+            } catch (IllegalAccessException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void methodSetterFallID(PatientModelAttribute attributName, Object zellenWert, Patient patient) {
@@ -161,7 +184,7 @@ public class PatientAttributMethodenService {
             try {
                 //setter darf nur einen parameter haben
                 if (zellenWert == null || setterMethod.getParameterTypes()[0].equals(zellenWert.getClass())) {
-                    setterMethod.invoke(patient.getFaelle(), zellenWert);
+                    setterMethod.invoke(patient.getFaelle().stream().findFirst().get().getFallID(), zellenWert);
                 }
             } catch (IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();
@@ -175,12 +198,69 @@ public class PatientAttributMethodenService {
             try {
                 //setter darf nur einen parameter haben
                 if (zellenWert == null || setterMethod.getParameterTypes()[0].equals(zellenWert.getClass())) {
-                    //TODO mäh funktioniert nur bei setBefundtext, kann nicht benutzt werden um FallID Klassifikation etc zu setzen
-                    setterMethod.invoke(patient.getFaelle().toArray()[0], zellenWert);
+                    setterMethod.invoke(patient.getFaelle().stream().findFirst().get(), zellenWert);
                 }
+
             } catch (IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    public Object methodGetterFall(PatientModelAttribute patientAttribut, Patient patientAusDatenbank, Patient patient) {
+        Method getterMethod = getGetterMethod(patientAttribut);
+        try {
+
+            return getterMethod.invoke(patient.getFaelle().stream().
+                    filter(s -> {
+                        BefundTyp befundTyp = patient.getFaelle().stream().findAny().get().getFallID().getBefundTyp();
+                        return s.getFallID().getBefundTyp().equals(befundTyp);
+                    }).
+                    filter(s -> {
+                        String eNummer = patient.getFaelle().stream().findAny().get().getFallID().geteNummer().getValue();
+                        return s.getFallID().geteNummer().getValue().equals(eNummer);
+                    }).findFirst().get());
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Object methodGetterTumorart(PatientModelAttribute patientAttribut, Patient patientAusDatenbank, Patient patient) {
+        Method getterMethod = getGetterMethod(patientAttribut);
+        try {
+
+            return getterMethod.invoke(patient.getFaelle().stream().
+                    filter(s -> {
+                        BefundTyp befundTyp = patient.getFaelle().stream().findAny().get().getFallID().getBefundTyp();
+                        return s.getFallID().getBefundTyp().equals(befundTyp);
+                    }).
+                    filter(s -> {
+                        String eNummer = patient.getFaelle().stream().findAny().get().getFallID().geteNummer().getValue();
+                        return s.getFallID().geteNummer().getValue().equals(eNummer);
+                    }).findFirst().get().getKlassifikation().getTumorArt());
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Object methodGetterKlassifikation(PatientModelAttribute patientAttribut, Patient patientAusDatenbank, Patient patient) {
+        Method getterMethod = getGetterMethod(patientAttribut);
+        try {
+
+            return getterMethod.invoke(patient.getFaelle().stream().
+                    filter(s -> {
+                        BefundTyp befundTyp = patient.getFaelle().stream().findAny().get().getFallID().getBefundTyp();
+                        return s.getFallID().getBefundTyp().equals(befundTyp);
+                    }).
+                    filter(s -> {
+                        String eNummer = patient.getFaelle().stream().findAny().get().getFallID().geteNummer().getValue();
+                        return s.getFallID().geteNummer().getValue().equals(eNummer);
+                    }).findFirst().get().getKlassifikation());
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
