@@ -71,10 +71,10 @@ public class Test implements CommandLineRunner {
 		testMapPatientenZuExcelIndex.add(new IndexMapper(4, PatientModelAttribute.GEBURTSDATUM, false));
 		testMapPatientenZuExcelIndex.add(new IndexMapper(5, PatientModelAttribute.PLZ, false));
 		testMapPatientenZuExcelIndex.add(new IndexMapper(6, PatientModelAttribute.BEFUNDTEXT, false));
-		for (int aktuelleZeile = 1; aktuelleZeile < excelFile.getNumberOfRows(indexWorksheet); aktuelleZeile++) {
-			patient = excelService.getPatientWithDBCheck(testMapPatientenZuExcelIndex, aktuelleZeile, excelFile.getSheet(indexWorksheet));
-			patientRepository.save(patient);
-		}
+//		for (int aktuelleZeile = 1; aktuelleZeile < excelFile.getNumberOfRows(indexWorksheet); aktuelleZeile++) {
+//			patient = excelService.getPatientWithDBCheck(testMapPatientenZuExcelIndex, aktuelleZeile, excelFile.getSheet(indexWorksheet));
+//			patientRepository.save(patient);
+//		}
 
 
 		System.out.println();

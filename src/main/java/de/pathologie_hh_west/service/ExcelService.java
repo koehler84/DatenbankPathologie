@@ -19,6 +19,7 @@ import java.time.ZoneId;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.IntStream;
 
 /**
  * Created by VaniR on 15.07.2017.
@@ -43,6 +44,12 @@ public class ExcelService {
 			//TODO
 		}
 		return new ExcelFile(workbook);
+	}
+	
+	public void updatePatientsFromExcel(final Set<IndexMapper> indexMappers, final ExcelFile excelFile, final Integer sheetIndex) {
+		final XSSFSheet sheet = excelFile.getSheet(sheetIndex);
+		IntStream.range(1, sheet.getPhysicalNumberOfRows())
+				.forEach(index -> getPatientWithDBCheck(indexMappers, index, sheet));
 	}
 
 	public Patient getPatientWithDBCheck(Set<IndexMapper> excelIndexPatientMapping, Integer currentRow, XSSFSheet sheet) {
