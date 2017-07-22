@@ -1,5 +1,6 @@
 package de.pathologie_hh_west.ui.openexcel;
 
+import de.pathologie_hh_west.service.ExcelService;
 import de.pathologie_hh_west.service.IndexMapper;
 import de.pathologie_hh_west.service.ExcelFile;
 import de.pathologie_hh_west.service.PatientModelAttribute;
@@ -37,6 +38,8 @@ public class MapColumns implements Initializable {
 	private Button btnCancel;
 	@Autowired
 	private StageManager stageManager;
+	@Autowired
+	private ExcelService excelService;
 	
 	private Map<String, Integer> excelColumnsMap;
 	private List<String> excelColumns;
@@ -46,7 +49,16 @@ public class MapColumns implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		final Integer worksheetIndex = (Integer) stageManager.getAttribute("openExcelSelectedWorksheetIndex");
 		final ExcelFile excelFile = (ExcelFile) stageManager.getAttribute("openExcelSelectedFile");
-		excelColumnsMap = excelFile.getHeadlines(worksheetIndex);
+		try {
+			excelColumnsMap = excelFile.getHeadlines(worksheetIndex);
+		} catch (Exception e) {
+			e.printStackTrace();
+//			Alert alert = new Alert(Alert.AlertType.ERROR, "Es ist ein Fehler beim öffnen des Arbeitsblatts aufgetreten. " +
+//					"Bitte wählen Sie ein anderes Arbeitsblatt oder überprüfen Sie die Daten.");
+//			alert.showAndWait();
+//			stageManager.switchScene("openExcelStage", FXMLView.OPENEXCEL_WORKSHEETDIALOG);
+//			return;
+		}
 		this.excelColumns = new ArrayList<>(excelColumnsMap.keySet());
 		gridPaneInputNodes = new ArrayList<>();
 		
@@ -67,6 +79,19 @@ public class MapColumns implements Initializable {
 		
 		btnContinue.setOnAction(event -> {
 			Set<IndexMapper> indexMappers = getIndexMappersFromGridPane();
+			excelService.updatePatientsFromExcel(indexMappers, excelFile, worksheetIndex);
+			
+			Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+					"Der Datenimport wurde abgeschlossen. Möchten Sie dieses Fenster jetzt schließen?", ButtonType.YES, ButtonType.NO);
+			Optional<ButtonType> buttonType = alert.showAndWait();
+			if (buttonType != null && buttonType.get() == ButtonType.YES) {
+				stageManager.removeAttribute("openExcelSelectedFile");
+				stageManager.removeAttribute("openExcelWorksheets");
+				stageManager.removeAttribute("openExcelSelectedWorksheetIndex");
+				stageManager.getStage("openExcelStage").close();
+			} else if (buttonType != null && buttonType.get() == ButtonType.NO) {
+			
+			}
 		});
 		
 		btnBack.setOnAction(event -> {
@@ -107,7 +132,7 @@ public class MapColumns implements Initializable {
 					
 					Boolean selected = null;
 					if (nodeArray[2] != null && nodeArray[2] instanceof CheckBox) {
-						selected = ((CheckBox) nodeArray[2]).isSelected();
+						selected = !((CheckBox) nodeArray[2]).isSelected();
 					}
 					
 					return new IndexMapper(excelIndex, patientAttribut, selected);
