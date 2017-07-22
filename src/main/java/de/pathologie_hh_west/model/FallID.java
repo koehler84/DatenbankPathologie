@@ -8,46 +8,47 @@ import java.io.Serializable;
  */
 @Embeddable
 public class FallID implements Serializable {
-
-    @Embedded
-    private ENummer eNummer;
-    @Enumerated(EnumType.STRING)
-    private BefundTyp befundTyp;
-    @Column(name = "fall_index")
-    private Integer index;
-
-    public FallID() {
-        this.eNummer = new ENummer();
-    }
-
-    public FallID(ENummer eNummer) {
-        this.eNummer = eNummer;
-    }
-
-    public ENummer geteNummer() {
-        return eNummer;
-    }
-
-    public void seteNummer(ENummer eNummer) {
-
-        this.eNummer = eNummer;
-
-    }
-
-    public BefundTyp getBefundTyp() {
-        return befundTyp;
-    }
-
-    public void setBefundTyp(BefundTyp befundTyp) {
-        this.befundTyp = befundTyp;
-    }
-
-    public Integer getIndex() {
-        return index;
-    }
-
-    public void setIndex(Integer index) {
-        this.index = index;
-    }
-
+	
+	@Embedded
+	private ENummer eNummer;
+	@Enumerated(EnumType.STRING)
+	private BefundTyp befundTyp;
+	@Column(name = "fall_index")
+	private Integer index;
+	
+	public FallID() {
+		this.eNummer = new ENummer();
+		this.befundTyp = BefundTyp.UNBEKANNT;
+	}
+	
+	public FallID(ENummer eNummer) {
+		this.eNummer = eNummer;
+	}
+	
+	public ENummer geteNummer() {
+		return eNummer;
+	}
+	
+	public void seteNummer(ENummer eNummer) {
+		
+		this.eNummer = eNummer;
+		
+	}
+	
+	public BefundTyp getBefundTyp() {
+		return befundTyp;
+	}
+	
+	public void setBefundTyp(BefundTyp befundTyp) {
+		this.befundTyp = befundTyp;
+	}
+	
+	public Integer getIndex() {
+		return index;
+	}
+	
+	public void setIndex(Integer index) {
+		this.index = index;
+	}
+	
 }
