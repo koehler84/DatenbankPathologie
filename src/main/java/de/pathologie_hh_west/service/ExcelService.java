@@ -1,6 +1,7 @@
 package de.pathologie_hh_west.service;
 
 import de.pathologie_hh_west.data.PatientRepository;
+import de.pathologie_hh_west.model.Fall;
 import de.pathologie_hh_west.model.Patient;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.xssf.usermodel.XSSFCell;
@@ -57,6 +58,8 @@ public class ExcelService {
 		}
 		return patient;
 	}
+
+	public Fall getFallWithDBCHeck(Set<IndexMapper> excelIndexFallMapping, Integer currentRow){return null;}
 
 
 	private Patient patientDataFromExcel(Set<IndexMapper> excelIndexPatientMapping, Integer currentRow, XSSFSheet sheet) {
