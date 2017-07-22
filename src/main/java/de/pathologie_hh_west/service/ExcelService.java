@@ -1,5 +1,6 @@
 package de.pathologie_hh_west.service;
 
+import de.pathologie_hh_west.data.FallRepository;
 import de.pathologie_hh_west.data.PatientRepository;
 import de.pathologie_hh_west.model.Fall;
 import de.pathologie_hh_west.model.Patient;
@@ -28,6 +29,10 @@ public class ExcelService {
 
 	@Autowired
 	private PatientAttributAuswahl patientAttributAuswahl;
+	@Autowired
+	private PatientRepository patientRepository;
+	@Autowired
+	private FallRepository fallRepository;
 
 	public ExcelFile openExcelFile(String filePath) {
 		XSSFWorkbook workbook = null;
@@ -40,7 +45,7 @@ public class ExcelService {
 		return new ExcelFile(workbook);
 	}
 
-	public Patient getPatientWithDBCheck(Set<IndexMapper> excelIndexPatientMapping, Integer currentRow, XSSFSheet sheet, PatientRepository patientRepository) {
+	public Patient getPatientWithDBCheck(Set<IndexMapper> excelIndexPatientMapping, Integer currentRow, XSSFSheet sheet) {
 		Patient patient = patientDataFromExcel(excelIndexPatientMapping, currentRow, sheet);
 		List<Patient> patienten = patientRepository.findByNachnameAndVornameAndGeburtsDatum(patient.getNachname(), patient.getVorname(), patient.getGeburtsDatum());
 		if (!patienten.isEmpty()) {
