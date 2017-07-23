@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.ZoneId;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.IntStream;
 
@@ -58,10 +57,7 @@ public class ExcelService {
 			return null;
 			//throw new IllegalArgumentException("Kein eindeutiger Patient, es fehlt Vorname, Nachname oder Geburtsdatum");
 		}
-		List<Patient> patienten = patientRepository.findByNachnameAndVornameAndGeburtsDatum(patient.getNachname(), patient.getVorname(), patient.getGeburtsDatum());
-		if (!patienten.isEmpty()) {
-			if (patienten.size() == 1) {
-				Patient patientAusDatenbank = patienten.get(0);
+		Patient patientAusDatenbank = patientRepository.findByNachnameAndVornameAndGeburtsDatum(patient.getNachname(), patient.getVorname(), patient.getGeburtsDatum());
 				patient.setId(patientAusDatenbank.getId());
 				for (IndexMapper im : excelIndexPatientMapping) {
 					if (im.getOverwriteExcelValue() || !patientAttributAuswahl.isDbValueNull(im.getPatientAttribut(), patientAusDatenbank)) {
@@ -80,10 +76,7 @@ public class ExcelService {
 							.forEach(patientFinal.getFaelle()::add);
 					patient = patientFinal;
 				}
-			} else {
-				throw new IllegalArgumentException("Datenbank Inkonsistenz - Patient existiert doppelt");
-			}
-		}
+
 		//TODO Temporary - Fall überarbeiten
 		patientRepository.save(patient);
 		return patient;
@@ -99,6 +92,7 @@ public class ExcelService {
 	private Patient patientDataFromExcel(Set<IndexMapper> excelIndexPatientMapping, Integer currentRow, XSSFSheet sheet) {
 		XSSFRow row = sheet.getRow(currentRow);
 		Patient patient = new Patient();
+		patient.getFaelle().add(new Fall());
 		for (Iterator<IndexMapper> it = excelIndexPatientMapping.iterator(); it.hasNext(); ) {
 			IndexMapper indexMapper = it.next();
 			Integer cellIndex = indexMapper.getExcelIndex();

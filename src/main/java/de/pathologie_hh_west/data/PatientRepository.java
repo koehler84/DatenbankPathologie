@@ -5,13 +5,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
-import java.util.List;
 
 /**
  * Created by VaniR on 10.07.2017.
  */
 @Repository
 public interface PatientRepository extends JpaRepository<Patient, Long> {
-    List<Patient> findByNachnameAndVornameAndGeburtsDatum(String nachname, String vorname, LocalDate geburtsDatum);         //TODO warum als return type nicht nur Patient oder Optional<Patient>? ist ja unique. hab ich auch getestet -eike
+    Patient findByNachnameAndVornameAndGeburtsDatum(String nachname, String vorname, LocalDate geburtsDatum);         //TODO warum als return type nicht nur Patient oder Optional<Patient>? ist ja unique. hab ich auch getestet -eike
 
 }

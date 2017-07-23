@@ -36,7 +36,6 @@ public class Patient {
         this.adresse = new Adresse();
         this.patientenZusatzdaten = new PatientenZusatzdaten();
         this.faelle = new HashSet<Fall>();
-        faelle.add(new Fall());             //TODO das muss unbedingt entfernt werden. Hier einen neuen Fall anzulegen ist absolut fehlerhaft!!!!!!
     }
 
     public Long getId() {
