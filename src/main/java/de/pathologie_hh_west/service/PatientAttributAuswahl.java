@@ -70,7 +70,17 @@ public class PatientAttributAuswahl {
 				dbValue = patientAttributMethodenService.methodGetterExprimage(patientAttribut, patientAusDatenbank);
 				patientAttributMethodenService.methodSetterExprimage(patientAttribut, dbValue, patient);
 				break;
+			case "FALL":
+				dbValue = patientAttributMethodenService.methodGetterFall(patientAttribut, patientAusDatenbank, patient);
+				patientAttributMethodenService.methodSetterFall(patientAttribut, dbValue, patient);
+			case "KLASSIFIKATION":
+				dbValue = patientAttributMethodenService.methodGetterKlassifikation(patientAttribut, patientAusDatenbank, patient);
 
+				break;
+			case "TUMORART":
+				dbValue = patientAttributMethodenService.methodGetterTumorart(patientAttribut, patientAusDatenbank, patient);
+
+				break;
 		}
 		return patient;
 

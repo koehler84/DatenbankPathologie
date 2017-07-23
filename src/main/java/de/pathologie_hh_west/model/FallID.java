@@ -1,6 +1,9 @@
 package de.pathologie_hh_west.model;
 
-import javax.persistence.*;
+import javax.persistence.Embeddable;
+import javax.persistence.Embedded;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.io.Serializable;
 
 /**
@@ -13,8 +16,6 @@ public class FallID implements Serializable {
 	private ENummer eNummer;
 	@Enumerated(EnumType.STRING)
 	private BefundTyp befundTyp;
-	@Column(name = "fall_index")
-	private Integer index;
 	
 	public FallID() {
 		this.eNummer = new ENummer();
@@ -42,13 +43,4 @@ public class FallID implements Serializable {
 	public void setBefundTyp(BefundTyp befundTyp) {
 		this.befundTyp = befundTyp;
 	}
-	
-	public Integer getIndex() {
-		return index;
-	}
-	
-	public void setIndex(Integer index) {
-		this.index = index;
-	}
-	
 }
