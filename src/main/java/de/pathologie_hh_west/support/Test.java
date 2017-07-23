@@ -39,11 +39,9 @@ public class Test implements CommandLineRunner {
 		
 		FallID e4321 = new FallID(new ENummer("001/00146"));
 		e4321.setBefundTyp(BefundTyp.NACHBEFUND);
-		e4321.setIndex(1);
 		fall1.setFallID(e4321);
 		FallID e1234 = new FallID(new ENummer("A/1996/200591"));
 		e1234.setBefundTyp(BefundTyp.HAUPTBEFUND);
-		e1234.setIndex(1);
 		fall.setFallID(e1234);
 		patient.getAdresse().setHausnummer("12");
 		patient.getAdresse().setLand("Deutschland");

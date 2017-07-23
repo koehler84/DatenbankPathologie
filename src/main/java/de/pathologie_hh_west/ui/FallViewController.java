@@ -12,7 +12,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -130,12 +129,9 @@ public class FallViewController implements Initializable {
 		eNummerColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<String>(cellData.getValue().getFallID().geteNummer().getValue()));
 		TableColumn<Fall, String> befundTypColumn = new TableColumn<>("Befundtyp");
 		befundTypColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<String>(cellData.getValue().getFallID().getBefundTyp().toString()));
-		TableColumn<Fall, Integer> indexColumn = new TableColumn<>("Index");
-		indexColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<Integer>(cellData.getValue().getFallID().getIndex()));
 		fallIDColumn.getColumns().add(eNummerColumn);
 		fallIDColumn.getColumns().add(befundTypColumn);
-		fallIDColumn.getColumns().add(indexColumn);
-		
+
 		tableView.getColumns().add(fallIDColumn);
 	}
 }

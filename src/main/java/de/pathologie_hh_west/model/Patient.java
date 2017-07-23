@@ -107,7 +107,7 @@ public class Patient {
         for (Fall fall : this.getFaelle()) {
             if (fall.getFallID().geteNummer().getValue().equals(eNummer.getValue())
                     && fall.getFallID().getBefundTyp().equals(befundTyp)
-                    && (index == null || fall.getFallID().getIndex() == null || fall.getFallID().getIndex().equals(index))) {
+                    ) {
                 return fall;
             }
         }
