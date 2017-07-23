@@ -12,6 +12,6 @@ import java.util.List;
  */
 @Repository
 public interface PatientRepository extends JpaRepository<Patient, Long> {
-    List<Patient> findByNachnameAndVornameAndGeburtsDatum(String nachname, String vorname, LocalDate geburtsDatum);
+    List<Patient> findByNachnameAndVornameAndGeburtsDatum(String nachname, String vorname, LocalDate geburtsDatum);         //TODO warum als return type nicht nur Patient oder Optional<Patient>? ist ja unique. hab ich auch getestet -eike
 
 }
