@@ -60,9 +60,21 @@ public class SelectFileController implements Initializable {
 			}
 		});
 		
+		filePath.focusedProperty().addListener((observableValue, oldValue, newValue) -> {
+			if (newValue) return;
+			String path = filePath.getText();
+			if (path == null) return;
+			File file = new File(path);
+			if (file.exists() && (file.getName().endsWith(".xlsx") || file.getName().endsWith(".xls"))) {
+				selectedFile = file;
+			} else {
+				selectedFile = null;
+			}
+		});
+		
 		btnContinue.setOnAction(event -> {
 			if (selectedFile == null) {
-				Alert alert = new Alert(Alert.AlertType.ERROR, "Bitte wählen Sie eine Datei aus.", ButtonType.OK);
+				Alert alert = new Alert(Alert.AlertType.ERROR, "Bitte wählen Sie eine gültige Datei aus.", ButtonType.OK);
 				alert.show();
 				return;
 			}

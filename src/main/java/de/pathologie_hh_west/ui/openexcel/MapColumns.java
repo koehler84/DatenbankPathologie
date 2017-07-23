@@ -1,9 +1,6 @@
 package de.pathologie_hh_west.ui.openexcel;
 
-import de.pathologie_hh_west.service.ExcelService;
-import de.pathologie_hh_west.service.IndexMapper;
-import de.pathologie_hh_west.service.ExcelFile;
-import de.pathologie_hh_west.service.PatientModelAttribute;
+import de.pathologie_hh_west.service.*;
 import de.pathologie_hh_west.ui.util.AutoCompleteComboBoxListener;
 import de.pathologie_hh_west.ui.util.FXMLView;
 import de.pathologie_hh_west.ui.util.StageManager;
@@ -51,13 +48,12 @@ public class MapColumns implements Initializable {
 		final ExcelFile excelFile = (ExcelFile) stageManager.getAttribute("openExcelSelectedFile");
 		try {
 			excelColumnsMap = excelFile.getHeadlines(worksheetIndex);
-		} catch (Exception e) {
-			e.printStackTrace();
-//			Alert alert = new Alert(Alert.AlertType.ERROR, "Es ist ein Fehler beim öffnen des Arbeitsblatts aufgetreten. " +
-//					"Bitte wählen Sie ein anderes Arbeitsblatt oder überprüfen Sie die Daten.");
-//			alert.showAndWait();
-//			stageManager.switchScene("openExcelStage", FXMLView.OPENEXCEL_WORKSHEETDIALOG);
-//			return;
+		} catch (ColumnHeadersNotFoundException e) {
+			Alert alert = new Alert(Alert.AlertType.ERROR, "Es ist ein Fehler beim öffnen des Arbeitsblatts aufgetreten. " +
+					"Bitte wählen Sie ein anderes Arbeitsblatt oder überprüfen Sie die Daten.");
+			alert.showAndWait();
+			stageManager.switchScene("openExcelStage", FXMLView.OPENEXCEL_WORKSHEETDIALOG);
+			throw new RuntimeException(e);
 		}
 		this.excelColumns = new ArrayList<>(excelColumnsMap.keySet());
 		gridPaneInputNodes = new ArrayList<>();

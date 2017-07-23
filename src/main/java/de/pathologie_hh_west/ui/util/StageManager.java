@@ -1,5 +1,6 @@
 package de.pathologie_hh_west.ui.util;
 
+import javafx.fxml.LoadException;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -30,8 +31,15 @@ public class StageManager {
 		this.stageMap.put(stageName, stage);
 	}
 
-	public void switchScene(final String stageName, final FXMLView view) {
-		Parent parent = loadView(view.getFXMLFile());
+	public void switchScene(final String stageName, final FXMLView view) throws RuntimeException {
+		Parent parent = null;
+		try {
+			parent = loadView(view.getFXMLFile());
+		} catch (Exception e) {
+			e.printStackTrace();
+			if (e instanceof LoadException) throw new RuntimeException(e.getCause());
+			throw new RuntimeException(e);
+		}
 		show(stageName, parent, view.getTitle());
 	}
 
@@ -61,14 +69,10 @@ public class StageManager {
 		return scene;
 	}
 
-	private Parent loadView(String fxmlFile) {
+	private Parent loadView(String fxmlFile) throws Exception {
 		Parent rootNode = null;
-		try {
-			rootNode = fxmlLoader.loadNewFXML(fxmlFile);
-			Objects.requireNonNull(rootNode);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		rootNode = fxmlLoader.loadNewFXML(fxmlFile);
+		Objects.requireNonNull(rootNode);
 		return rootNode;
 	}
 
