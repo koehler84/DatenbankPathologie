@@ -185,6 +185,8 @@ public class PatientAttributMethodenService {
                 //setter darf nur einen parameter haben
                 if (zellenWert == null || setterMethod.getParameterTypes()[0].equals(zellenWert.getClass())) {
                     setterMethod.invoke(patient.getFaelle().stream().findFirst().get().getFallID(), zellenWert);
+                } else if (attributName == PatientModelAttribute.ENUMMER && zellenWert != "") {
+                    patient.getFaelle().stream().findFirst().get().getFallID().geteNummer().setValue(zellenWert.toString());
                 }
             } catch (IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();
@@ -259,6 +261,7 @@ public class PatientAttributMethodenService {
                         return s.getFallID().geteNummer().getValue().equals(eNummer);
                     }).findFirst().get().getKlassifikation());
         } catch (IllegalAccessException | InvocationTargetException e) {
+            System.out.println(patientAttribut.toString() + "|" + patient.getVorname());
             e.printStackTrace();
         }
         return null;

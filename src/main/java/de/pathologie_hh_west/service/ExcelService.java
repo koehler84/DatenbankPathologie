@@ -54,6 +54,10 @@ public class ExcelService {
 
 	public Patient getPatientWithDBCheck(Set<IndexMapper> excelIndexPatientMapping, Integer currentRow, XSSFSheet sheet) {
 		Patient patient = patientDataFromExcel(excelIndexPatientMapping, currentRow, sheet);
+		if (patient.getVorname() == null || patient.getNachname() == null || patient.getGeburtsDatum() == null) {
+			return null;
+			//throw new IllegalArgumentException("Kein eindeutiger Patient, es fehlt Vorname, Nachname oder Geburtsdatum");
+		}
 		List<Patient> patienten = patientRepository.findByNachnameAndVornameAndGeburtsDatum(patient.getNachname(), patient.getVorname(), patient.getGeburtsDatum());
 		if (!patienten.isEmpty()) {
 			if (patienten.size() == 1) {
@@ -65,17 +69,23 @@ public class ExcelService {
 					}
 				}
                 final Patient patientFinal = patient;
-                patientAusDatenbank.getFaelle().stream()
-                        .filter(f -> !f.getFallID().geteNummer().equals(patientFinal.getFaelle().stream()
-                                .findFirst().get().getFallID().geteNummer()))
-                        .filter(g -> !g.getFallID().getBefundTyp().equals(patientFinal.getFaelle().stream()
-                                .findFirst().get().getFallID().getBefundTyp()))
-                        .forEach(patientFinal.getFaelle()::add);
-                patient = patientFinal;
-            } else {
+				if (patientAusDatenbank.getFaelle().stream().findFirst().get().getFallID().getBefundTyp() != null
+						&& patientAusDatenbank.getFaelle().stream().findFirst().get().getFallID().geteNummer().getValue() != "") {
+
+					patientAusDatenbank.getFaelle().stream()
+							.filter(f -> !f.getFallID().geteNummer().equals(patientFinal.getFaelle().stream()
+									.findFirst().get().getFallID().geteNummer()))
+							.filter(g -> !g.getFallID().getBefundTyp().equals(patientFinal.getFaelle().stream()
+									.findFirst().get().getFallID().getBefundTyp()))
+							.forEach(patientFinal.getFaelle()::add);
+					patient = patientFinal;
+				}
+			} else {
 				throw new IllegalArgumentException("Datenbank Inkonsistenz - Patient existiert doppelt");
 			}
 		}
+		//TODO Temporary - Fall überarbeiten
+		patientRepository.save(patient);
 		return patient;
 	}
 

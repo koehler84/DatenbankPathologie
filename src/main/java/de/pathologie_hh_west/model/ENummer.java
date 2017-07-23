@@ -30,9 +30,9 @@ public class ENummer {
             int jahr = Integer.parseInt(value.substring(0, 2));
             String laufendeNummer = value.substring(2, 3) + value.substring(4);
             if (jahr < 80) {
-                value = "A/20" + jahr;
+                value = "A/20" + String.format("%02d", jahr);
             } else {
-                value = "A/19" + jahr;
+                value = "A/19" + String.format("%02d", jahr);
             }
             this.value = value + "/" + laufendeNummer;
         } else if (Pattern.matches("\\p{Alpha}/\\d{4}/\\d{6}", value)) {
