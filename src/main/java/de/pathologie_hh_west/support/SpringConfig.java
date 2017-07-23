@@ -1,12 +1,13 @@
 package de.pathologie_hh_west.support;
 
 import de.pathologie_hh_west.ui.util.SpringFXMLLoader;
-import de.pathologie_hh_west.ui.util.StageManager;
-import javafx.stage.Stage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.InjectionPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.Scope;
 
 import java.util.ResourceBundle;
 
@@ -16,12 +17,14 @@ import java.util.ResourceBundle;
 @Configuration
 public class SpringConfig {
 
-	@Autowired
-	private SpringFXMLLoader springFXMLLoader;
-	
 	@Bean
 	public ResourceBundle resourceBundle() {
 		return ResourceBundle.getBundle("ui.resourcebundles.Bundle");
 	}
 	
+	@Bean
+	@Scope("prototype")
+	public Logger logger(InjectionPoint injectionPoint){
+		return LoggerFactory.getLogger(injectionPoint.getField().getDeclaringClass());
+	}
 }

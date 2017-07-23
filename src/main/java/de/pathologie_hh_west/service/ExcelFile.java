@@ -33,10 +33,11 @@ public class ExcelFile {
         return sheet.getPhysicalNumberOfRows();
     }
 
-    public HashMap<String, Integer> getHeadlines(Integer indexWorksheet) {
+    public HashMap<String, Integer> getHeadlines(Integer indexWorksheet) throws ColumnHeadersNotFoundException {
 		XSSFSheet sheet = workbook.getSheetAt(indexWorksheet);
 		HashMap<String, Integer> headlines = new HashMap<>();
 		XSSFRow row = sheet.getRow(0);
+        if (row == null) throw new ColumnHeadersNotFoundException();
 		int numberOfRows = row.getPhysicalNumberOfCells();
 		for (int i = 0; i < numberOfRows; i++) {
 			XSSFCell cell = row.getCell(i);

@@ -1,7 +1,6 @@
 package de.pathologie_hh_west.ui.openexcel;
 
-import de.pathologie_hh_west.service.ExcelFile;
-import de.pathologie_hh_west.service.ExcelService;
+import de.pathologie_hh_west.service.ColumnHeadersNotFoundException;
 import de.pathologie_hh_west.ui.util.FXMLView;
 import de.pathologie_hh_west.ui.util.StageManager;
 import javafx.collections.FXCollections;
@@ -10,15 +9,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.util.StringConverter;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
 import java.net.URL;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.ResourceBundle;
 
 /**
  * Created by eike on 15.07.2017.
@@ -26,6 +26,9 @@ import java.util.stream.Collectors;
 @Component
 @Scope("prototype")
 public class SelectWorksheetController implements Initializable {
+	
+	@Autowired
+	private Logger logger;
 	
 	@FXML private ChoiceBox<String> cbWorksheet;    //TODO change type to ExcelWorksheet wrapper
 	@FXML
@@ -57,7 +60,15 @@ public class SelectWorksheetController implements Initializable {
 			}
 			
 			stageManager.addAttribute("openExcelSelectedWorksheetIndex", worksheets.get(cbWorksheet.getValue()));
-			stageManager.switchScene("openExcelStage", FXMLView.OPENEXCEL_MAPPINGDIALOG);
+			try {
+				stageManager.switchScene("openExcelStage", FXMLView.OPENEXCEL_MAPPINGDIALOG);
+			} catch (RuntimeException e) {
+				if (e.getCause().getCause() instanceof ColumnHeadersNotFoundException) {
+					logger.warn("Could not load OPENEXCEL_MAPPINGDIALOG: Column Headers could not be found.");
+				} else {
+					e.printStackTrace();
+				}
+			}
 		});
 		
 		btnCancel.setOnAction(event -> {
