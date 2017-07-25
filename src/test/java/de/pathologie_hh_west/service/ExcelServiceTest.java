@@ -15,8 +15,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import static org.junit.Assert.fail;
-
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class ExcelServiceTest {
@@ -42,10 +40,12 @@ public class ExcelServiceTest {
 		Fall fall1 = new Fall();
 
 		FallID e4321 = new FallID(new ENummer("001/00146"));
-		e4321.setBefundTyp(BefundTyp.NACHBEFUND);
+		e4321.setBefundTyp(BefundTyp.HAUPTBEFUND);
 		fall1.setFallID(e4321);
-		FallID e1234 = new FallID(new ENummer("A/1996/200591"));
-		e1234.setBefundTyp(BefundTyp.HAUPTBEFUND);
+		fall.setBefundtext("Klaus Kleber Setup 1");
+		fall1.setBefundtext("Klaus Kleber Setup 2");
+		FallID e1234 = new FallID(new ENummer("A/2000/200597"));
+		e1234.setBefundTyp(BefundTyp.NACHBEFUND);
 		fall.setFallID(e1234);
 		patient.getAdresse().setHausnummer("12");
 		patient.getAdresse().setLand("Deutschland");
@@ -58,8 +58,8 @@ public class ExcelServiceTest {
 		patient.setFaelle(objects);
 		patientRepository.save(patient);
 
-		Patient patientOptional = patientRepository.findByNachnameAndVornameAndGeburtsDatum("Apfel", "Klaudis", LocalDate.of(2000, 3, 1));
-		if (patientOptional.equals(null)) fail();
+//		Patient patientOptional = patientRepository.findByNachnameAndVornameAndGeburtsDatum("Apfel", "Klaudis", LocalDate.of(2000, 3, 1));
+//		if (patientOptional.equals(null)) fail();
 		
 		Set<IndexMapper> mappers = new HashSet<>();
 		mappers.add(new IndexMapper(0, PatientModelAttribute.VORNAME, true));
@@ -78,11 +78,13 @@ public class ExcelServiceTest {
 				.filter(entry -> entry.getKey().equals("Tabelle1"))
 				.map(Map.Entry::getValue)
 				.limit(1).findFirst().get();
-		
-		Patient patientWithDBCheck = excelService.getPatientWithDBCheck(mappers, 2, excelFile.getSheet(sheetIndex));
 
-		patientOptional = patientRepository.findByNachnameAndVornameAndGeburtsDatum("Apfel", "Klaudis", LocalDate.of(2000, 3, 1));
-		if (!patientOptional.equals(null)) fail();
+
+		excelService.updatePatientsFromExcel(mappers, excelFile, sheetIndex);
+
+
+//		patientOptional = patientRepository.findByNachnameAndVornameAndGeburtsDatum("Apfel", "Klaudis", LocalDate.of(2000, 3, 1));
+//		if (!patientOptional.equals(null)) fail();
 	}
 	
 }
