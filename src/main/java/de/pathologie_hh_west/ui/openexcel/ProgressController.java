@@ -4,7 +4,6 @@ import de.pathologie_hh_west.model.Patient;
 import de.pathologie_hh_west.service.ExcelFile;
 import de.pathologie_hh_west.service.ExcelService;
 import de.pathologie_hh_west.service.IndexMapper;
-import de.pathologie_hh_west.support.ProgressListener;
 import de.pathologie_hh_west.ui.util.StageManager;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -44,9 +43,9 @@ public class ProgressController implements Initializable {
 			final Task<List<Patient>> task = new Task<List<Patient>>() {
 				@Override
 				protected List<Patient> call() throws Exception {
-					excelService.updatePatientsFromExcel(indexMappers, excelFile, worksheetIndex)
+					excelService.getUpdatedPatientsFromExcel(indexMappers, excelFile, worksheetIndex)
 							.registerListener(this::updateProgress)
-							.updateData();
+							.updateAndGet();
 					
 					return null;
 				}

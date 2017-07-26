@@ -1,7 +1,5 @@
 package de.pathologie_hh_west.service;
 
-import de.pathologie_hh_west.service.PatientModelAttribute;
-
 /**
  * Created by VaniR on 17.07.2017.
  * Project: path_db

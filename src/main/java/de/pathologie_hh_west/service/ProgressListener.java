@@ -1,4 +1,4 @@
-package de.pathologie_hh_west.support;
+package de.pathologie_hh_west.service;
 
 public interface ProgressListener {
 	

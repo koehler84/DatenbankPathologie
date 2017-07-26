@@ -83,7 +83,7 @@ public class ExcelServiceTest {
 				.limit(1).findFirst().get();
 //TODO
 		long timeMillis = System.currentTimeMillis();
-		excelService.updatePatientsFromExcel(mappers, excelFile, sheetIndex);
+		excelService.getUpdatedPatientsFromExcel(mappers, excelFile, sheetIndex).updateAndGet();
 		System.out.println("Patienten to DB komplett ohne Excel einlesen: " + (timeMillis - System.currentTimeMillis()));
 
 

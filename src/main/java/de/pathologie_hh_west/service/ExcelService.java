@@ -41,8 +41,8 @@ public class ExcelService {
 		return new ExcelFile(workbook);
 	}
 	
-	public DataUpdateWrapper updatePatientsFromExcel(final Set<IndexMapper> indexMappers, final ExcelFile excelFile, final Integer sheetIndex) {
-		return new DataUpdateWrapper(this, indexMappers, excelFile, sheetIndex);
+	public DataUpdateWrapper getUpdatedPatientsFromExcel(final Set<IndexMapper> indexMappers, final ExcelFile excelFile, final Integer sheetIndex) {
+		return new DataUpdateWrapper(this, patientRepository, indexMappers, excelFile, sheetIndex);
 	}
 	
 	public Patient getPatientWithDBCheck(Set<IndexMapper> excelIndexPatientMapping, Integer currentRow, XSSFSheet sheet) {
@@ -85,10 +85,6 @@ public class ExcelService {
 //		if (patient.getId() != null) {
 //			patientRepository.delete(patient.getId());
 //		}
-		//TODO
-		timeMillis = System.currentTimeMillis();
-		patientRepository.save(patient);
-		System.out.println("Patient speichern: " + (timeMillis - System.currentTimeMillis()));
 		return patient;
 	}
 
