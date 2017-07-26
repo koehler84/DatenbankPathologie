@@ -1,11 +1,13 @@
 package de.pathologie_hh_west.ui.openexcel;
 
+import de.pathologie_hh_west.model.Patient;
 import de.pathologie_hh_west.service.ExcelFile;
 import de.pathologie_hh_west.service.ExcelService;
 import de.pathologie_hh_west.service.IndexMapper;
 import de.pathologie_hh_west.support.ProgressListener;
 import de.pathologie_hh_west.ui.util.StageManager;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -16,6 +18,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -38,11 +41,18 @@ public class ProgressController implements Initializable {
 		final Set<IndexMapper> indexMappers = (Set<IndexMapper>) stageManager.getAttribute("openExcelIndexMappers");
 		
 		Platform.runLater(() -> {
-			try {
-				excelService.updatePatientsFromExcel(indexMappers, excelFile, worksheetIndex)
-						.registerListener(new ProgressBarUpdater())
-						.updateData();
-				
+			final Task<List<Patient>> task = new Task<List<Patient>>() {
+				@Override
+				protected List<Patient> call() throws Exception {
+					excelService.updatePatientsFromExcel(indexMappers, excelFile, worksheetIndex)
+							.registerListener(this::updateProgress)
+							.updateData();
+					
+					return null;
+				}
+			};
+			
+			task.setOnSucceeded(event -> {
 				Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
 						"Der Datenimport wurde abgeschlossen. Möchten Sie dieses Fenster jetzt schließen?", ButtonType.YES, ButtonType.NO);
 				Optional<ButtonType> buttonType = alert.showAndWait();
@@ -53,20 +63,18 @@ public class ProgressController implements Initializable {
 					stageManager.removeAttribute("openExcelIndexMappers");
 					stageManager.getStage("openExcelStage").close();
 				} else if (buttonType != null && buttonType.get() == ButtonType.NO) {
-				
+					//TODO
 				}
-			} catch (Exception e) {
-				Alert alert = new Alert(Alert.AlertType.ERROR, "Beim einlesen der Daten ist ein Fehler aufgetreten: " + e.getMessage());
+			});
+			
+			task.setOnFailed(event -> {
+				Alert alert = new Alert(Alert.AlertType.ERROR, "Beim einlesen der Daten ist ein Fehler aufgetreten: " + task.getException().getMessage());
 				alert.show();
-			}
+			});
+			
+			progressBar.progressProperty().bind(task.progressProperty());
+			
+			new Thread(task).start();
 		});
-	}
-	
-	public class ProgressBarUpdater implements ProgressListener {
-		
-		@Override
-		public void updateProgress(double progress) {
-			progressBar.progressProperty().setValue(progress);
-		}
 	}
 }

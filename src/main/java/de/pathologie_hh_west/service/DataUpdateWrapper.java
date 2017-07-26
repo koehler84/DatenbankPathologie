@@ -46,15 +46,15 @@ public class DataUpdateWrapper {
 				.parallel()
 				.mapToObj(index -> {
 					int progressInt = progressedEntities.incrementAndGet();
-					notifyProgressListeners(((double) progressInt) / numberOfRows);
+					notifyProgressListeners(progressInt, numberOfRows);
 					return excelService.getPatientWithDBCheck(indexMappers, index, sheet);
 				})
 				.filter(Objects::nonNull)
 				.collect(Collectors.toList());
 	}
 	
-	private void notifyProgressListeners(final double progress) {
-		progressListeners.forEach(listener -> listener.updateProgress(progress));
+	private void notifyProgressListeners(final double progress, final double max) {
+		progressListeners.forEach(listener -> listener.updateProgress(progress, max));
 	}
 	
 }
