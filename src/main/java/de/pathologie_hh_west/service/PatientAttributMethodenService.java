@@ -261,7 +261,6 @@ public class PatientAttributMethodenService {
                         return s.getFallID().geteNummer().getValue().equals(eNummer);
                     }).findFirst().get().getKlassifikation());
         } catch (IllegalAccessException | InvocationTargetException e) {
-            System.out.println(patientAttribut.toString() + "|" + patient.getVorname());
             e.printStackTrace();
         }
         return null;

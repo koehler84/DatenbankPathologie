@@ -28,7 +28,10 @@ public class ExcelServiceTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		excelFile = excelService.openExcelFile("src/test/testDaten/test.xlsx");
+		//TODO
+		long timeMillis = System.currentTimeMillis();
+		excelFile = excelService.openExcelFile("src/test/testDaten/testBasis.xlsx");
+		System.out.println("Excel einlesen: " + (timeMillis - System.currentTimeMillis()));
 	}
 	
 	@Test
@@ -45,7 +48,7 @@ public class ExcelServiceTest {
 		fall.setBefundtext("Klaus Kleber Setup 1");
 		fall1.setBefundtext("Klaus Kleber Setup 2");
 		FallID e1234 = new FallID(new ENummer("A/2000/200597"));
-		e1234.setBefundTyp(BefundTyp.NACHBEFUND);
+		e1234.setBefundTyp(BefundTyp.NACHBERICHT2);
 		fall.setFallID(e1234);
 		patient.getAdresse().setHausnummer("12");
 		patient.getAdresse().setLand("Deutschland");
@@ -62,15 +65,15 @@ public class ExcelServiceTest {
 //		if (patientOptional.equals(null)) fail();
 		
 		Set<IndexMapper> mappers = new HashSet<>();
-		mappers.add(new IndexMapper(0, PatientModelAttribute.VORNAME, true));
-		mappers.add(new IndexMapper(1, PatientModelAttribute.NACHNAME, true));
-		mappers.add(new IndexMapper(3, PatientModelAttribute.STRASSE, true));
-		mappers.add(new IndexMapper(4, PatientModelAttribute.GEBURTSDATUM, true));
-		mappers.add(new IndexMapper(7, PatientModelAttribute.ENUMMER, true));
+		mappers.add(new IndexMapper(4, PatientModelAttribute.VORNAME, true));
+		mappers.add(new IndexMapper(5, PatientModelAttribute.NACHNAME, true));
+		mappers.add(new IndexMapper(6, PatientModelAttribute.STRASSE, false));
+		mappers.add(new IndexMapper(3, PatientModelAttribute.GEBURTSDATUM, true));
+		mappers.add(new IndexMapper(1, PatientModelAttribute.ENUMMER, true));
 		mappers.add(new IndexMapper(2, PatientModelAttribute.ALTERNATIVNAME, false));
-		mappers.add(new IndexMapper(5, PatientModelAttribute.PLZ, true));
-		mappers.add(new IndexMapper(6, PatientModelAttribute.BEFUNDTEXT, false));
-		mappers.add(new IndexMapper(8, PatientModelAttribute.BEFUNDTYP, true));
+		mappers.add(new IndexMapper(9, PatientModelAttribute.PLZ, false));
+		mappers.add(new IndexMapper(28, PatientModelAttribute.BEFUNDTEXT, false));
+		mappers.add(new IndexMapper(26, PatientModelAttribute.BEFUNDTYP, true));
 
 
 
@@ -78,9 +81,10 @@ public class ExcelServiceTest {
 				.filter(entry -> entry.getKey().equals("Tabelle1"))
 				.map(Map.Entry::getValue)
 				.limit(1).findFirst().get();
-
-
+//TODO
+		long timeMillis = System.currentTimeMillis();
 		excelService.updatePatientsFromExcel(mappers, excelFile, sheetIndex);
+		System.out.println("Patienten to DB komplett ohne Excel einlesen: " + (timeMillis - System.currentTimeMillis()));
 
 
 //		patientOptional = patientRepository.findByNachnameAndVornameAndGeburtsDatum("Apfel", "Klaudis", LocalDate.of(2000, 3, 1));

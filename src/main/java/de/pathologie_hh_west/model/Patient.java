@@ -9,9 +9,10 @@ import java.util.Set;
  * Created by VaniR on 10.07.2017.
  */
 @Entity
-//@Table(
-//        uniqueConstraints = @UniqueConstraint(columnNames = {"geburtsDatum", "vorname", "nachname"})
-//)
+@Table(
+        uniqueConstraints = @UniqueConstraint(columnNames = {"geburtsDatum", "vorname", "nachname"})
+)
+//@Transactional(isolation = Isolation.SERIALIZABLE)
 public class Patient {
     @Id
     @GeneratedValue

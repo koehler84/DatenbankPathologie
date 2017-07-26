@@ -10,7 +10,7 @@ import java.io.Serializable;
  * Created by VaniR on 10.07.2017.
  */
 @Embeddable
-public class FallID implements Serializable {
+public class FallID implements Serializable, Comparable {
 
 	@Embedded
 	private ENummer eNummer;
@@ -45,37 +45,69 @@ public class FallID implements Serializable {
 	}
 
 	public void setBefundTyp(String befundTyp) {
-		switch (befundTyp.toLowerCase()) {
-			case "hauptbefund":
-				this.befundTyp = BefundTyp.HAUPTBEFUND;
-				break;
-			case "nebenbefund":
-				this.befundTyp = BefundTyp.NEBENBEFUND;
-				break;
-			case "nachbefund":
-				this.befundTyp = BefundTyp.NACHBEFUND;
-				break;
-			default:
-				this.befundTyp = BefundTyp.UNBEKANNT;
-		}
-	}
+        String s = befundTyp.toLowerCase();
+        if (s.contains("hauptbefund")) {
+            this.befundTyp = BefundTyp.HAUPTBEFUND;
+
+        } else if (s.contains("konsiliarbericht")) {
+            this.befundTyp = BefundTyp.KONSILIARERICHT;
+
+        } else if (s.contains("korrekturbefund 1")) {
+            this.befundTyp = BefundTyp.KORREKTURBEFUND1;
+
+        } else if (s.contains("korrekturbefund 2")) {
+            this.befundTyp = BefundTyp.KORREKTURBEFUND2;
+
+        } else if (s.contains("korrekturbefund 3")) {
+            this.befundTyp = BefundTyp.KORREKTURBEFUND3;
+
+        } else if (s.contains("korrekturbefund 4")) {
+            this.befundTyp = BefundTyp.KORREKTURBEFUND4;
+
+        } else if (s.contains("nachbericht 1")) {
+            this.befundTyp = BefundTyp.NACHBERICHT1;
+
+        } else if (s.contains("nachbericht 2")) {
+            this.befundTyp = BefundTyp.NACHBERICHT2;
+
+        } else {
+            this.befundTyp = BefundTyp.UNBEKANNT;
+        }
+
+
+    }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof FallID)) return false;
+    public int compareTo(Object o) {
+        if (this == o) return 0;
+        if (!(o instanceof FallID)) return 1;
 
         FallID fallID = (FallID) o;
 
         if (geteNummer().getValue() != "" ? !geteNummer().getValue().equals(fallID.geteNummer().getValue()) : fallID.geteNummer().getValue() != "")
-            return false;
-        return getBefundTyp() == fallID.getBefundTyp();
+            return 1;
+        if (getBefundTyp() == fallID.getBefundTyp()) {
+            return 0;
+        } else return 1;
     }
 
-    @Override
-    public int hashCode() {
-        int result = geteNummer().getValue() != "" ? geteNummer().getValue().hashCode() : 0;
-        result = 31 * result + (getBefundTyp() != null ? getBefundTyp().hashCode() : 0);
-        return result;
-    }
+
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (!(o instanceof FallID)) return false;
+//
+//        FallID fallID = (FallID) o;
+//
+//        if (geteNummer().getValue() != "" ? !geteNummer().getValue().equals(fallID.geteNummer().getValue()) : fallID.geteNummer().getValue() != "")
+//            return false;
+//        return getBefundTyp() == fallID.getBefundTyp();
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        int result = geteNummer().getValue() != "" ? geteNummer().getValue().hashCode() : 0;
+//        result = 31 * result + (getBefundTyp() != null ? getBefundTyp().hashCode() : 0);
+//        return result;
+//    }
 }

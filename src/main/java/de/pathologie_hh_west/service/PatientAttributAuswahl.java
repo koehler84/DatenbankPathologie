@@ -97,22 +97,29 @@ public class PatientAttributAuswahl {
                 }
                 break;
             case "ADRESSE":
-                if (patientAttributMethodenService.methodGetterAdresse(patientAttribut, patientAusDatenbank) == null) {
+                if (patientAusDatenbank.getAdresse() == null ||
+                        patientAttributMethodenService.methodGetterAdresse(patientAttribut, patientAusDatenbank) == null) {
                     return true;
                 }
                 break;
             case "EE2011":
-                if (patientAttributMethodenService.methodGetterEE2011(patientAttribut, patientAusDatenbank) == null) {
+                if (patientAusDatenbank.getPatientenZusatzdaten() == null ||
+                        patientAusDatenbank.getPatientenZusatzdaten().getEe2011() == null ||
+                        patientAttributMethodenService.methodGetterEE2011(patientAttribut, patientAusDatenbank) == null) {
                     return true;
                 }
                 break;
             case "EE2015":
-                if (patientAttributMethodenService.methodGetterEE2015(patientAttribut, patientAusDatenbank) == null) {
+                if (patientAusDatenbank.getPatientenZusatzdaten() == null ||
+                        patientAusDatenbank.getPatientenZusatzdaten().getEe2015() == null ||
+                        patientAttributMethodenService.methodGetterEE2015(patientAttribut, patientAusDatenbank) == null) {
                     return true;
                 }
                 break;
             case "EXPRIMAGE":
-                if (patientAttributMethodenService.methodGetterExprimage(patientAttribut, patientAusDatenbank) == null) {
+                if (patientAusDatenbank.getPatientenZusatzdaten() == null ||
+                        patientAusDatenbank.getPatientenZusatzdaten().getExprimage() == null ||
+                        patientAttributMethodenService.methodGetterExprimage(patientAttribut, patientAusDatenbank) == null) {
                     return true;
                 }
                 break;

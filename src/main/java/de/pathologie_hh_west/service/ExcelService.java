@@ -47,18 +47,25 @@ public class ExcelService {
 
 	public void updatePatientsFromExcel(final Set<IndexMapper> indexMappers, final ExcelFile excelFile, final Integer sheetIndex) {
 		final XSSFSheet sheet = excelFile.getSheet(sheetIndex);
-		IntStream.range(1, sheet.getPhysicalNumberOfRows())
-				.forEach(index -> getPatientWithDBCheck(indexMappers, index, sheet));
+        IntStream.range(1, sheet.getPhysicalNumberOfRows()).
+                parallel()
+                .forEach(index -> getPatientWithDBCheck(indexMappers, index, sheet));
 	}
 
 	public Patient getPatientWithDBCheck(Set<IndexMapper> excelIndexPatientMapping, Integer currentRow, XSSFSheet sheet) {
-		Patient patient = patientDataFromExcel(excelIndexPatientMapping, currentRow, sheet);
-		if (patient.getVorname() == null || patient.getNachname() == null || patient.getGeburtsDatum() == null) {
+        //TODO
+        long timeMillis = System.currentTimeMillis();
+        Patient patient = patientDataFromExcel(excelIndexPatientMapping, currentRow, sheet);
+        System.out.println("Patient zusammen Bauen: " + (timeMillis - System.currentTimeMillis()));
+        if (patient.getVorname() == null || patient.getNachname() == null || patient.getGeburtsDatum() == null) {
 			return null;
 			//throw new IllegalArgumentException("Kein eindeutiger Patient, es fehlt Vorname, Nachname oder Geburtsdatum");
 		}
-		Patient patientAusDatenbank = patientRepository.findByNachnameAndVornameAndGeburtsDatum(patient.getNachname(), patient.getVorname(), patient.getGeburtsDatum());
-		if (patientAusDatenbank != null) {
+        //TODO
+        timeMillis = System.currentTimeMillis();
+        Patient patientAusDatenbank = patientRepository.findByNachnameAndVornameAndGeburtsDatum(patient.getNachname(), patient.getVorname(), patient.getGeburtsDatum());
+        System.out.println("Patient aus DB lesen: " + (timeMillis - System.currentTimeMillis()));
+        if (patientAusDatenbank != null) {
 			patient.setId(patientAusDatenbank.getId());
 			for (IndexMapper im : excelIndexPatientMapping) {
 				if (im.getOverwriteExcelValue() || !patientAttributAuswahl.isDbValueNull(im.getPatientAttribut(), patientAusDatenbank)) {
@@ -71,24 +78,32 @@ public class ExcelService {
 //					&& patientAusDatenbank.getFaelle().stream().findFirst().get().getFallID().geteNummer().getValue() != "") {
 
 			patientAusDatenbank.getFaelle().stream()
-					.filter(f -> !f.getFallID().geteNummer().equals(patientFinal.getFaelle().stream()
-							.findFirst().get().getFallID().geteNummer()))
-					.filter(g -> !g.getFallID().getBefundTyp().equals(patientFinal.getFaelle().stream()
+                    .filter(f -> !f.getFallID().geteNummer().getValue().equals(patientFinal.getFaelle().stream()
+                            .findFirst().get().getFallID().geteNummer().getValue()))
+                    .filter(g -> !g.getFallID().getBefundTyp().equals(patientFinal.getFaelle().stream()
 							.findFirst().get().getFallID().getBefundTyp()))
 					.forEach(patientFinal.getFaelle()::add);
 			patient = patientFinal;
+            //TODO
+            System.out.println("Fälle mergen: " + (timeMillis - System.currentTimeMillis()));
 //			}
 		}
 		//TODO Temporary - Fall überarbeiten
-		patientRepository.save(patient);
-		return patient;
+//		if (patient.getId() != null) {
+//			patientRepository.delete(patient.getId());
+//		}
+        //TODO
+        timeMillis = System.currentTimeMillis();
+        patientRepository.save(patient);
+        System.out.println("Patient speichern: " + (timeMillis - System.currentTimeMillis()));
+        return patient;
 	}
 
-	public Fall getFallWithDBCHeck(Set<IndexMapper> excelIndexFallMapping, Integer currentRow, XSSFSheet sheet) {
+//	public Fall getFallWithDBCHeck(Set<IndexMapper> excelIndexFallMapping, Integer currentRow, XSSFSheet sheet) {
 //		Fall fall = patientDataFromExcel(excelIndexFallMapping, currentRow, sheet);
-
-		return null;
-	}
+//
+//		return null;
+//	}
 
 
 	private Patient patientDataFromExcel(Set<IndexMapper> excelIndexPatientMapping, Integer currentRow, XSSFSheet sheet) {

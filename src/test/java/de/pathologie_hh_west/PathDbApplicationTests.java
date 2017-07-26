@@ -19,7 +19,7 @@ public class PathDbApplicationTests {
 		Fall fall1 = new Fall();
 
 		FallID e4321 = new FallID(new ENummer("001/00146"));
-		e4321.setBefundTyp(BefundTyp.NACHBEFUND);
+		e4321.setBefundTyp(BefundTyp.KORREKTURBEFUND4);
 		fall1.setFallID(e4321);
 		FallID e1234 = new FallID(new ENummer("A/1996/200591"));
 		e1234.setBefundTyp(BefundTyp.HAUPTBEFUND);
