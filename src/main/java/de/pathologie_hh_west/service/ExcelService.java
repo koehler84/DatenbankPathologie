@@ -1,6 +1,5 @@
 package de.pathologie_hh_west.service;
 
-import de.pathologie_hh_west.data.FallRepository;
 import de.pathologie_hh_west.data.PatientRepository;
 import de.pathologie_hh_west.model.Fall;
 import de.pathologie_hh_west.model.Patient;
@@ -18,7 +17,6 @@ import java.math.BigDecimal;
 import java.time.ZoneId;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.stream.IntStream;
 
 /**
  * Created by VaniR on 15.07.2017.
@@ -26,14 +24,12 @@ import java.util.stream.IntStream;
  */
 @Service
 public class ExcelService {
-
+	
 	@Autowired
 	private PatientAttributAuswahl patientAttributAuswahl;
 	@Autowired
 	private PatientRepository patientRepository;
-	@Autowired
-	private FallRepository fallRepository;
-
+	
 	public ExcelFile openExcelFile(String filePath) {
 		XSSFWorkbook workbook = null;
 		try {
@@ -44,28 +40,25 @@ public class ExcelService {
 		}
 		return new ExcelFile(workbook);
 	}
-
-	public void updatePatientsFromExcel(final Set<IndexMapper> indexMappers, final ExcelFile excelFile, final Integer sheetIndex) {
-		final XSSFSheet sheet = excelFile.getSheet(sheetIndex);
-        IntStream.range(1, sheet.getPhysicalNumberOfRows()).
-                parallel()
-                .forEach(index -> getPatientWithDBCheck(indexMappers, index, sheet));
+	
+	public DataUpdateWrapper updatePatientsFromExcel(final Set<IndexMapper> indexMappers, final ExcelFile excelFile, final Integer sheetIndex) {
+		return new DataUpdateWrapper(this, indexMappers, excelFile, sheetIndex);
 	}
-
+	
 	public Patient getPatientWithDBCheck(Set<IndexMapper> excelIndexPatientMapping, Integer currentRow, XSSFSheet sheet) {
-        //TODO
-        long timeMillis = System.currentTimeMillis();
-        Patient patient = patientDataFromExcel(excelIndexPatientMapping, currentRow, sheet);
-        System.out.println("Patient zusammen Bauen: " + (timeMillis - System.currentTimeMillis()));
-        if (patient.getVorname() == null || patient.getNachname() == null || patient.getGeburtsDatum() == null) {
+		//TODO
+		long timeMillis = System.currentTimeMillis();
+		Patient patient = patientDataFromExcel(excelIndexPatientMapping, currentRow, sheet);
+		System.out.println("Patient zusammen Bauen: " + (timeMillis - System.currentTimeMillis()));
+		if (patient.getVorname() == null || patient.getNachname() == null || patient.getGeburtsDatum() == null) {
 			return null;
 			//throw new IllegalArgumentException("Kein eindeutiger Patient, es fehlt Vorname, Nachname oder Geburtsdatum");
 		}
-        //TODO
-        timeMillis = System.currentTimeMillis();
-        Patient patientAusDatenbank = patientRepository.findByNachnameAndVornameAndGeburtsDatum(patient.getNachname(), patient.getVorname(), patient.getGeburtsDatum());
-        System.out.println("Patient aus DB lesen: " + (timeMillis - System.currentTimeMillis()));
-        if (patientAusDatenbank != null) {
+		//TODO
+		timeMillis = System.currentTimeMillis();
+		Patient patientAusDatenbank = patientRepository.findByNachnameAndVornameAndGeburtsDatum(patient.getNachname(), patient.getVorname(), patient.getGeburtsDatum());
+		System.out.println("Patient aus DB lesen: " + (timeMillis - System.currentTimeMillis()));
+		if (patientAusDatenbank != null) {
 			patient.setId(patientAusDatenbank.getId());
 			for (IndexMapper im : excelIndexPatientMapping) {
 				if (im.getOverwriteExcelValue() || !patientAttributAuswahl.isDbValueNull(im.getPatientAttribut(), patientAusDatenbank)) {
@@ -76,27 +69,27 @@ public class ExcelService {
 //			TODO benötigt?
 //			if (patientAusDatenbank.getFaelle().stream().findFirst().get().getFallID().getBefundTyp() != null
 //					&& patientAusDatenbank.getFaelle().stream().findFirst().get().getFallID().geteNummer().getValue() != "") {
-
+			
 			patientAusDatenbank.getFaelle().stream()
-                    .filter(f -> !f.getFallID().geteNummer().getValue().equals(patientFinal.getFaelle().stream()
-                            .findFirst().get().getFallID().geteNummer().getValue()))
-                    .filter(g -> !g.getFallID().getBefundTyp().equals(patientFinal.getFaelle().stream()
+					.filter(f -> !f.getFallID().geteNummer().getValue().equals(patientFinal.getFaelle().stream()
+							.findFirst().get().getFallID().geteNummer().getValue()))
+					.filter(g -> !g.getFallID().getBefundTyp().equals(patientFinal.getFaelle().stream()
 							.findFirst().get().getFallID().getBefundTyp()))
 					.forEach(patientFinal.getFaelle()::add);
 			patient = patientFinal;
-            //TODO
-            System.out.println("Fälle mergen: " + (timeMillis - System.currentTimeMillis()));
+			//TODO
+			System.out.println("Fälle mergen: " + (timeMillis - System.currentTimeMillis()));
 //			}
 		}
 		//TODO Temporary - Fall überarbeiten
 //		if (patient.getId() != null) {
 //			patientRepository.delete(patient.getId());
 //		}
-        //TODO
-        timeMillis = System.currentTimeMillis();
-        patientRepository.save(patient);
-        System.out.println("Patient speichern: " + (timeMillis - System.currentTimeMillis()));
-        return patient;
+		//TODO
+		timeMillis = System.currentTimeMillis();
+		patientRepository.save(patient);
+		System.out.println("Patient speichern: " + (timeMillis - System.currentTimeMillis()));
+		return patient;
 	}
 
 //	public Fall getFallWithDBCHeck(Set<IndexMapper> excelIndexFallMapping, Integer currentRow, XSSFSheet sheet) {
@@ -104,8 +97,7 @@ public class ExcelService {
 //
 //		return null;
 //	}
-
-
+	
 	private Patient patientDataFromExcel(Set<IndexMapper> excelIndexPatientMapping, Integer currentRow, XSSFSheet sheet) {
 		XSSFRow row = sheet.getRow(currentRow);
 		Patient patient = new Patient();
@@ -125,7 +117,7 @@ public class ExcelService {
 							patient = patientAttributAuswahl.mapExcelValueToPatient(cell.getDateCellValue().toInstant().
 											atZone(ZoneId.systemDefault()).toLocalDate(), indexMapper.getPatientAttribut(),
 									patient);
-
+							
 						} else {
 							patient = patientAttributAuswahl.mapExcelValueToPatient(BigDecimal.valueOf(cell.getNumericCellValue()), indexMapper.
 									getPatientAttribut(), patient);
@@ -147,7 +139,7 @@ public class ExcelService {
 						patient = patientAttributAuswahl.mapExcelValueToPatient(cell.getErrorCellValue() + "", indexMapper.getPatientAttribut(),
 								patient);
 						break;
-
+					
 					default:
 						patient = patientAttributAuswahl.mapExcelValueToPatient("<FEHLER IM PROGRAMM>", indexMapper.getPatientAttribut(),
 								patient);
@@ -156,5 +148,5 @@ public class ExcelService {
 		}
 		return patient;
 	}
-
+	
 }

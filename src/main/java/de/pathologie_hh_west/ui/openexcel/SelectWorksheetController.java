@@ -75,6 +75,7 @@ public class SelectWorksheetController implements Initializable {
 			stageManager.removeAttribute("openExcelSelectedFile");
 			stageManager.removeAttribute("openExcelWorksheets");
 			stageManager.removeAttribute("openExcelSelectedWorksheetIndex");
+			stageManager.removeAttribute("openExcelIndexMappers");
 			stageManager.getStage("openExcelStage").close();
 		});
 	}

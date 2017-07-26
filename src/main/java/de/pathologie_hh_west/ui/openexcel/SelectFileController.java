@@ -28,10 +28,14 @@ import java.util.ResourceBundle;
 @Scope("prototype")
 public class SelectFileController implements Initializable {
 	
-	@FXML private TextField filePath;
-	@FXML private Button btnChooseFile;
-	@FXML private Button btnContinue;
-	@FXML private Button btnCancel;
+	@FXML
+	private TextField filePath;
+	@FXML
+	private Button btnChooseFile;
+	@FXML
+	private Button btnContinue;
+	@FXML
+	private Button btnCancel;
 	@Autowired
 	private StageManager stageManager;
 	@Autowired
@@ -103,6 +107,7 @@ public class SelectFileController implements Initializable {
 			stageManager.removeAttribute("openExcelSelectedFile");
 			stageManager.removeAttribute("openExcelWorksheets");
 			stageManager.removeAttribute("openExcelSelectedWorksheetIndex");
+			stageManager.removeAttribute("openExcelIndexMappers");
 			stageManager.getStage("openExcelStage").close();
 		});
 	}

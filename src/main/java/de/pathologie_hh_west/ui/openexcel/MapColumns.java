@@ -75,19 +75,9 @@ public class MapColumns implements Initializable {
 		
 		btnContinue.setOnAction(event -> {
 			Set<IndexMapper> indexMappers = getIndexMappersFromGridPane();
-			excelService.updatePatientsFromExcel(indexMappers, excelFile, worksheetIndex);
+			stageManager.addAttribute("openExcelIndexMappers", indexMappers);
 			
-			Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
-					"Der Datenimport wurde abgeschlossen. Möchten Sie dieses Fenster jetzt schließen?", ButtonType.YES, ButtonType.NO);
-			Optional<ButtonType> buttonType = alert.showAndWait();
-			if (buttonType != null && buttonType.get() == ButtonType.YES) {
-				stageManager.removeAttribute("openExcelSelectedFile");
-				stageManager.removeAttribute("openExcelWorksheets");
-				stageManager.removeAttribute("openExcelSelectedWorksheetIndex");
-				stageManager.getStage("openExcelStage").close();
-			} else if (buttonType != null && buttonType.get() == ButtonType.NO) {
-			
-			}
+			stageManager.switchScene("openExcelStage", FXMLView.OPENEXCEL_PROGESSDIALOG);
 		});
 		
 		btnBack.setOnAction(event -> {
