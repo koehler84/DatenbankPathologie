@@ -58,7 +58,7 @@ public class ExcelServiceTest {
 		patient.setNachname("Kleber");
 		patient.setGeburtsDatum(date);
 		HashSet<Fall> objects = new HashSet<>(Arrays.asList(fall, fall1));
-		patient.setFaelle(objects);
+		objects.forEach(patient.getFaelle()::add);
 		patientRepository.save(patient);
 
 //		Patient patientOptional = patientRepository.findByNachnameAndVornameAndGeburtsDatum("Apfel", "Klaudis", LocalDate.of(2000, 3, 1));

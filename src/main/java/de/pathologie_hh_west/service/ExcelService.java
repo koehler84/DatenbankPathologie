@@ -1,8 +1,10 @@
 package de.pathologie_hh_west.service;
 
 import de.pathologie_hh_west.data.PatientRepository;
+import de.pathologie_hh_west.model.Adresse;
 import de.pathologie_hh_west.model.Fall;
 import de.pathologie_hh_west.model.Patient;
+import de.pathologie_hh_west.model.PatientenZusatzdaten;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -98,6 +100,8 @@ public class ExcelService {
 		XSSFRow row = sheet.getRow(currentRow);
 		Patient patient = new Patient();
 		patient.getFaelle().add(new Fall());
+		patient.setAdresse(new Adresse());
+		patient.setPatientenZusatzdaten(new PatientenZusatzdaten());
 		for (Iterator<IndexMapper> it = excelIndexPatientMapping.iterator(); it.hasNext(); ) {
 			IndexMapper indexMapper = it.next();
 			Integer cellIndex = indexMapper.getExcelIndex();

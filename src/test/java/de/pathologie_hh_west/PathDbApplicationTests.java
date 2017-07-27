@@ -32,8 +32,7 @@ public class PathDbApplicationTests {
 		patient.setNachname("Kleber");
 		patient.setGeburtsDatum(date);
 		HashSet<Fall> objects = new HashSet<>(Arrays.asList(fall, fall1));
-		patient.setFaelle(objects);
-
+		objects.forEach(patient.getFaelle()::add);
 	}
 
 	private Fall getFallByID(ENummer eNummer, BefundTyp befundTyp, Integer index) {
