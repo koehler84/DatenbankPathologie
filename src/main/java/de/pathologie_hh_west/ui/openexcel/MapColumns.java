@@ -142,7 +142,7 @@ public class MapColumns implements Initializable {
 		return new CheckBox();
 	}
 	
-	private ChoiceBox getExcelBox() {
+	private Node getExcelBox() {
 		ChoiceBox<Object> cb = new ChoiceBox<>();
 		cb.setDisable(true);
 		cb.setPrefWidth(150);

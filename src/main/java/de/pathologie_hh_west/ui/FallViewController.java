@@ -4,16 +4,21 @@ import de.pathologie_hh_west.data.FallQueryExecutor;
 import de.pathologie_hh_west.data.FallRepository;
 import de.pathologie_hh_west.model.Fall;
 import de.pathologie_hh_west.model.FallID;
+import de.pathologie_hh_west.ui.util.FXMLView;
 import de.pathologie_hh_west.ui.util.SpringFXMLLoader;
+import de.pathologie_hh_west.ui.util.StageManager;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -44,12 +49,14 @@ public class FallViewController implements Initializable {
 	private SpringFXMLLoader springFXMLLoader;
 	private FallQueryExecutor queryExecutor;
 	private FallRepository fallRepository;
+	private StageManager stageManager;
 	
 	@Autowired
-	public FallViewController(SpringFXMLLoader springFXMLLoader, FallQueryExecutor queryExecutor, FallRepository fallRepository) {
+	public FallViewController(SpringFXMLLoader springFXMLLoader, FallQueryExecutor queryExecutor, FallRepository fallRepository, StageManager stageManager) {
 		this.springFXMLLoader = springFXMLLoader;
 		this.queryExecutor = queryExecutor;
 		this.fallRepository = fallRepository;
+		this.stageManager = stageManager;
 	}
 	
 	@Override
@@ -120,6 +127,26 @@ public class FallViewController implements Initializable {
 					tableView.getItems().addAll(fallList);
 				}
 			}
+		});
+		
+		tableView.setRowFactory(tv -> {
+			final TableRow<Fall> tableRow = new TableRow<>();
+			tableRow.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+				if (event.getClickCount() != 2) {
+					return;
+				}
+				
+				Fall item = tableRow.getItem();
+				
+				String stageName = "PatientView".concat(String.valueOf(item.getFallID().hashCode()));
+				Stage stage = new Stage();
+				Scene scene = new Scene(new VBox());
+				scene.setUserData(item);
+				stage.setScene(scene);
+				stageManager.registerStage(stageName, stage);
+				stageManager.switchScene(stageName, FXMLView.PATIENT_VIEW);
+			});
+			return tableRow;
 		});
 	}
 	
