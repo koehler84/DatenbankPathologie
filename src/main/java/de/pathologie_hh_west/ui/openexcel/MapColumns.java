@@ -4,6 +4,8 @@ import de.pathologie_hh_west.service.*;
 import de.pathologie_hh_west.ui.util.AutoCompleteComboBoxListener;
 import de.pathologie_hh_west.ui.util.FXMLView;
 import de.pathologie_hh_west.ui.util.StageManager;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -130,11 +132,19 @@ public class MapColumns implements Initializable {
 	}
 	
 	private Node[] getInputNodes() {
+		ComboBox fieldsBox = getFieldsBox();
+		CheckBox checkBox = getCheckBox();
+		checkBox.disableProperty().bind(fieldsBox.getEditor().textProperty().isEmpty());
+		fieldsBox.getEditor().textProperty().isEmpty().addListener((observable, oldValue, newValue) -> {
+			if (newValue) checkBox.setSelected(false);      //uncheck if fieldsbox is being cleared
+		});
+		
 		Node[] nodes = new Node[3];
 		nodes[0] = getExcelBox();
-		nodes[1] = getFieldsBox();
-		nodes[2] = getCheckBox();
+		nodes[1] = fieldsBox;
+		nodes[2] = checkBox;
 		gridPaneInputNodes.add(nodes);
+		
 		return nodes;
 	}
 	
