@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.pathologie_hh_west.ui.patientview.MainView">
+   <children>
+      <Accordion minHeight="400.0">
+        <panes>
+          <TitledPane fx:id="tilePanePatient" animated="false" text="Patientendaten">
+            <content>
+                  <VBox>
+                     <children>
+                        <GridPane alignment="TOP_CENTER" hgap="15.0" minHeight="-Infinity" minWidth="-Infinity" vgap="15.0">
+                           <columnConstraints>
+                              <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" />
+                              <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" vgrow="NEVER" />
+                              <RowConstraints minHeight="10.0" vgrow="NEVER" />
+                              <RowConstraints minHeight="10.0" vgrow="NEVER" />
+                              <RowConstraints minHeight="10.0" vgrow="NEVER" />
+                              <RowConstraints minHeight="10.0" vgrow="NEVER" />
+                           </rowConstraints>
+                           <children>
+                              <Label text="ID" />
+                              <TextField fx:id="tfId" maxWidth="200.0" prefWidth="200.0" GridPane.columnIndex="1" />
+                              <TextField fx:id="tfVorname" maxWidth="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <TextField fx:id="tfNachname" maxWidth="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <Label text="Vorname" GridPane.rowIndex="1" />
+                              <Label text="Nachname" GridPane.rowIndex="2" />
+                              <Label text="Geburtsdatum" GridPane.rowIndex="4" />
+                              <DatePicker fx:id="dpGeburtsdatum" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <TextField fx:id="tfAlternativname" maxWidth="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <Label text="Alternativname" GridPane.rowIndex="3" />
+                           </children>
+                        </GridPane>
+                     </children>
+                  </VBox>
+            </content>
+          </TitledPane>
+          <TitledPane animated="false" text="Adresse">
+            <content>
+                  <VBox style="-fx-border-color: green;">
+                     <children>
+                        <GridPane alignment="TOP_CENTER" hgap="15.0" minHeight="-Infinity" minWidth="-Infinity" vgap="15.0">
+                          <columnConstraints>
+                            <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" />
+                            <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints vgrow="NEVER" />
+                            <RowConstraints vgrow="NEVER" />
+                            <RowConstraints vgrow="NEVER" />
+                              <RowConstraints vgrow="NEVER" />
+                              <RowConstraints vgrow="NEVER" />
+                          </rowConstraints>
+                           <children>
+                              <Label text="Straße" />
+                              <Label text="Hausnummer" GridPane.rowIndex="1" />
+                              <Label text="PLZ" GridPane.rowIndex="2" />
+                              <Label text="Ort" GridPane.rowIndex="3" />
+                              <Label text="Land" GridPane.rowIndex="4" />
+                              <TextField fx:id="tfStrasse" maxWidth="200.0" prefWidth="200.0" GridPane.columnIndex="1" />
+                              <TextField fx:id="tfHausnummer" maxWidth="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <TextField fx:id="tfPLZ" maxWidth="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <TextField fx:id="tfOrt" maxWidth="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <TextField fx:id="tfLand" maxWidth="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                           </children>
+                        </GridPane>
+                     </children>
+                  </VBox>
+            </content>
+          </TitledPane>
+            <TitledPane animated="false" contentDisplay="CENTER" text="EE2015">
+              <content>
+                  <VBox style="-fx-border-color: green;">
+                     <children>
+                        <ScrollPane fitToWidth="true">
+                           <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0">
+                                 <children>
+                                    <GridPane alignment="TOP_CENTER" hgap="15.0" vgap="15.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                      <columnConstraints>
+                                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" />
+                                        <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints vgrow="NEVER" />
+                                        <RowConstraints vgrow="NEVER" />
+                                        <RowConstraints vgrow="NEVER" />
+                                          <RowConstraints vgrow="NEVER" />
+                                          <RowConstraints vgrow="NEVER" />
+                                          <RowConstraints vgrow="NEVER" />
+                                          <RowConstraints vgrow="NEVER" />
+                                          <RowConstraints vgrow="NEVER" />
+                                          <RowConstraints vgrow="NEVER" />
+                                          <RowConstraints vgrow="NEVER" />
+                                          <RowConstraints vgrow="NEVER" />
+                                          <RowConstraints vgrow="NEVER" />
+                                          <RowConstraints vgrow="NEVER" />
+                                          <RowConstraints vgrow="NEVER" />
+                                          <RowConstraints vgrow="NEVER" />
+                                          <RowConstraints vgrow="NEVER" />
+                                          <RowConstraints vgrow="NEVER" />
+                                          <RowConstraints vgrow="NEVER" />
+                                          <RowConstraints vgrow="NEVER" />
+                                          <RowConstraints vgrow="NEVER" />
+                                          <RowConstraints vgrow="NEVER" />
+                                          <RowConstraints vgrow="NEVER" />
+                                          <RowConstraints vgrow="NEVER" />
+                                          <RowConstraints vgrow="NEVER" />
+                                          <RowConstraints vgrow="NEVER" />
+                                          <RowConstraints vgrow="NEVER" />
+                                          <RowConstraints vgrow="NEVER" />
+                                          <RowConstraints vgrow="NEVER" />
+                                          <RowConstraints vgrow="NEVER" />
+                                          <RowConstraints vgrow="NEVER" />
+                                          <RowConstraints vgrow="NEVER" />
+                                          <RowConstraints vgrow="NEVER" />
+                                          <RowConstraints vgrow="NEVER" />
+                                          <RowConstraints vgrow="NEVER" />
+                                          <RowConstraints vgrow="NEVER" />
+                                          <RowConstraints vgrow="NEVER" />
+                                          <RowConstraints vgrow="NEVER" />
+                                          <RowConstraints vgrow="NEVER" />
+                                          <RowConstraints vgrow="NEVER" />
+                                          <RowConstraints vgrow="NEVER" />
+                                      </rowConstraints>
+                                       <children>
+                                          <Label text="Pseudonym" GridPane.rowIndex="1" />
+                                          <Label text="Pseudonym2" GridPane.rowIndex="2" />
+                                          <Label text="Status" GridPane.rowIndex="3" />
+                                          <Label text="Datum" GridPane.rowIndex="4" />
+                                          <Label text="Tod (Quelle)" GridPane.rowIndex="5" />
+                                          <Label text="Todesdatum" GridPane.rowIndex="6" />
+                                          <Label text="Notizen" GridPane.rowIndex="7" />
+                                          <Label text="Welle" GridPane.rowIndex="8" />
+                                          <Label text="Rawid" GridPane.rowIndex="9" />
+                                          <Label text="Source" GridPane.rowIndex="10" />
+                                          <Label text="Zeit" GridPane.rowIndex="11" />
+                                          <Label text="Chemo" GridPane.rowIndex="12" />
+                                          <Label text="Chemo Zeitpunkt" GridPane.rowIndex="13" />
+                                          <Label text="Medikamente" GridPane.rowIndex="14" />
+                                          <Label text="Bestrahlung" GridPane.rowIndex="15" />
+                                          <Label text="Med Antihormon" GridPane.rowIndex="16" />
+                                          <Label text="Med Antihormon unbekannt" GridPane.rowIndex="17" />
+                                          <Label text="Med Antihormon Tamoxifen" GridPane.rowIndex="18" />
+                                          <Label text="Med Antihormon Arimidex" GridPane.rowIndex="19" />
+                                          <Label text="Med Antihormon Aromasin" GridPane.rowIndex="20" />
+                                          <Label text="Med Antihormon fe03a" GridPane.rowIndex="21" />
+                                          <Label text="Herceptin" GridPane.rowIndex="22" />
+                                          <Label text="Biophosphonaten" GridPane.rowIndex="23" />
+                                          <Label text="Biophosphaten_text" GridPane.rowIndex="24" />
+                                          <Label text="Weitere_erkrankung" GridPane.rowIndex="25" />
+                                          <Label text="Rezidiv" GridPane.rowIndex="26" />
+                                          <Label text="Metastasen" GridPane.rowIndex="27" />
+                                          <Label text="Metastasen_abrust" GridPane.rowIndex="28" />
+                                          <Label text="Metastasen_lymphknoten" GridPane.rowIndex="29" />
+                                          <Label text="Metastasen_knochen" GridPane.rowIndex="30" />
+                                          <Label text="Metastasen_lunge" GridPane.rowIndex="31" />
+                                          <Label text="Metastasen_gehirn" GridPane.rowIndex="32" />
+                                          <Label text="Metastasen_leber" GridPane.rowIndex="33" />
+                                          <Label text="Metastasen_andere" GridPane.rowIndex="34" />
+                                          <Label text="Metastasen_andere_text" GridPane.rowIndex="35" />
+                                          <Label text="Rezidiv_zeitpunkt" GridPane.rowIndex="36" />
+                                          <Label text="Hausarzt" GridPane.rowIndex="37" />
+                                          <Label text="Frauenarzt" GridPane.rowIndex="38" />
+                                          <Label text="Anmerkungen" GridPane.rowIndex="39" />
+                                          <Label text="Information" GridPane.rowIndex="40" />
+                                          <TextField fx:id="tfPseudonym" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <TextField fx:id="tfPseudonym2" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                          <TextField fx:id="tfStatus" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                          <DatePicker fx:id="dpDatum" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                          <TextField fx:id="tfTodQuelle" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                          <DatePicker fx:id="dpTodDatum" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                          <TextField fx:id="tfNotizen" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                          <TextField fx:id="welle" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                                          <TextField fx:id="rawid" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                                          <TextField fx:id="source" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                                          <TextField fx:id="zeit" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+                                          <TextField fx:id="chemo" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+                                          <TextField fx:id="chemo_zeitpunkt" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+                                          <TextField fx:id="medikamente" GridPane.columnIndex="1" GridPane.rowIndex="14" />
+                                          <TextField fx:id="bestrahlung" GridPane.columnIndex="1" GridPane.rowIndex="15" />
+                                          <CheckBox fx:id="med_anithormon" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="16" />
+                                          <CheckBox fx:id="med_antihormon_unbekannt" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="17" />
+                                          <CheckBox fx:id="med_antihormon_tamoxifen" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="18" />
+                                          <CheckBox fx:id="med_antihormon_arimidex" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="19" />
+                                          <CheckBox fx:id="med_antihormon_aromasin" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="20" />
+                                          <CheckBox fx:id="med_antihormon_fe03a" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="21" />
+                                          <TextField fx:id="herceptin" GridPane.columnIndex="1" GridPane.rowIndex="22" />
+                                          <TextField fx:id="biophosphonaten" GridPane.columnIndex="1" GridPane.rowIndex="23" />
+                                          <TextField fx:id="biophosphaten_text" GridPane.columnIndex="1" GridPane.rowIndex="24" />
+                                          <TextField fx:id="weitere_erkrankung" GridPane.columnIndex="1" GridPane.rowIndex="25" />
+                                          <CheckBox fx:id="rezidiv" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="26" />
+                                          <CheckBox fx:id="metastasen" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="27" />
+                                          <CheckBox fx:id="metastasen_abrust" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="28" />
+                                          <CheckBox fx:id="metastasen_lymphknoten" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="29" />
+                                          <CheckBox fx:id="metastasen_knochen" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="30" />
+                                          <CheckBox fx:id="metastasen_lunge" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="31" />
+                                          <CheckBox fx:id="metastasen_gehirn" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="32" />
+                                          <CheckBox fx:id="metastasen_leber" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="33" />
+                                          <CheckBox fx:id="metastasen_andere" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="34" />
+                                          <TextField fx:id="metastasen_andere_text" GridPane.columnIndex="1" GridPane.rowIndex="35" />
+                                          <DatePicker fx:id="rezidiv_zeitpunkt" GridPane.columnIndex="1" GridPane.rowIndex="36" />
+                                          <TextField fx:id="hausarzt" GridPane.columnIndex="1" GridPane.rowIndex="37" />
+                                          <TextField fx:id="frauenarzt" GridPane.columnIndex="1" GridPane.rowIndex="38" />
+                                          <TextField fx:id="anmerkungen" GridPane.columnIndex="1" GridPane.rowIndex="39" />
+                                          <TextField fx:id="information" GridPane.columnIndex="1" GridPane.rowIndex="40" />
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </ScrollPane>
+                     </children>
+                  </VBox>
+              </content>
+            </TitledPane>
+            <TitledPane animated="false" text="untitled">
+              <content>
+                  <VBox />
+              </content>
+            </TitledPane>
+        </panes>
+      </Accordion>
+   </children>
+</VBox>

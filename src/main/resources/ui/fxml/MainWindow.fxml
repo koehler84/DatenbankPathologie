@@ -22,16 +22,6 @@
               <MenuItem fx:id="mnFallView" mnemonicParsing="false" text="Fall Tabelle" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Bearbeiten">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Hilfe">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
-            </items>
-          </Menu>
         </menus>
       </MenuBar>
       <GridPane fx:id="mainContainer" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">

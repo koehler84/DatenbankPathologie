@@ -55,6 +55,16 @@ public enum FXMLView {
 		String getFXMLFile() {
 			return "/ui/fxml/openexcel/Progress.fxml";
 		}
+	}, PATIENT_VIEW {
+		@Override
+		String getTitle() {
+			return "Patient";
+		}
+		
+		@Override
+		String getFXMLFile() {
+			return "/ui/fxml/patientview/MainView.fxml";
+		}
 	};
 	
 	abstract String getTitle();

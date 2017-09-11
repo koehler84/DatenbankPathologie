@@ -43,11 +43,11 @@ public class ProgressController implements Initializable {
 			final Task<List<Patient>> task = new Task<List<Patient>>() {
 				@Override
 				protected List<Patient> call() throws Exception {
-					excelService.getUpdatedPatientsFromExcel(indexMappers, excelFile, worksheetIndex)
+					List<Patient> patients = excelService.getUpdatedPatientsFromExcel(indexMappers, excelFile, worksheetIndex)
 							.registerListener(this::updateProgress)
 							.updateAndGet();
 					
-					return null;
+					return patients;
 				}
 			};
 			
@@ -67,7 +67,7 @@ public class ProgressController implements Initializable {
 			});
 			
 			task.setOnFailed(event -> {
-				Alert alert = new Alert(Alert.AlertType.ERROR, "Beim einlesen der Daten ist ein Fehler aufgetreten: " + task.getException().getMessage());
+				Alert alert = new Alert(Alert.AlertType.ERROR, "Beim Einlesen der Daten ist ein Fehler aufgetreten: " + task.getException().getMessage());
 				alert.show();
 			});
 			

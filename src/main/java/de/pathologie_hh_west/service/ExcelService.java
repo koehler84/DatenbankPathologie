@@ -17,6 +17,7 @@ import java.math.BigDecimal;
 import java.time.ZoneId;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Created by VaniR on 15.07.2017.
@@ -41,7 +42,21 @@ public class ExcelService {
 		return new ExcelFile(workbook);
 	}
 	
-	public DataUpdateWrapper getUpdatedPatientsFromExcel(final Set<IndexMapper> indexMappers, final ExcelFile excelFile, final Integer sheetIndex) {
+	public DataUpdateWrapper getUpdatedPatientsFromExcel(final Set<IndexMapper> indexMappers, final ExcelFile excelFile, final Integer sheetIndex) throws Exception {
+		long count = indexMappers.stream()
+				.filter(mapper -> {
+					switch (mapper.getPatientAttribut()) {
+						case VORNAME:
+						case NACHNAME:
+						case GEBURTSDATUM:
+							return true;
+						default:
+							return false;
+					}
+				})
+				.count();
+		if (count != 3) throw new IllegalArgumentException("Kein eindeutiger Patient, es fehlt Vorname, Nachname oder Geburtsdatum");
+		
 		return new DataUpdateWrapper(this, patientRepository, indexMappers, excelFile, sheetIndex);
 	}
 	
@@ -51,8 +66,7 @@ public class ExcelService {
 		Patient patient = patientDataFromExcel(excelIndexPatientMapping, currentRow, sheet);
 		System.out.println("Patient zusammen Bauen: " + (timeMillis - System.currentTimeMillis()));
 		if (patient.getVorname() == null || patient.getNachname() == null || patient.getGeburtsDatum() == null) {
-			return null;
-			//throw new IllegalArgumentException("Kein eindeutiger Patient, es fehlt Vorname, Nachname oder Geburtsdatum");
+			throw new IllegalArgumentException("Kein eindeutiger Patient, es fehlt Vorname, Nachname oder Geburtsdatum");
 		}
 		//TODO
 		timeMillis = System.currentTimeMillis();
