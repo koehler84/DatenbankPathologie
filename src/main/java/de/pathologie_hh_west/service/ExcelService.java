@@ -78,7 +78,8 @@ public class ExcelService {
 					.forEach(patientFinal.getFaelle()::add);
 			patient = patientFinal;
 			//TODO
-			System.out.println("Fälle mergen: " + (timeMillis - System.currentTimeMillis()));
+			System.out.println("Fälle mergen: " + (timeMillis - System.currentTimeMillis()) + "|" + patient.getVorname()
+					+ ", " + patient.getNachname() + ", " + patient.getGeburtsDatum());
 //			}
 		}
 		//TODO Temporary - Fall überarbeiten

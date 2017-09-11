@@ -1,6 +1,7 @@
 package de.pathologie_hh_west.model;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -45,6 +46,10 @@ public class Patient {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public void setId(BigDecimal id) {
+        this.id = id.longValue();
     }
 
     public String getVorname() {

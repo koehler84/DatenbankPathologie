@@ -1,7 +1,7 @@
 package de.pathologie_hh_west.model;
 
-import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /**
@@ -9,127 +9,123 @@ import java.time.LocalDate;
  */
 @Embeddable
 public class EE2011 {
-    @Column(name = "EE2011status")
-    private String status;
-    @Column(name = "EE2011datum")
-    private LocalDate datum;
-    @Column(name = "EE2011rezidiv_Metastase")
-    private Integer rezidiv_Metastase;
-    @Column(name = "EE2011r")
-    private Integer r;
-    @Column(name = "EE2011rDatum")
-    private LocalDate rDatum;
-    @Column(name = "EE2011rDatum2")
-    private LocalDate rDatum2;
-    @Column(name = "EE2011notizen")
-    private String notizen;
-    @Column(name = "EE2011chemo")
-    private String chemo;
-    @Column(name = "EE2011radiatio")
-    private String radiatio;
-    @Column(name = "EE2011aH")
-    private String aH;
-    @Column(name = "EE2011hausarzt")
-    private String hausarzt;
-    @Column(name = "EE2011frauenarzt")
-    private String frauenarzt;
+    private String ee2011Status;
+    private LocalDate ee2011Datum;
+    private Integer ee2011Rezidiv_Metastase;
+    private Integer ee2011R;
+    private LocalDate ee2011RDatum;
+    private LocalDate ee2011RDatum2;
+    private String ee2011Notizen;
+    private String ee2011Chemo;
+    private String ee2011Radiatio;
+    private String ee2011AH;
+    private String ee2011Hausarzt;
+    private String ee2011Frauenarzt;
 
     public EE2011() {
     }
 
-    public String getStatus() {
-        return status;
+    public String getEe2011Status() {
+        return ee2011Status;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setEe2011Status(String ee2011Status) {
+        this.ee2011Status = ee2011Status;
     }
 
-    public LocalDate getDatum() {
-        return datum;
+    public LocalDate getEe2011Datum() {
+        return ee2011Datum;
     }
 
-    public void setDatum(LocalDate datum) {
-        this.datum = datum;
+    public void setEe2011Datum(LocalDate ee2011Datum) {
+        this.ee2011Datum = ee2011Datum;
     }
 
-    public Integer getRezidiv_Metastase() {
-        return rezidiv_Metastase;
+    public Integer getEe2011Rezidiv_Metastase() {
+        return ee2011Rezidiv_Metastase;
     }
 
-    public void setRezidiv_Metastase(Integer rezidiv_Metastase) {
-        this.rezidiv_Metastase = rezidiv_Metastase;
+    public void setEe2011Rezidiv_Metastase(BigDecimal ee2011Rezidiv_Metastase) {
+        this.ee2011Rezidiv_Metastase = ee2011Rezidiv_Metastase.intValue();
     }
 
-    public Integer getR() {
-        return r;
+    public void setEe2011Rezidiv_Metastase(Integer ee2011Rezidiv_Metastase) {
+        this.ee2011Rezidiv_Metastase = ee2011Rezidiv_Metastase;
     }
 
-    public void setR(Integer r) {
-        this.r = r;
+    public Integer getEe2011R() {
+        return ee2011R;
     }
 
-    public LocalDate getrDatum() {
-        return rDatum;
+    public void setEe2011R(BigDecimal ee2011R) {
+        this.ee2011R = ee2011R.intValue();
     }
 
-    public void setrDatum(LocalDate rDatum) {
-        this.rDatum = rDatum;
+    public void setEe2011R(Integer ee2011R) {
+        this.ee2011R = ee2011R;
     }
 
-    public LocalDate getrDatum2() {
-        return rDatum2;
+    public LocalDate getEe2011RDatum() {
+        return ee2011RDatum;
     }
 
-    public void setrDatum2(LocalDate rDatum2) {
-        this.rDatum2 = rDatum2;
+    public void setEe2011RDatum(LocalDate ee2011RDatum) {
+        this.ee2011RDatum = ee2011RDatum;
     }
 
-    public String getNotizen() {
-        return notizen;
+    public LocalDate getEe2011RDatum2() {
+        return ee2011RDatum2;
     }
 
-    public void setNotizen(String notizen) {
-        this.notizen = notizen;
+    public void setEe2011RDatum2(LocalDate ee2011RDatum2) {
+        this.ee2011RDatum2 = ee2011RDatum2;
     }
 
-    public String getChemo() {
-        return chemo;
+    public String getEe2011Notizen() {
+        return ee2011Notizen;
     }
 
-    public void setChemo(String chemo) {
-        this.chemo = chemo;
+    public void setEe2011Notizen(String ee2011Notizen) {
+        this.ee2011Notizen = ee2011Notizen;
     }
 
-    public String getRadiatio() {
-        return radiatio;
+    public String getEe2011Chemo() {
+        return ee2011Chemo;
     }
 
-    public void setRadiatio(String radiatio) {
-        this.radiatio = radiatio;
+    public void setEe2011Chemo(String ee2011Chemo) {
+        this.ee2011Chemo = ee2011Chemo;
     }
 
-    public String getaH() {
-        return aH;
+    public String getEe2011Radiatio() {
+        return ee2011Radiatio;
     }
 
-    public void setaH(String aH) {
-        this.aH = aH;
+    public void setEe2011Radiatio(String ee2011Radiatio) {
+        this.ee2011Radiatio = ee2011Radiatio;
     }
 
-    public String getHausarzt() {
-        return hausarzt;
+    public String getEe2011AH() {
+        return ee2011AH;
     }
 
-    public void setHausarzt(String hausarzt) {
-        this.hausarzt = hausarzt;
+    public void setEe2011AH(String ee2011AH) {
+        this.ee2011AH = ee2011AH;
     }
 
-    public String getFrauenarzt() {
-        return frauenarzt;
+    public String getEe2011Hausarzt() {
+        return ee2011Hausarzt;
     }
 
-    public void setFrauenarzt(String frauenarzt) {
-        this.frauenarzt = frauenarzt;
+    public void setEe2011Hausarzt(String ee2011Hausarzt) {
+        this.ee2011Hausarzt = ee2011Hausarzt;
+    }
+
+    public String getEe2011Frauenarzt() {
+        return ee2011Frauenarzt;
+    }
+
+    public void setEe2011Frauenarzt(String ee2011Frauenarzt) {
+        this.ee2011Frauenarzt = ee2011Frauenarzt;
     }
 }

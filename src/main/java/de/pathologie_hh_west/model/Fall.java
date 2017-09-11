@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import java.time.LocalDate;
 
 /**
  *
@@ -17,10 +18,29 @@ public class Fall {
     private String befundtext;
     @Embedded
     private Klassifikation klassifikation;
+    private LocalDate EingangsDatum;
+    private String Einsender;
+
 
     public Fall() {
         this.fallID = new FallID();
         this.klassifikation = new Klassifikation();
+    }
+
+    public LocalDate getEingangsDatum() {
+        return EingangsDatum;
+    }
+
+    public void setEingangsDatum(LocalDate eingangsDatum) {
+        EingangsDatum = eingangsDatum;
+    }
+
+    public String getEinsender() {
+        return Einsender;
+    }
+
+    public void setEinsender(String einsender) {
+        Einsender = einsender;
     }
 
     public FallID getFallID() {

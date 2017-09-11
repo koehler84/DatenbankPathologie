@@ -11,7 +11,7 @@ public class ENummer {
     private String value;
 
     //TODO Utilityfunktionen wie das speichern ob alte oder neue nummer war, jahr der erstellung extrahieren etc.
-    //Alt: 001/00146
+    //Alt: 962/00591
     //Neu: A/1996/200591
     public ENummer() {
     }

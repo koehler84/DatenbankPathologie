@@ -1,6 +1,5 @@
 package de.pathologie_hh_west.model;
 
-import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.time.LocalDate;
 
@@ -9,140 +8,126 @@ import java.time.LocalDate;
  */
 @Embeddable
 public class Exprimage {
-    @Column(name = "EXPnotizen")
-    private String notizen;
-    @Column(name = "EXPchemo")
-    private String chemo;
-    @Column(name = "EXPtamoxifen")
-    private String tamoxifen;
-    @Column(name = "EXParomataseHemmer")
-    private String aromataseHemmer;
-    @Column(name = "EXPradatio")
-    private String radatio;
-    @Column(name = "EXPtumorprogress1")
-    private LocalDate tumorprogress1;
-    @Column(name = "EXPtumorprogress2")
-    private LocalDate tumorprogress2;
-    @Column(name = "EXPstatus")
-    private String status;
-    @Column(name = "EXPdatum")
-    private LocalDate datum;
-    @Column(name = "EXPfollowUp")
-    private LocalDate followUp;
-    @Column(name = "EXPtodQuelle")
-    private String todQuelle;
-    @Column(name = "EXPtodDatum")
-    private LocalDate todDatum;
-    @Column(name = "EXPbemerkung")
-    private String bemerkung;
-    @Column(name = "EXParzt")
+    private String expNotizen;
+    private String expChemo;
+    private String expTamoxifen;
+    private String expAromataseHemmer;
+    private String expRadatio;
+    private LocalDate expTumorprogress1;
+    private LocalDate expTumorprogress2;
+    private String expStatus;
+    private LocalDate expDatum;
+    private LocalDate expFollowUp;
+    private String expTodQuelle;
+    private LocalDate expTodDatum;
+    private String expBemerkung;
     private String expArzt;
 
     public Exprimage() {
     }
 
-    public String getNotizen() {
-        return notizen;
+    public String getExpNotizen() {
+        return expNotizen;
     }
 
-    public void setNotizen(String notizen) {
-        this.notizen = notizen;
+    public void setExpNotizen(String expNotizen) {
+        this.expNotizen = expNotizen;
     }
 
-    public String getChemo() {
-        return chemo;
+    public String getExpChemo() {
+        return expChemo;
     }
 
-    public void setChemo(String chemo) {
-        this.chemo = chemo;
+    public void setExpChemo(String expChemo) {
+        this.expChemo = expChemo;
     }
 
-    public String getTamoxifen() {
-        return tamoxifen;
+    public String getExpTamoxifen() {
+        return expTamoxifen;
     }
 
-    public void setTamoxifen(String tamoxifen) {
-        this.tamoxifen = tamoxifen;
+    public void setExpTamoxifen(String expTamoxifen) {
+        this.expTamoxifen = expTamoxifen;
     }
 
-    public String getAromataseHemmer() {
-        return aromataseHemmer;
+    public String getExpAromataseHemmer() {
+        return expAromataseHemmer;
     }
 
-    public void setAromataseHemmer(String aromataseHemmer) {
-        this.aromataseHemmer = aromataseHemmer;
+    public void setExpAromataseHemmer(String expAromataseHemmer) {
+        this.expAromataseHemmer = expAromataseHemmer;
     }
 
-    public String getRadatio() {
-        return radatio;
+    public String getExpRadatio() {
+        return expRadatio;
     }
 
-    public void setRadatio(String radatio) {
-        this.radatio = radatio;
+    public void setExpRadatio(String expRadatio) {
+        this.expRadatio = expRadatio;
     }
 
-    public LocalDate getTumorprogress1() {
-        return tumorprogress1;
+    public LocalDate getExpTumorprogress1() {
+        return expTumorprogress1;
     }
 
-    public void setTumorprogress1(LocalDate tumorprogress1) {
-        this.tumorprogress1 = tumorprogress1;
+    public void setExpTumorprogress1(LocalDate expTumorprogress1) {
+        this.expTumorprogress1 = expTumorprogress1;
     }
 
-    public LocalDate getTumorprogress2() {
-        return tumorprogress2;
+    public LocalDate getExpTumorprogress2() {
+        return expTumorprogress2;
     }
 
-    public void setTumorprogress2(LocalDate tumorprogress2) {
-        this.tumorprogress2 = tumorprogress2;
+    public void setExpTumorprogress2(LocalDate expTumorprogress2) {
+        this.expTumorprogress2 = expTumorprogress2;
     }
 
-    public String getStatus() {
-        return status;
+    public String getExpStatus() {
+        return expStatus;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setExpStatus(String expStatus) {
+        this.expStatus = expStatus;
     }
 
-    public LocalDate getDatum() {
-        return datum;
+    public LocalDate getExpDatum() {
+        return expDatum;
     }
 
-    public void setDatum(LocalDate datum) {
-        this.datum = datum;
+    public void setExpDatum(LocalDate expDatum) {
+        this.expDatum = expDatum;
     }
 
-    public LocalDate getFollowUp() {
-        return followUp;
+    public LocalDate getExpFollowUp() {
+        return expFollowUp;
     }
 
-    public void setFollowUp(LocalDate followUp) {
-        this.followUp = followUp;
+    public void setExpFollowUp(LocalDate expFollowUp) {
+        this.expFollowUp = expFollowUp;
     }
 
-    public String getTodQuelle() {
-        return todQuelle;
+    public String getExpTodQuelle() {
+        return expTodQuelle;
     }
 
-    public void setTodQuelle(String todQuelle) {
-        this.todQuelle = todQuelle;
+    public void setExpTodQuelle(String expTodQuelle) {
+        this.expTodQuelle = expTodQuelle;
     }
 
-    public LocalDate getTodDatum() {
-        return todDatum;
+    public LocalDate getExpTodDatum() {
+        return expTodDatum;
     }
 
-    public void setTodDatum(LocalDate todDatum) {
-        this.todDatum = todDatum;
+    public void setExpTodDatum(LocalDate expTodDatum) {
+        this.expTodDatum = expTodDatum;
     }
 
-    public String getBemerkung() {
-        return bemerkung;
+    public String getExpBemerkung() {
+        return expBemerkung;
     }
 
-    public void setBemerkung(String bemerkung) {
-        this.bemerkung = bemerkung;
+    public void setExpBemerkung(String expBemerkung) {
+        this.expBemerkung = expBemerkung;
     }
 
     public String getExpArzt() {

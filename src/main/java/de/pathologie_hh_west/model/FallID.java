@@ -50,7 +50,7 @@ public class FallID implements Serializable, Comparable {
             this.befundTyp = BefundTyp.HAUPTBEFUND;
 
         } else if (s.contains("konsiliarbericht")) {
-            this.befundTyp = BefundTyp.KONSILIARERICHT;
+            this.befundTyp = BefundTyp.KONSILIARBERICHT;
 
         } else if (s.contains("korrekturbefund 1")) {
             this.befundTyp = BefundTyp.KORREKTURBEFUND1;
@@ -91,6 +91,13 @@ public class FallID implements Serializable, Comparable {
         } else return 1;
     }
 
+    @Override
+    public String toString() {
+        return "FallID{" +
+                "eNummer=" + eNummer +
+                ", befundTyp=" + befundTyp +
+                '}';
+    }
 
 //    @Override
 //    public boolean equals(Object o) {

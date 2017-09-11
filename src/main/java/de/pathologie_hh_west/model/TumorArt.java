@@ -7,7 +7,9 @@ import javax.persistence.Embeddable;
  */
 @Embeddable
 public class TumorArt {
-    private String invasion;
+    private String tumorArtString;
+    private boolean invasiv;
+    private boolean inSitu;
     private boolean duktal;
     private boolean lipidreich;
     private boolean sekretorisch;
@@ -28,16 +30,11 @@ public class TumorArt {
     public TumorArt() {
     }
 
-    public String getInvasion() {
-        return invasion;
-    }
-
-    public void setInvasion(String invasion) {
-        this.invasion = invasion;
-    }
-
-    public String getTumorArt() {
+    public String getTumorArtString() {
         String tumorArt = "";
+        if (inSitu) {
+            tumorArt = tumorArt + "in Situ, ";
+        }
         if (duktal) {
             tumorArt = tumorArt + "duktal, ";
         }
@@ -90,8 +87,61 @@ public class TumorArt {
     }
 
     //TODO Setter fuer alle Tumorarten auf einmal (binaere Zahl? String Array? String und patternMatch?
-    public void setTumorArt() {
-
+    public void setTumorArtString(String tumorArt) {
+        if (tumorArt.matches(".*in situ")) {
+            setInSitu(true);
+        }
+        if (tumorArt.matches(".*invasiv")) {
+            setInvasiv(true);
+        }
+        if (tumorArt.matches(".*duktal") || tumorArt.matches(".*duktal,.*")) {
+            setDuktal(true);
+        }
+        if (tumorArt.matches(".*lipidreich.*")) {
+            setLipidreich(true);
+        }
+        if (tumorArt.matches(".*sekretorisch.*")) {
+            setSekretorisch(true);
+        }
+        if (tumorArt.matches(".*adenoid-zystisch.*")) {
+            setAdenoidZystisch(true);
+        }
+        if (tumorArt.matches(".*glykogenreich.*")) {
+            setGlykogenreich(true);
+        }
+        if (tumorArt.matches(".*kribriform.*")) {
+            setKribriform(true);
+        }
+        if (tumorArt.matches(".*mikropapillär.*")) {
+            setMikropapillaer(true);
+        }
+        if (tumorArt.matches(".*lobulär.*")) {
+            setLobulaer(true);
+        }
+        if (tumorArt.matches(".*muzinös.*")) {
+            setMuzinoes(true);
+        }
+        if (tumorArt.matches(".*papillär,.*") || tumorArt.matches(".*papillär")) {
+            setPapillaer(true);
+        }
+        if (tumorArt.matches(".*pleomorph.*")) {
+            setPleomorph(true);
+        }
+        if (tumorArt.matches(".*tubulär.*")) {
+            setTubulaer(true);
+        }
+        if (tumorArt.matches(".*medullär.*")) {
+            setMedullaer(true);
+        }
+        if (tumorArt.matches(".*metaplastisch.*")) {
+            setMetaplastisch(true);
+        }
+        if (tumorArt.matches(".*intrazystisch.*")) {
+            setIntrazystisch(true);
+        }
+        if (tumorArt.matches(".* intraduktales papilläres karzinom mit invasion.*")) {
+            setIntrazystisch(true);
+        }
     }
 
     public boolean isDuktal() {
@@ -220,5 +270,21 @@ public class TumorArt {
 
     public void setIntraduktalesPapillaeresKarzinomMitInvasion(boolean intraduktalesPapillaeresKarzinomMitInvasion) {
         this.intraduktalesPapillaeresKarzinomMitInvasion = intraduktalesPapillaeresKarzinomMitInvasion;
+    }
+
+    public boolean isInSitu() {
+        return inSitu;
+    }
+
+    public void setInSitu(boolean inSitu) {
+        this.inSitu = inSitu;
+    }
+
+    public boolean isInvasiv() {
+        return invasiv;
+    }
+
+    public void setInvasiv(boolean invasiv) {
+        this.invasiv = invasiv;
     }
 }
