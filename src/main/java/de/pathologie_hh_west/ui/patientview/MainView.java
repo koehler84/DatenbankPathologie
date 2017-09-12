@@ -14,7 +14,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 @Component
@@ -184,8 +183,9 @@ public class MainView implements Initializable {
 		if (ee2015 == null) {
 			return;
 		}
-		
-		tfPseudonym2.setText(ee2015.getPseudonym2());
+        //TODO: namechanges of functions
+        /*
+        tfPseudonym2.setText(ee2015.getPseudonym2());
 		tfStatus.setText(ee2015.getStatus());
 		dpDatum.setValue(ee2015.getDatum());
 		tfTodQuelle.setText(ee2015.getTodQuelle());
@@ -224,5 +224,6 @@ public class MainView implements Initializable {
 		frauenarzt.setText(ee2015.getFrauenarzt());
 		anmerkungen.setText(ee2015.getAnmerkungen());
 		information.setText(ee2015.getInformation());
+		*/
 	}
 }

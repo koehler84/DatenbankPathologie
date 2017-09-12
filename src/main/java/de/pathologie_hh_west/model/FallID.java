@@ -52,22 +52,22 @@ public class FallID implements Serializable, Comparable {
         } else if (s.contains("konsiliarbericht")) {
             this.befundTyp = BefundTyp.KONSILIARBERICHT;
 
-        } else if (s.contains("korrekturbefund 1")) {
+        } else if (s.contains("korrekturbefund1")) {
             this.befundTyp = BefundTyp.KORREKTURBEFUND1;
 
-        } else if (s.contains("korrekturbefund 2")) {
+        } else if (s.contains("korrekturbefund2")) {
             this.befundTyp = BefundTyp.KORREKTURBEFUND2;
 
-        } else if (s.contains("korrekturbefund 3")) {
+        } else if (s.contains("korrekturbefund3")) {
             this.befundTyp = BefundTyp.KORREKTURBEFUND3;
 
-        } else if (s.contains("korrekturbefund 4")) {
+        } else if (s.contains("korrekturbefund4")) {
             this.befundTyp = BefundTyp.KORREKTURBEFUND4;
 
-        } else if (s.contains("nachbericht 1")) {
+        } else if (s.contains("nachbericht1")) {
             this.befundTyp = BefundTyp.NACHBERICHT1;
 
-        } else if (s.contains("nachbericht 2")) {
+        } else if (s.contains("nachbericht2")) {
             this.befundTyp = BefundTyp.NACHBERICHT2;
 
         } else {

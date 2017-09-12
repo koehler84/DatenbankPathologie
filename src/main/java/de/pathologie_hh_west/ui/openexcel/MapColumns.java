@@ -4,8 +4,6 @@ import de.pathologie_hh_west.service.*;
 import de.pathologie_hh_west.ui.util.AutoCompleteComboBoxListener;
 import de.pathologie_hh_west.ui.util.FXMLView;
 import de.pathologie_hh_west.ui.util.StageManager;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -65,8 +63,19 @@ public class MapColumns implements Initializable {
 			Node[] inputNodes = getInputNodes();
 			ChoiceBox<String> excelBox = ((ChoiceBox<String>) inputNodes[0]);
 			excelBox.setValue(this.excelColumns.get(i));
-			gpMapperNodes.addRow(gpRowAmount + i, excelBox, inputNodes[1], inputNodes[2]);
-		}
+            ComboBox<String> excelMapValue = (ComboBox<String>) inputNodes[1];
+            CheckBox excelOverride = (CheckBox) inputNodes[2];
+            try {
+                PatientModelAttribute.valueOf(this.excelColumns.get(i).toUpperCase());
+                excelMapValue.setValue(this.excelColumns.get(i).toUpperCase());
+                excelOverride.setSelected(true);
+            } catch (IllegalArgumentException e) {
+                //TODO: Überschrift existiert nicht als enum
+                //Feedback nötig?
+            }
+            gpMapperNodes.addRow(gpRowAmount + i, excelBox, excelMapValue, excelOverride);
+            System.out.println();
+        }
 		
 		btnCancel.setOnAction(event -> {
 			stageManager.removeAttribute("openExcelSelectedFile");

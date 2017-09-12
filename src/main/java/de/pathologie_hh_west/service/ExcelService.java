@@ -15,9 +15,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.ZoneId;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * Created by VaniR on 15.07.2017.
@@ -30,6 +30,7 @@ public class ExcelService {
 	private PatientAttributAuswahl patientAttributAuswahl;
 	@Autowired
 	private PatientRepository patientRepository;
+	public Set<Integer> debug = new HashSet<>();
 	
 	public ExcelFile openExcelFile(String filePath) {
 		XSSFWorkbook workbook = null;
@@ -62,20 +63,22 @@ public class ExcelService {
 	
 	public Patient getPatientWithDBCheck(Set<IndexMapper> excelIndexPatientMapping, Integer currentRow, XSSFSheet sheet) {
 		//TODO
+		debug.add(currentRow);
 		long timeMillis = System.currentTimeMillis();
 		Patient patient = patientDataFromExcel(excelIndexPatientMapping, currentRow, sheet);
-		System.out.println("Patient zusammen Bauen: " + (timeMillis - System.currentTimeMillis()));
+		//System.out.println("Patient zusammen Bauen: " + (timeMillis - System.currentTimeMillis()));
 		if (patient.getVorname() == null || patient.getNachname() == null || patient.getGeburtsDatum() == null) {
 			throw new IllegalArgumentException("Kein eindeutiger Patient, es fehlt Vorname, Nachname oder Geburtsdatum");
 		}
 		//TODO
 		timeMillis = System.currentTimeMillis();
 		Patient patientAusDatenbank = patientRepository.findByNachnameAndVornameAndGeburtsDatum(patient.getNachname(), patient.getVorname(), patient.getGeburtsDatum());
-		System.out.println("Patient aus DB lesen: " + (timeMillis - System.currentTimeMillis()));
+		System.out.println("Patient aus DB lesen: " + (timeMillis - System.currentTimeMillis()) + (timeMillis - System.currentTimeMillis()) + "|" + patient.getVorname()
+				+ ", " + patient.getNachname() + ", " + patient.getGeburtsDatum());
 		if (patientAusDatenbank != null) {
 			patient.setId(patientAusDatenbank.getId());
 			for (IndexMapper im : excelIndexPatientMapping) {
-				if (im.getOverwriteExcelValue() || !patientAttributAuswahl.isDbValueNull(im.getPatientAttribut(), patientAusDatenbank)) {
+				if (im.getOverwriteExcelValue() || patientAttributAuswahl.isDbValueNull(im.getPatientAttribut(), patientAusDatenbank)) {
 					patient = patientAttributAuswahl.setValueFromDbToExcelPatient(im.getPatientAttribut(), patientAusDatenbank, patient);
 				}
 			}
@@ -100,6 +103,7 @@ public class ExcelService {
 //		if (patient.getId() != null) {
 //			patientRepository.delete(patient.getId());
 //		}
+		debug.remove(currentRow);
 		return patient;
 	}
 
@@ -110,12 +114,17 @@ public class ExcelService {
 //	}
 	
 	private Patient patientDataFromExcel(Set<IndexMapper> excelIndexPatientMapping, Integer currentRow, XSSFSheet sheet) {
+
 		XSSFRow row = sheet.getRow(currentRow);
 		Patient patient = new Patient();
 		patient.getFaelle().add(new Fall());
 		for (Iterator<IndexMapper> it = excelIndexPatientMapping.iterator(); it.hasNext(); ) {
 			IndexMapper indexMapper = it.next();
+			System.out.println(indexMapper.getPatientAttribut());
 			Integer cellIndex = indexMapper.getExcelIndex();
+			if (indexMapper.getPatientAttribut() != null && indexMapper.getPatientAttribut().toString() != "") {
+				//System.out.println(indexMapper.getPatientAttribut());
+			}
 			XSSFCell cell = row.getCell(cellIndex);
 			if (cell != null) {
 				switch (cell.getCellType()) {

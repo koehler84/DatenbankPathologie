@@ -1,5 +1,6 @@
 package de.pathologie_hh_west.model;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -47,6 +48,7 @@ public class EE2015 {
     private LocalDate ee2015Rezidiv_zeitpunkt;
     private String ee2015Hausarzt;
     private String ee2015Frauenarzt;
+    @Column(length = 1000000)
     private String ee2015Anmerkungen;
     private String ee2015Information;
 

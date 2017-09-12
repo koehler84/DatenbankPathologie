@@ -44,7 +44,7 @@ public class DataUpdateWrapper {
 		final int numberOfRows = sheet.getPhysicalNumberOfRows();
 		final AtomicInteger progressedEntities = new AtomicInteger();
 		patientStream = IntStream.range(1, numberOfRows)
-				.parallel()
+				//.parallel()
 				.mapToObj(index -> {
 					int progressInt = progressedEntities.incrementAndGet();
 					notifyProgressListeners(progressInt, numberOfRows);
