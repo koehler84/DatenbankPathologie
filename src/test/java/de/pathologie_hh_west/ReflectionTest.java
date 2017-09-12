@@ -65,6 +65,8 @@ public class ReflectionTest {
 	
 	@Test
 	public void EnumReflectionTest() throws Exception {
+
+		Method testMethod = ;
 		Patient p = new Patient();
 		PatientAttributAuswahl patientAttributAuswahl = new PatientAttributAuswahl();
 		p = patientAttributAuswahl.mapExcelValueToPatient("Dieter", PatientModelAttribute.VORNAME, p);
@@ -73,6 +75,10 @@ public class ReflectionTest {
 		System.out.println(PatientModelAttribute.VORNAME.getWrappingClass().equals(Patient.class));
 
 		System.out.println(PatientModelAttribute.EXPARZT.getWrappingClass().getSimpleName());
+	}
+
+	private void print(String string) {
+		System.out.println(string);
 	}
 
 	private Method[] getGetterMethod(PatientModelAttribute modelAttribute) {

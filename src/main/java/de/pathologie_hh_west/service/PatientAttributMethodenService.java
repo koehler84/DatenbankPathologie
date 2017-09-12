@@ -340,4 +340,64 @@ public class PatientAttributMethodenService {
         }
         return null;
     }
+
+    public void methodSetterKlassifikationFallBekannt(PatientModelAttribute patientAttribut, Object dbValue, Patient patientAusDatenbank, Patient patientAusExcel) {
+        Method[] setterMethods = getSetterMethod(patientAttribut);
+        if (dbValue == null) dbValue = "";
+        for (Method setterMethod : setterMethods) {
+            try {
+                //setter darf nur einen parameter haben
+                if (setterMethod.getParameterTypes()[0].equals(dbValue.getClass())) {
+                    setterMethod.invoke(patientAusDatenbank.getFaelle().stream().filter(f -> f.getFallID().geteNummer().getValue().equals(patientAusExcel.getFaelle().stream().findFirst().get().getFallID().geteNummer().getValue()))
+                            .filter(g -> g.getFallID().getBefundTyp().equals(patientAusExcel.getFaelle().stream()
+                                    .findFirst().get().getFallID().getBefundTyp())).findFirst().get().getKlassifikation(), dbValue);
+                }
+                if (setterMethod.getParameterTypes()[0].equals(Integer.class) && dbValue.getClass().equals(BigDecimal.class)) {
+                    BigDecimal temp = (BigDecimal) dbValue;
+                    setterMethod.invoke(patientAusDatenbank.getFaelle().stream().filter(f -> f.getFallID().geteNummer().getValue().equals(patientAusExcel.getFaelle().stream().findFirst().get().getFallID().geteNummer().getValue()))
+                            .filter(g -> g.getFallID().getBefundTyp().equals(patientAusExcel.getFaelle().stream()
+                                    .findFirst().get().getFallID().getBefundTyp())).findFirst().get().getKlassifikation(), temp.intValue());
+                }
+                if (setterMethod.getParameterTypes()[0].equals(String.class) && dbValue.getClass().equals(BigDecimal.class)) {
+                    BigDecimal temp = (BigDecimal) dbValue;
+                    setterMethod.invoke(patientAusDatenbank.getFaelle()
+                            .stream()
+                            .filter(f -> f.getFallID().geteNummer().getValue().equals(patientAusExcel.getFaelle().stream().findFirst().get().getFallID().geteNummer().getValue()))
+                            .filter(g -> g.getFallID().getBefundTyp().equals(patientAusExcel.getFaelle().stream()
+                                    .findFirst().get().getFallID().getBefundTyp()))
+                            .findFirst().get().getKlassifikation(), temp.intValue() + "");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void methodSetterTumorartFallBekannt(PatientModelAttribute patientAttribut, Object dbValue, Patient patientAusDatenbank, Patient patientAusExcel) {
+        Method[] setterMethods = getSetterMethod(patientAttribut);
+        for (Method setterMethod : setterMethods) {
+            try {
+                //setter darf nur einen parameter haben
+                if (dbValue == null || setterMethod.getParameterTypes()[0].equals(dbValue.getClass())) {
+                    setterMethod.invoke(patientAusDatenbank.getFaelle().stream().filter(f -> f.getFallID().geteNummer().getValue().equals(patientAusExcel.getFaelle().stream().findFirst().get().getFallID().geteNummer().getValue()))
+                            .filter(g -> g.getFallID().getBefundTyp().equals(patientAusExcel.getFaelle().stream()
+                                    .findFirst().get().getFallID().getBefundTyp())).findFirst().get().getKlassifikation(), dbValue);
+                }
+                if (setterMethod.getParameterTypes()[0].equals(Integer.class) && dbValue.getClass().equals(BigDecimal.class)) {
+                    BigDecimal temp = (BigDecimal) dbValue;
+                    setterMethod.invoke(patientAusDatenbank.getFaelle().stream().filter(f -> f.getFallID().geteNummer().getValue().equals(patientAusExcel.getFaelle().stream().findFirst().get().getFallID().geteNummer().getValue()))
+                            .filter(g -> g.getFallID().getBefundTyp().equals(patientAusExcel.getFaelle().stream()
+                                    .findFirst().get().getFallID().getBefundTyp())).findFirst().get().getKlassifikation(), temp.intValue());
+                }
+                if (setterMethod.getParameterTypes()[0].equals(String.class) && dbValue.getClass().equals(BigDecimal.class)) {
+                    BigDecimal temp = (BigDecimal) dbValue;
+                    setterMethod.invoke(patientAusDatenbank.getFaelle().stream().filter(f -> f.getFallID().geteNummer().getValue().equals(patientAusExcel.getFaelle().stream().findFirst().get().getFallID().geteNummer().getValue()))
+                            .filter(g -> g.getFallID().getBefundTyp().equals(patientAusExcel.getFaelle().stream()
+                                    .findFirst().get().getFallID().getBefundTyp())).findFirst().get().getKlassifikation().getTumorArt(), temp.intValue() + "");
+                }
+            } catch (IllegalAccessException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

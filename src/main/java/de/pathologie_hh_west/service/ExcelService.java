@@ -62,43 +62,31 @@ public class ExcelService {
 	}
 	
 	public Patient getPatientWithDBCheck(Set<IndexMapper> excelIndexPatientMapping, Integer currentRow, XSSFSheet sheet) {
-		//TODO
-		debug.add(currentRow);
 		long timeMillis = System.currentTimeMillis();
-		Patient patient = patientDataFromExcel(excelIndexPatientMapping, currentRow, sheet);
-		//System.out.println("Patient zusammen Bauen: " + (timeMillis - System.currentTimeMillis()));
-		if (patient.getVorname() == null || patient.getNachname() == null || patient.getGeburtsDatum() == null) {
-			throw new IllegalArgumentException("Kein eindeutiger Patient, es fehlt Vorname, Nachname oder Geburtsdatum");
+        Patient patientAusExcel = patientDataFromExcel(excelIndexPatientMapping, currentRow, sheet);
+        Patient patient = patientAusExcel;
+        patientAusExcel.setAlternativName(null);
+        //System.out.println("Patient zusammen Bauen: " + (timeMillis - System.currentTimeMillis()));
+        if (patientAusExcel.getVorname() == null || patientAusExcel.getNachname() == null || patientAusExcel.getGeburtsDatum() == null) {
+            throw new IllegalArgumentException("Kein eindeutiger Patient, es fehlt Vorname, Nachname oder Geburtsdatum");
 		}
-		//TODO
-		timeMillis = System.currentTimeMillis();
-		Patient patientAusDatenbank = patientRepository.findByNachnameAndVornameAndGeburtsDatum(patient.getNachname(), patient.getVorname(), patient.getGeburtsDatum());
-		System.out.println("Patient aus DB lesen: " + (timeMillis - System.currentTimeMillis()) + (timeMillis - System.currentTimeMillis()) + "|" + patient.getVorname()
-				+ ", " + patient.getNachname() + ", " + patient.getGeburtsDatum());
-		if (patientAusDatenbank != null) {
-			patient.setId(patientAusDatenbank.getId());
-			for (IndexMapper im : excelIndexPatientMapping) {
-				if (im.getOverwriteExcelValue() || patientAttributAuswahl.isDbValueNull(im.getPatientAttribut(), patientAusDatenbank)) {
-					patient = patientAttributAuswahl.setValueFromDbToExcelPatient(im.getPatientAttribut(), patientAusDatenbank, patient);
-				}
+        Patient patientAusDatenbank = patientRepository.findByNachnameAndVornameAndGeburtsDatum(patientAusExcel.getNachname(), patientAusExcel.getVorname(), patientAusExcel.getGeburtsDatum());
+        if (patientAusDatenbank != null) {
+            patient = patientAusDatenbank;
+            for (IndexMapper im : excelIndexPatientMapping) {
+                if (!im.getOverwriteExcelValue() || patientAttributAuswahl.isDbValueNull(im.getPatientAttribut(), patientAusDatenbank)) {
+                    patient = patientAttributAuswahl.setValueFromExcelToDbPatient(im.getPatientAttribut(), patientAusExcel, patientAusDatenbank);
+                }
 			}
-			final Patient patientFinal = patient;
-//			TODO benötigt?
-//			if (patientAusDatenbank.getFaelle().stream().findFirst().get().getFallID().getBefundTyp() != null
-//					&& patientAusDatenbank.getFaelle().stream().findFirst().get().getFallID().geteNummer().getValue() != "") {
-			
-			patientAusDatenbank.getFaelle().stream()
-					.filter(f -> !f.getFallID().geteNummer().getValue().equals(patientFinal.getFaelle().stream()
-							.findFirst().get().getFallID().geteNummer().getValue()))
-					.filter(g -> !g.getFallID().getBefundTyp().equals(patientFinal.getFaelle().stream()
-							.findFirst().get().getFallID().getBefundTyp()))
-					.forEach(patientFinal.getFaelle()::add);
-			patient = patientFinal;
-			//TODO
-			System.out.println("Fälle mergen: " + (timeMillis - System.currentTimeMillis()) + "|" + patient.getVorname()
-					+ ", " + patient.getNachname() + ", " + patient.getGeburtsDatum());
-//			}
-		}
+//			final Patient patientFinal = patient;
+//			patientAusDatenbank.getFaelle().stream()
+//					.filter(f -> !f.getFallID().geteNummer().getValue().equals(patientFinal.getFaelle().stream()
+//							.findFirst().get().getFallID().geteNummer().getValue()))
+//					.filter(g -> !g.getFallID().getBefundTyp().equals(patientFinal.getFaelle().stream()
+//							.findFirst().get().getFallID().getBefundTyp()))
+//					.forEach(patientFinal.getFaelle()::add);
+//			patient = patientFinal;
+        }
 		//TODO Temporary - Fall überarbeiten
 //		if (patient.getId() != null) {
 //			patientRepository.delete(patient.getId());
@@ -106,12 +94,6 @@ public class ExcelService {
 		debug.remove(currentRow);
 		return patient;
 	}
-
-//	public Fall getFallWithDBCHeck(Set<IndexMapper> excelIndexFallMapping, Integer currentRow, XSSFSheet sheet) {
-//		Fall fall = patientDataFromExcel(excelIndexFallMapping, currentRow, sheet);
-//
-//		return null;
-//	}
 	
 	private Patient patientDataFromExcel(Set<IndexMapper> excelIndexPatientMapping, Integer currentRow, XSSFSheet sheet) {
 
@@ -120,11 +102,7 @@ public class ExcelService {
 		patient.getFaelle().add(new Fall());
 		for (Iterator<IndexMapper> it = excelIndexPatientMapping.iterator(); it.hasNext(); ) {
 			IndexMapper indexMapper = it.next();
-			System.out.println(indexMapper.getPatientAttribut());
 			Integer cellIndex = indexMapper.getExcelIndex();
-			if (indexMapper.getPatientAttribut() != null && indexMapper.getPatientAttribut().toString() != "") {
-				//System.out.println(indexMapper.getPatientAttribut());
-			}
 			XSSFCell cell = row.getCell(cellIndex);
 			if (cell != null) {
 				switch (cell.getCellType()) {

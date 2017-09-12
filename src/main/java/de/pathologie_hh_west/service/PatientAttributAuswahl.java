@@ -47,45 +47,45 @@ public class PatientAttributAuswahl {
 	}
 
 
-	public Patient setValueFromDbToExcelPatient(PatientModelAttribute patientAttribut, Patient patientAusDatenbank, Patient patient) {
+	public Patient setValueFromExcelToDbPatient(PatientModelAttribute patientAttribut, Patient patientAusExcel, Patient patientAusDatenbank) {
 		Object dbValue;
 		switch (patientAttribut.getWrappingClass().getSimpleName().toUpperCase()) {
 			case "PATIENT":
-				dbValue = patientAttributMethodenService.methodGetterPatient(patientAttribut, patientAusDatenbank);
-				patientAttributMethodenService.methodSetterPatient(patientAttribut, dbValue, patient);
+				dbValue = patientAttributMethodenService.methodGetterPatient(patientAttribut, patientAusExcel);
+				patientAttributMethodenService.methodSetterPatient(patientAttribut, dbValue, patientAusDatenbank);
 				break;
 			case "ADRESSE":
-				dbValue = patientAttributMethodenService.methodGetterAdresse(patientAttribut, patientAusDatenbank);
-				patientAttributMethodenService.methodSetterAdresse(patientAttribut, dbValue, patient);
+				dbValue = patientAttributMethodenService.methodGetterAdresse(patientAttribut, patientAusExcel);
+				patientAttributMethodenService.methodSetterAdresse(patientAttribut, dbValue, patientAusDatenbank);
 				break;
 			case "EE2011":
-				dbValue = patientAttributMethodenService.methodGetterEE2011(patientAttribut, patientAusDatenbank);
-				patientAttributMethodenService.methodSetterEE2011(patientAttribut, dbValue, patient);
+				dbValue = patientAttributMethodenService.methodGetterEE2011(patientAttribut, patientAusExcel);
+				patientAttributMethodenService.methodSetterEE2011(patientAttribut, dbValue, patientAusDatenbank);
 				break;
 			case "EE2015":
-				dbValue = patientAttributMethodenService.methodGetterEE2015(patientAttribut, patientAusDatenbank);
-				patientAttributMethodenService.methodSetterEE2015(patientAttribut, dbValue, patient);
+				dbValue = patientAttributMethodenService.methodGetterEE2015(patientAttribut, patientAusExcel);
+				patientAttributMethodenService.methodSetterEE2015(patientAttribut, dbValue, patientAusDatenbank);
 				break;
 			case "EXPRIMAGE":
-				dbValue = patientAttributMethodenService.methodGetterExprimage(patientAttribut, patientAusDatenbank);
-				patientAttributMethodenService.methodSetterExprimage(patientAttribut, dbValue, patient);
+				dbValue = patientAttributMethodenService.methodGetterExprimage(patientAttribut, patientAusExcel);
+				patientAttributMethodenService.methodSetterExprimage(patientAttribut, dbValue, patientAusDatenbank);
 				break;
 			case "FALL":
-				dbValue = patientAttributMethodenService.methodGetterFall(patientAttribut, patientAusDatenbank, patient);
-				patientAttributMethodenService.methodSetterFall(patientAttribut, dbValue, patient);
+				dbValue = patientAttributMethodenService.methodGetterFall(patientAttribut, patientAusExcel, patientAusDatenbank);
+				patientAttributMethodenService.methodSetterFall(patientAttribut, dbValue, patientAusDatenbank);
 				break;
 			case "KLASSIFIKATION":
-				dbValue = patientAttributMethodenService.methodGetterKlassifikation(patientAttribut, patientAusDatenbank, patient);
-				patientAttributMethodenService.methodSetterKlassifikation(patientAttribut, dbValue, patient);
+				dbValue = patientAttributMethodenService.methodGetterKlassifikation(patientAttribut, patientAusExcel, patientAusDatenbank);
+				patientAttributMethodenService.methodSetterKlassifikationFallBekannt(patientAttribut, dbValue, patientAusDatenbank, patientAusExcel);
 
 				break;
 			case "TUMORART":
-				dbValue = patientAttributMethodenService.methodGetterTumorart(patientAttribut, patientAusDatenbank, patient);
-				patientAttributMethodenService.methodSetterTumorart(patientAttribut, dbValue, patient);
+				dbValue = patientAttributMethodenService.methodGetterTumorart(patientAttribut, patientAusExcel, patientAusDatenbank);
+				patientAttributMethodenService.methodSetterTumorartFallBekannt(patientAttribut, dbValue, patientAusDatenbank, patientAusExcel);
 
 				break;
 		}
-		return patient;
+		return patientAusDatenbank;
 
 	}
 
