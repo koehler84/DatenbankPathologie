@@ -74,7 +74,6 @@ public class MapColumns implements Initializable {
                 //Feedback nötig?
             }
             gpMapperNodes.addRow(gpRowAmount + i, excelBox, excelMapValue, excelOverride);
-            System.out.println();
         }
 		
 		btnCancel.setOnAction(event -> {

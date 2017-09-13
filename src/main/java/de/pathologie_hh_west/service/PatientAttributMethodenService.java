@@ -288,13 +288,13 @@ public class PatientAttributMethodenService {
         Method getterMethod = getGetterMethod(patientAttribut);
         try {
 
-            return getterMethod.invoke(patient.getFaelle().stream().
+            return getterMethod.invoke(patientAusDatenbank.getFaelle().stream().
                     filter(s -> {
-                        BefundTyp befundTyp = patient.getFaelle().stream().findAny().get().getFallID().getBefundTyp();
+                        BefundTyp befundTyp = patientAusDatenbank.getFaelle().stream().findAny().get().getFallID().getBefundTyp();
                         return s.getFallID().getBefundTyp().equals(befundTyp);
                     }).
                     filter(s -> {
-                        String eNummer = patient.getFaelle().stream().findAny().get().getFallID().geteNummer().getValue();
+                        String eNummer = patientAusDatenbank.getFaelle().stream().findAny().get().getFallID().geteNummer().getValue();
                         return s.getFallID().geteNummer().getValue().equals(eNummer);
                     }).findFirst().get());
         } catch (IllegalAccessException | InvocationTargetException e) {
@@ -307,13 +307,13 @@ public class PatientAttributMethodenService {
         Method getterMethod = getGetterMethod(patientAttribut);
         try {
 
-            return getterMethod.invoke(patient.getFaelle().stream().
+            return getterMethod.invoke(patientAusDatenbank.getFaelle().stream().
                     filter(s -> {
-                        BefundTyp befundTyp = patient.getFaelle().stream().findAny().get().getFallID().getBefundTyp();
+                        BefundTyp befundTyp = patientAusDatenbank.getFaelle().stream().findAny().get().getFallID().getBefundTyp();
                         return s.getFallID().getBefundTyp().equals(befundTyp);
                     }).
                     filter(s -> {
-                        String eNummer = patient.getFaelle().stream().findAny().get().getFallID().geteNummer().getValue();
+                        String eNummer = patientAusDatenbank.getFaelle().stream().findAny().get().getFallID().geteNummer().getValue();
                         return s.getFallID().geteNummer().getValue().equals(eNummer);
                     }).findFirst().get().getKlassifikation().getTumorArt());
         } catch (IllegalAccessException | InvocationTargetException e) {
@@ -326,13 +326,13 @@ public class PatientAttributMethodenService {
         Method getterMethod = getGetterMethod(patientAttribut);
         try {
 
-            return getterMethod.invoke(patient.getFaelle().stream().
+            return getterMethod.invoke(patientAusDatenbank.getFaelle().stream().
                     filter(s -> {
-                        BefundTyp befundTyp = patient.getFaelle().stream().findAny().get().getFallID().getBefundTyp();
+                        BefundTyp befundTyp = patientAusDatenbank.getFaelle().stream().findAny().get().getFallID().getBefundTyp();
                         return s.getFallID().getBefundTyp().equals(befundTyp);
                     }).
                     filter(s -> {
-                        String eNummer = patient.getFaelle().stream().findAny().get().getFallID().geteNummer().getValue();
+                        String eNummer = patientAusDatenbank.getFaelle().stream().findAny().get().getFallID().geteNummer().getValue();
                         return s.getFallID().geteNummer().getValue().equals(eNummer);
                     }).findFirst().get().getKlassifikation());
         } catch (IllegalAccessException | InvocationTargetException e) {
@@ -347,7 +347,7 @@ public class PatientAttributMethodenService {
         for (Method setterMethod : setterMethods) {
             try {
                 //setter darf nur einen parameter haben
-                if (setterMethod.getParameterTypes()[0].equals(dbValue.getClass())) {
+                if (dbValue == null || setterMethod.getParameterTypes()[0].equals(dbValue.getClass())) {
                     setterMethod.invoke(patientAusDatenbank.getFaelle().stream().filter(f -> f.getFallID().geteNummer().getValue().equals(patientAusExcel.getFaelle().stream().findFirst().get().getFallID().geteNummer().getValue()))
                             .filter(g -> g.getFallID().getBefundTyp().equals(patientAusExcel.getFaelle().stream()
                                     .findFirst().get().getFallID().getBefundTyp())).findFirst().get().getKlassifikation(), dbValue);
@@ -375,6 +375,7 @@ public class PatientAttributMethodenService {
 
     public void methodSetterTumorartFallBekannt(PatientModelAttribute patientAttribut, Object dbValue, Patient patientAusDatenbank, Patient patientAusExcel) {
         Method[] setterMethods = getSetterMethod(patientAttribut);
+        if (dbValue == null) dbValue = "";
         for (Method setterMethod : setterMethods) {
             try {
                 //setter darf nur einen parameter haben
@@ -396,6 +397,38 @@ public class PatientAttributMethodenService {
                                     .findFirst().get().getFallID().getBefundTyp())).findFirst().get().getKlassifikation().getTumorArt(), temp.intValue() + "");
                 }
             } catch (IllegalAccessException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void methodSetterFallBekannt(PatientModelAttribute patientAttribut, Object dbValue, Patient patientAusDatenbank, Patient patientAusExcel) {
+        Method[] setterMethods = getSetterMethod(patientAttribut);
+        if (dbValue == null) dbValue = "";
+        for (Method setterMethod : setterMethods) {
+            try {
+                //setter darf nur einen parameter haben
+                if (setterMethod.getParameterTypes()[0].equals(dbValue.getClass())) {
+                    setterMethod.invoke(patientAusDatenbank.getFaelle().stream().filter(f -> f.getFallID().geteNummer().getValue().equals(patientAusExcel.getFaelle().stream().findFirst().get().getFallID().geteNummer().getValue()))
+                            .filter(g -> g.getFallID().getBefundTyp().equals(patientAusExcel.getFaelle().stream()
+                                    .findFirst().get().getFallID().getBefundTyp())).findFirst().get(), dbValue);
+                }
+                if (setterMethod.getParameterTypes()[0].equals(Integer.class) && dbValue.getClass().equals(BigDecimal.class)) {
+                    BigDecimal temp = (BigDecimal) dbValue;
+                    setterMethod.invoke(patientAusDatenbank.getFaelle().stream().filter(f -> f.getFallID().geteNummer().getValue().equals(patientAusExcel.getFaelle().stream().findFirst().get().getFallID().geteNummer().getValue()))
+                            .filter(g -> g.getFallID().getBefundTyp().equals(patientAusExcel.getFaelle().stream()
+                                    .findFirst().get().getFallID().getBefundTyp())).findFirst().get(), temp.intValue());
+                }
+                if (setterMethod.getParameterTypes()[0].equals(String.class) && dbValue.getClass().equals(BigDecimal.class)) {
+                    BigDecimal temp = (BigDecimal) dbValue;
+                    setterMethod.invoke(patientAusDatenbank.getFaelle()
+                            .stream()
+                            .filter(f -> f.getFallID().geteNummer().getValue().equals(patientAusExcel.getFaelle().stream().findFirst().get().getFallID().geteNummer().getValue()))
+                            .filter(g -> g.getFallID().getBefundTyp().equals(patientAusExcel.getFaelle().stream()
+                                    .findFirst().get().getFallID().getBefundTyp()))
+                            .findFirst().get(), temp.intValue() + "");
+                }
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

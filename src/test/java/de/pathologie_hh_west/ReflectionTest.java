@@ -66,8 +66,8 @@ public class ReflectionTest {
 	@Test
 	public void EnumReflectionTest() throws Exception {
 
-		Method testMethod = ;
-		Patient p = new Patient();
+        Method testMethod = null;
+        Patient p = new Patient();
 		PatientAttributAuswahl patientAttributAuswahl = new PatientAttributAuswahl();
 		p = patientAttributAuswahl.mapExcelValueToPatient("Dieter", PatientModelAttribute.VORNAME, p);
 		boolean dieter = p.getVorname().equals("Dieter");

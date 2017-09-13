@@ -1,5 +1,7 @@
 package de.pathologie_hh_west.model;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -9,6 +11,7 @@ import java.util.Set;
 /**
  * Created by VaniR on 10.07.2017.
  */
+
 @Entity
 @Table(
         uniqueConstraints = @UniqueConstraint(columnNames = {"geburtsDatum", "vorname", "nachname"})
@@ -16,7 +19,10 @@ import java.util.Set;
 //@Transactional(isolation = Isolation.SERIALIZABLE)
 public class Patient {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "IdOrGenerated")
+    @GenericGenerator(name = "IdOrGenerated",
+            strategy = "de.pathologie_hh_west.service.UseIdOrGenerate"
+    )
     @Column(name = "ID")
     private Long id;
     @Column(name = "vorname")

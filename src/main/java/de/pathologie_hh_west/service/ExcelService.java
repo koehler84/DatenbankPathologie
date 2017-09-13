@@ -65,7 +65,6 @@ public class ExcelService {
 		long timeMillis = System.currentTimeMillis();
         Patient patientAusExcel = patientDataFromExcel(excelIndexPatientMapping, currentRow, sheet);
         Patient patient = patientAusExcel;
-        patientAusExcel.setAlternativName(null);
         //System.out.println("Patient zusammen Bauen: " + (timeMillis - System.currentTimeMillis()));
         if (patientAusExcel.getVorname() == null || patientAusExcel.getNachname() == null || patientAusExcel.getGeburtsDatum() == null) {
             throw new IllegalArgumentException("Kein eindeutiger Patient, es fehlt Vorname, Nachname oder Geburtsdatum");

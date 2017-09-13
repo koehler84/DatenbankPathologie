@@ -72,8 +72,8 @@ public class PatientAttributAuswahl {
 				break;
 			case "FALL":
 				dbValue = patientAttributMethodenService.methodGetterFall(patientAttribut, patientAusExcel, patientAusDatenbank);
-				patientAttributMethodenService.methodSetterFall(patientAttribut, dbValue, patientAusDatenbank);
-				break;
+                patientAttributMethodenService.methodSetterFallBekannt(patientAttribut, dbValue, patientAusDatenbank, patientAusExcel);
+                break;
 			case "KLASSIFIKATION":
 				dbValue = patientAttributMethodenService.methodGetterKlassifikation(patientAttribut, patientAusExcel, patientAusDatenbank);
 				patientAttributMethodenService.methodSetterKlassifikationFallBekannt(patientAttribut, dbValue, patientAusDatenbank, patientAusExcel);
