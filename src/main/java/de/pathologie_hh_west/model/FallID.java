@@ -94,7 +94,7 @@ public class FallID implements Serializable, Comparable {
     @Override
     public String toString() {
         return "FallID{" +
-                "eNummer=" + eNummer +
+                "eNummer=" + eNummer.getValue() +
                 ", befundTyp=" + befundTyp +
                 '}';
     }

@@ -2,7 +2,6 @@ package de.pathologie_hh_west.model;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /**
@@ -169,20 +168,12 @@ public class EE2015 {
         return ee2015Med_antihormon;
     }
 
-    public void setEe2015Med_antihormon(BigDecimal ee2015Med_antihormon) {
-        this.ee2015Med_antihormon = ee2015Med_antihormon.intValue();
-    }
-
     public void setEe2015Med_antihormon(Integer ee2015Med_antihormon) {
         this.ee2015Med_antihormon = ee2015Med_antihormon;
     }
 
     public Integer getEe2015Med_antihormon_unbekannt() {
         return ee2015Med_antihormon_unbekannt;
-    }
-
-    public void setEe2015Med_antihormon_unbekannt(BigDecimal ee2015Med_antihormon_unbekannt) {
-        this.ee2015Med_antihormon_unbekannt = ee2015Med_antihormon_unbekannt.intValue();
     }
 
     public void setEe2015Med_antihormon_unbekannt(Integer ee2015Med_antihormon_unbekannt) {
@@ -193,10 +184,6 @@ public class EE2015 {
         return ee2015Med_antihormon_tamoxifen;
     }
 
-    public void setEe2015Med_antihormon_tamoxifen(BigDecimal ee2015Med_antihormon_tamoxifen) {
-        this.ee2015Med_antihormon_tamoxifen = ee2015Med_antihormon_tamoxifen.intValue();
-    }
-
     public void setEe2015Med_antihormon_tamoxifen(Integer ee2015Med_antihormon_tamoxifen) {
         this.ee2015Med_antihormon_tamoxifen = ee2015Med_antihormon_tamoxifen;
     }
@@ -205,20 +192,12 @@ public class EE2015 {
         return ee2015Med_antihormon_arimidex;
     }
 
-    public void setEe2015Med_antihormon_arimidex(BigDecimal ee2015Med_antihormon_arimidex) {
-        this.ee2015Med_antihormon_arimidex = ee2015Med_antihormon_arimidex.intValue();
-    }
-
-    public void setEe2015Med_antihormon_arimidex(Integer ee2015Med_antihormon_arimidex) {
+    void setEe2015Med_antihormon_arimidex(Integer ee2015Med_antihormon_arimidex) {
         this.ee2015Med_antihormon_arimidex = ee2015Med_antihormon_arimidex;
     }
 
     public Integer getEe2015Med_antihormon_aromasin() {
         return ee2015Med_antihormon_aromasin;
-    }
-
-    public void setEe2015Med_antihormon_aromasin(BigDecimal ee2015Med_antihormon_aromasin) {
-        this.ee2015Med_antihormon_aromasin = ee2015Med_antihormon_aromasin.intValue();
     }
 
     public void setEe2015Med_antihormon_aromasin(Integer ee2015Med_antihormon_aromasin) {
@@ -227,10 +206,6 @@ public class EE2015 {
 
     public Integer getEe2015Med_antihormon_fe03a() {
         return ee2015Med_antihormon_fe03a;
-    }
-
-    public void setEe2015Med_antihormon_fe03a(BigDecimal ee2015Med_antihormon_fe03a) {
-        this.ee2015Med_antihormon_fe03a = ee2015Med_antihormon_fe03a.intValue();
     }
 
     public void setEe2015Med_antihormon_fe03a(Integer ee2015Med_antihormon_fe03a) {
@@ -273,20 +248,12 @@ public class EE2015 {
         return ee2015Rezidiv;
     }
 
-    public void setEe2015Rezidiv(BigDecimal ee2015Rezidiv) {
-        this.ee2015Rezidiv = ee2015Rezidiv.intValue();
-    }
-
     public void setEe2015Rezidiv(Integer ee2015Rezidiv) {
         this.ee2015Rezidiv = ee2015Rezidiv;
     }
 
     public Integer getEe2015Metastasen() {
         return ee2015Metastasen;
-    }
-
-    public void setEe2015Metastasen(BigDecimal ee2015Metastasen) {
-        this.ee2015Metastasen = ee2015Metastasen.intValue();
     }
 
     public void setEe2015Metastasen(Integer ee2015Metastasen) {
@@ -297,20 +264,12 @@ public class EE2015 {
         return ee2015Metastasen_abrust;
     }
 
-    public void setEe2015Metastasen_abrust(BigDecimal ee2015Metastasen_abrust) {
-        this.ee2015Metastasen_abrust = ee2015Metastasen_abrust.intValue();
-    }
-
     public void setEe2015Metastasen_abrust(Integer ee2015Metastasen_abrust) {
         this.ee2015Metastasen_abrust = ee2015Metastasen_abrust;
     }
 
     public Integer getEe2015Metastasen_lymphknoten() {
         return ee2015Metastasen_lymphknoten;
-    }
-
-    public void setEe2015Metastasen_lymphknoten(BigDecimal ee2015Metastasen_lymphknoten) {
-        this.ee2015Metastasen_lymphknoten = ee2015Metastasen_lymphknoten.intValue();
     }
 
     public void setEe2015Metastasen_lymphknoten(Integer ee2015Metastasen_lymphknoten) {
@@ -321,20 +280,12 @@ public class EE2015 {
         return ee2015Metastasen_knochen;
     }
 
-    public void setEe2015Metastasen_knochen(BigDecimal ee2015Metastasen_knochen) {
-        this.ee2015Metastasen_knochen = ee2015Metastasen_knochen.intValue();
-    }
-
     public void setEe2015Metastasen_knochen(Integer ee2015Metastasen_knochen) {
         this.ee2015Metastasen_knochen = ee2015Metastasen_knochen;
     }
 
     public Integer getEe2015Metastasen_lunge() {
         return ee2015Metastasen_lunge;
-    }
-
-    public void setEe2015Metastasen_lunge(BigDecimal ee2015Metastasen_lunge) {
-        this.ee2015Metastasen_lunge = ee2015Metastasen_lunge.intValue();
     }
 
     public void setEe2015Metastasen_lunge(Integer ee2015Metastasen_lunge) {
@@ -345,10 +296,6 @@ public class EE2015 {
         return ee2015Metastasen_gehirn;
     }
 
-    public void setEe2015Metastasen_gehirn(BigDecimal ee2015Metastasen_gehirn) {
-        this.ee2015Metastasen_gehirn = ee2015Metastasen_gehirn.intValue();
-    }
-
     public void setEe2015Metastasen_gehirn(Integer ee2015Metastasen_gehirn) {
         this.ee2015Metastasen_gehirn = ee2015Metastasen_gehirn;
     }
@@ -357,20 +304,12 @@ public class EE2015 {
         return ee2015Metastasen_leber;
     }
 
-    public void setEe2015Metastasen_leber(BigDecimal ee2015Metastasen_leber) {
-        this.ee2015Metastasen_leber = ee2015Metastasen_leber.intValue();
-    }
-
     public void setEe2015Metastasen_leber(Integer ee2015Metastasen_leber) {
         this.ee2015Metastasen_leber = ee2015Metastasen_leber;
     }
 
     public Integer getEe2015Metastasen_andere() {
         return ee2015Metastasen_andere;
-    }
-
-    public void setEe2015Metastasen_andere(BigDecimal ee2015Metastasen_andere) {
-        this.ee2015Metastasen_andere = ee2015Metastasen_andere.intValue();
     }
 
     public void setEe2015Metastasen_andere(Integer ee2015Metastasen_andere) {

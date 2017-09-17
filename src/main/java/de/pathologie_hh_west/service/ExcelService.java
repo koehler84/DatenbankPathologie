@@ -1,8 +1,7 @@
 package de.pathologie_hh_west.service;
 
 import de.pathologie_hh_west.data.PatientRepository;
-import de.pathologie_hh_west.model.Fall;
-import de.pathologie_hh_west.model.Patient;
+import de.pathologie_hh_west.model.*;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -14,7 +13,9 @@ import org.springframework.stereotype.Service;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -25,13 +26,12 @@ import java.util.Set;
  */
 @Service
 public class ExcelService {
-	
+
 	@Autowired
 	private PatientAttributAuswahl patientAttributAuswahl;
 	@Autowired
 	private PatientRepository patientRepository;
-	public Set<Integer> debug = new HashSet<>();
-	
+
 	public ExcelFile openExcelFile(String filePath) {
 		XSSFWorkbook workbook = null;
 		try {
@@ -42,7 +42,7 @@ public class ExcelService {
 		}
 		return new ExcelFile(workbook);
 	}
-	
+
 	public DataUpdateWrapper getUpdatedPatientsFromExcel(final Set<IndexMapper> indexMappers, final ExcelFile excelFile, final Integer sheetIndex) throws Exception {
 		long count = indexMappers.stream()
 				.filter(mapper -> {
@@ -57,44 +57,85 @@ public class ExcelService {
 				})
 				.count();
 		if (count != 3) throw new IllegalArgumentException("Kein eindeutiger Patient, es fehlt Vorname, Nachname oder Geburtsdatum");
-		
-		return new DataUpdateWrapper(this, patientRepository, indexMappers, excelFile, sheetIndex);
+
+        return new DataUpdateWrapper(this, patientRepository, indexMappers, excelFile, sheetIndex);
 	}
-	
-	public Patient getPatientWithDBCheck(Set<IndexMapper> excelIndexPatientMapping, Integer currentRow, XSSFSheet sheet) {
-		long timeMillis = System.currentTimeMillis();
+
+    public Patient getPatientWithDBCheck(Set<IndexMapper> excelIndexPatientMapping, Integer currentRow, XSSFSheet sheet) {
         Patient patientAusExcel = patientDataFromExcel(excelIndexPatientMapping, currentRow, sheet);
         Patient patient = patientAusExcel;
-        //System.out.println("Patient zusammen Bauen: " + (timeMillis - System.currentTimeMillis()));
+        if (patientAusExcel.getFaelle().stream().findFirst().get().getFallID().geteNummer().getValue().equalsIgnoreCase("A/2006/208763")) {
+            System.out.println();
+        }
         if (patientAusExcel.getVorname() == null || patientAusExcel.getNachname() == null || patientAusExcel.getGeburtsDatum() == null) {
             throw new IllegalArgumentException("Kein eindeutiger Patient, es fehlt Vorname, Nachname oder Geburtsdatum");
-		}
+        }
         Patient patientAusDatenbank = patientRepository.findByNachnameAndVornameAndGeburtsDatum(patientAusExcel.getNachname(), patientAusExcel.getVorname(), patientAusExcel.getGeburtsDatum());
         if (patientAusDatenbank != null) {
+            if (patientAusDatenbank.getAdresse() == null) patientAusDatenbank.setAdresse(new Adresse());
+            if (patientAusDatenbank.getFaelle() == null) patientAusDatenbank.setFaelle(new HashSet<Fall>());
+            for (Fall fall : patientAusDatenbank.getFaelle()) {
+                if (fall.getFallID() == null) fall.setFallID(new FallID());
+                if (fall.getKlassifikation() == null) fall.setKlassifikation(new Klassifikation());
+                if (fall.getKlassifikation().getTumorArt() == null)
+                    fall.getKlassifikation().setTumorArt(new TumorArt());
+            }
+            if (patientAusDatenbank.getPatientenZusatzdaten() == null)
+                patientAusDatenbank.setPatientenZusatzdaten(new PatientenZusatzdaten());
+            if (patientAusDatenbank.getPatientenZusatzdaten().getExprimage() == null)
+                patientAusDatenbank.getPatientenZusatzdaten().setExprimage(new Exprimage());
+            if (patientAusDatenbank.getPatientenZusatzdaten().getEe2011() == null)
+                patientAusDatenbank.getPatientenZusatzdaten().setEe2011(new EE2011());
+            if (patientAusDatenbank.getPatientenZusatzdaten().getEe2015() == null)
+                patientAusDatenbank.getPatientenZusatzdaten().setEe2015(new EE2015());
+
+
             patient = patientAusDatenbank;
+            if (!patientAusDatenbank.getFaelle().stream()
+                    .filter(f -> f.getFallID().geteNummer().getValue().equals(patientAusExcel.getFaelle().stream()
+                            .findFirst().get().getFallID().geteNummer().getValue()))
+                    .filter(g -> g.getFallID().getBefundTyp().equals(patientAusExcel.getFaelle().stream()
+                            .findFirst().get().getFallID().getBefundTyp()))
+                    .findFirst()
+                    .isPresent()) {
+                patient.setFaelle(new HashSet<Fall>());
+                patient.getFaelle().add(new Fall());
+
+            }
+
             for (IndexMapper im : excelIndexPatientMapping) {
-                if (!im.getOverwriteExcelValue() || patientAttributAuswahl.isDbValueNull(im.getPatientAttribut(), patientAusDatenbank)) {
-                    patient = patientAttributAuswahl.setValueFromExcelToDbPatient(im.getPatientAttribut(), patientAusExcel, patientAusDatenbank);
+                if (!im.getOverwriteExcelValue()) {
+                    patient = patientAttributAuswahl.setValueFromExcelToDbPatient(im.getPatientAttribut(), patientAusExcel, patient);
                 }
-			}
-//			final Patient patientFinal = patient;
-//			patientAusDatenbank.getFaelle().stream()
-//					.filter(f -> !f.getFallID().geteNummer().getValue().equals(patientFinal.getFaelle().stream()
-//							.findFirst().get().getFallID().geteNummer().getValue()))
-//					.filter(g -> !g.getFallID().getBefundTyp().equals(patientFinal.getFaelle().stream()
-//							.findFirst().get().getFallID().getBefundTyp()))
-//					.forEach(patientFinal.getFaelle()::add);
-//			patient = patientFinal;
+            }
+            //TODO:FEHLER nur gleiche fälle vergleichen keine falschen
+//			for (Fall fallDatenbank : patientAusDatenbank.getFaelle()) {
+//				for (Fall fallExcel : patientAusExcel.getFaelle()) {
+//					if (fallDatenbank.getFallID().geteNummer().getValue().equalsIgnoreCase(fallExcel.getFallID().geteNummer().getValue())
+//							&& fallDatenbank.getFallID().getBefundTyp().equals(fallExcel.getFallID().getBefundTyp())) {
+//						for (IndexMapper im : excelIndexPatientMapping) {
+//							//TODO: || patientAttributAuswahl.isDbValueNull(im.getPatientAttribut(), patientAusDatenbank)
+//							if (!im.getOverwriteExcelValue() && im.getPatientAttribut() != PatientModelAttribute.FALLID
+//									&& im.getPatientAttribut() != PatientModelAttribute.BEFUNDTYP) {
+//								patient = patientAttributAuswahl.setValueFromExcelToDbPatient(im.getPatientAttribut(), patientAusExcel, patientAusDatenbank);
+//							}
+//						}
+//					} else {
+//						Fall fallNew = new Fall();
+//						fallNew.setFallID(patientAusExcel.getFaelle().stream().findFirst().get().getFallID());
+//						patientAusDatenbank.getFaelle().add(fallNew);
+//						for (IndexMapper im : excelIndexPatientMapping) {
+//
+//							patient = patientAttributAuswahl.setValueFromExcelToDbPatient(im.getPatientAttribut(), patientAusExcel, patientAusDatenbank);
+//						}
+//					}
+//				}
+//			}
         }
-		//TODO Temporary - Fall überarbeiten
-//		if (patient.getId() != null) {
-//			patientRepository.delete(patient.getId());
-//		}
-		debug.remove(currentRow);
-		return patient;
+        return patient;
 	}
-	
-	private Patient patientDataFromExcel(Set<IndexMapper> excelIndexPatientMapping, Integer currentRow, XSSFSheet sheet) {
+
+    private Patient patientDataFromExcel(Set<IndexMapper> excelIndexPatientMapping, Integer currentRow, XSSFSheet sheet) {
 
 		XSSFRow row = sheet.getRow(currentRow);
 		Patient patient = new Patient();
@@ -114,16 +155,21 @@ public class ExcelService {
 							patient = patientAttributAuswahl.mapExcelValueToPatient(cell.getDateCellValue().toInstant().
 											atZone(ZoneId.systemDefault()).toLocalDate(), indexMapper.getPatientAttribut(),
 									patient);
-							
-						} else {
+
+                        } else {
 							patient = patientAttributAuswahl.mapExcelValueToPatient(BigDecimal.valueOf(cell.getNumericCellValue()), indexMapper.
 									getPatientAttribut(), patient);
 						}
 						break;
 					case XSSFCell.CELL_TYPE_STRING:
-						patient = patientAttributAuswahl.mapExcelValueToPatient(cell.getStringCellValue(), indexMapper.getPatientAttribut(),
-								patient);
-						break;
+                        if (cell.getStringCellValue().matches("\\d\\d\\d\\d-\\d\\d-\\d\\d")) {
+                            patient = patientAttributAuswahl.mapExcelValueToPatient(LocalDate.parse(cell.getStringCellValue(), DateTimeFormatter.ISO_DATE), indexMapper.getPatientAttribut(),
+                                    patient);
+                        } else {
+                            patient = patientAttributAuswahl.mapExcelValueToPatient(cell.getStringCellValue(), indexMapper.getPatientAttribut(),
+                                    patient);
+                        }
+                        break;
 					case XSSFCell.CELL_TYPE_BLANK:
 						patient = patientAttributAuswahl.mapExcelValueToPatient("", indexMapper.getPatientAttribut(),
 								patient);
@@ -136,8 +182,8 @@ public class ExcelService {
 						patient = patientAttributAuswahl.mapExcelValueToPatient(cell.getErrorCellValue() + "", indexMapper.getPatientAttribut(),
 								patient);
 						break;
-					
-					default:
+
+                    default:
 						patient = patientAttributAuswahl.mapExcelValueToPatient("<FEHLER IM PROGRAMM>", indexMapper.getPatientAttribut(),
 								patient);
 				}
@@ -145,5 +191,5 @@ public class ExcelService {
 		}
 		return patient;
 	}
-	
+
 }

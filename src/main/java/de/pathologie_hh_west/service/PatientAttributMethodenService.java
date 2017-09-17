@@ -39,30 +39,6 @@ public class PatientAttributMethodenService {
         return null;
     }
 
-    public void methodSetterPatient(PatientModelAttribute modelAttribute, Object zellenWert, Patient patient) {
-        Method[] setterMethods = getSetterMethod(modelAttribute);
-        for (Method setterMethod : setterMethods) {
-            try {
-                //setter darf nur einen parameter haben
-                if (zellenWert == null || setterMethod.getParameterTypes()[0].equals(zellenWert.getClass())) {
-                    setterMethod.invoke(patient, zellenWert);
-                }
-                if (setterMethod.getParameterTypes()[0].equals(Integer.class) && zellenWert.getClass().equals(BigDecimal.class)) {
-                    BigDecimal temp = (BigDecimal) zellenWert;
-                    setterMethod.invoke(patient, temp.intValue());
-                }
-                if (setterMethod.getParameterTypes()[0].equals(String.class) && zellenWert.getClass().equals(BigDecimal.class)) {
-                    BigDecimal temp = (BigDecimal) zellenWert;
-                    setterMethod.invoke(patient, temp.intValue() + "");
-                }
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     public Object methodGetterAdresse(PatientModelAttribute modelAttribute, Patient patient) {
         Method getterMethod = getGetterMethod(modelAttribute);
         try {
@@ -71,28 +47,6 @@ public class PatientAttributMethodenService {
             e.printStackTrace();
         }
         return null;
-    }
-
-    public void methodSetterAdresse(PatientModelAttribute modelAttribute, Object zellenWert, Patient patient) {
-        Method[] setterMethods = getSetterMethod(modelAttribute);
-        for (Method setterMethod : setterMethods) {
-            try {
-                //setter darf nur einen parameter haben
-                if (zellenWert == null || setterMethod.getParameterTypes()[0].equals(zellenWert.getClass())) {
-                    setterMethod.invoke(patient.getAdresse(), zellenWert);
-                }
-                if (setterMethod.getParameterTypes()[0].equals(Integer.class) && zellenWert.getClass().equals(BigDecimal.class)) {
-                    BigDecimal temp = (BigDecimal) zellenWert;
-                    setterMethod.invoke(patient.getAdresse(), temp.intValue());
-                }
-                if (setterMethod.getParameterTypes()[0].equals(String.class) && zellenWert.getClass().equals(BigDecimal.class)) {
-                    BigDecimal temp = (BigDecimal) zellenWert;
-                    setterMethod.invoke(patient.getAdresse(), temp.intValue() + "");
-                }
-            } catch (IllegalAccessException | InvocationTargetException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     public Object methodGetterEE2011(PatientModelAttribute modelAttribute, Patient patient) {
@@ -105,28 +59,6 @@ public class PatientAttributMethodenService {
         return null;
     }
 
-    public void methodSetterEE2011(PatientModelAttribute modelAttribute, Object zellenWert, Patient patient) {
-        Method[] setterMethods = getSetterMethod(modelAttribute);
-        for (Method setterMethod : setterMethods) {
-            try {
-                //setter darf nur einen parameter haben
-                if (zellenWert == null || setterMethod.getParameterTypes()[0].equals(zellenWert.getClass())) {
-                    setterMethod.invoke(patient.getPatientenZusatzdaten().getEe2011(), zellenWert);
-                }
-                if (setterMethod.getParameterTypes()[0].equals(Integer.class) && zellenWert.getClass().equals(BigDecimal.class)) {
-                    BigDecimal temp = (BigDecimal) zellenWert;
-                    setterMethod.invoke(patient.getPatientenZusatzdaten().getEe2011(), temp.intValue());
-                }
-                if (setterMethod.getParameterTypes()[0].equals(String.class) && zellenWert.getClass().equals(BigDecimal.class)) {
-                    BigDecimal temp = (BigDecimal) zellenWert;
-                    setterMethod.invoke(patient.getPatientenZusatzdaten().getEe2011(), temp.intValue() + "");
-                }
-            } catch (IllegalAccessException | InvocationTargetException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     public Object methodGetterEE2015(PatientModelAttribute modelAttribute, Patient patient) {
         Method getterMethod = getGetterMethod(modelAttribute);
         try {
@@ -137,28 +69,6 @@ public class PatientAttributMethodenService {
         return null;
     }
 
-    public void methodSetterEE2015(PatientModelAttribute modelAttribute, Object zellenWert, Patient patient) {
-        Method[] setterMethods = getSetterMethod(modelAttribute);
-        for (Method setterMethod : setterMethods) {
-            try {
-                //setter darf nur einen parameter haben
-                if (zellenWert == null || setterMethod.getParameterTypes()[0].equals(zellenWert.getClass())) {
-                    setterMethod.invoke(patient.getPatientenZusatzdaten().getEe2015(), zellenWert);
-                }
-                if (setterMethod.getParameterTypes()[0].equals(Integer.class) && zellenWert.getClass().equals(BigDecimal.class)) {
-                    BigDecimal temp = (BigDecimal) zellenWert;
-                    setterMethod.invoke(patient.getPatientenZusatzdaten().getEe2015(), temp.intValue());
-                }
-                if (setterMethod.getParameterTypes()[0].equals(String.class) && zellenWert.getClass().equals(BigDecimal.class)) {
-                    BigDecimal temp = (BigDecimal) zellenWert;
-                    setterMethod.invoke(patient.getPatientenZusatzdaten().getEe2015(), temp.intValue() + "");
-                }
-            } catch (IllegalAccessException | InvocationTargetException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     public Object methodGetterExprimage(PatientModelAttribute modelAttribute, Patient patient) {
         Method getterMethod = getGetterMethod(modelAttribute);
         try {
@@ -167,121 +77,6 @@ public class PatientAttributMethodenService {
             e.printStackTrace();
         }
         return null;
-    }
-
-    public void methodSetterExprimage(PatientModelAttribute modelAttribute, Object zellenWert, Patient patient) {
-        Method[] setterMethods = getSetterMethod(modelAttribute);
-        for (Method setterMethod : setterMethods) {
-            try {
-                //setter darf nur einen parameter haben
-                if (zellenWert == null || setterMethod.getParameterTypes()[0].equals(zellenWert.getClass())) {
-                    setterMethod.invoke(patient.getPatientenZusatzdaten().getExprimage(), zellenWert);
-                }
-                if (setterMethod.getParameterTypes()[0].equals(Integer.class) && zellenWert.getClass().equals(BigDecimal.class)) {
-                    BigDecimal temp = (BigDecimal) zellenWert;
-                    setterMethod.invoke(patient.getPatientenZusatzdaten().getExprimage(), temp.intValue());
-                }
-                if (setterMethod.getParameterTypes()[0].equals(String.class) && zellenWert.getClass().equals(BigDecimal.class)) {
-                    BigDecimal temp = (BigDecimal) zellenWert;
-                    setterMethod.invoke(patient.getPatientenZusatzdaten().getExprimage(), temp.intValue() + "");
-                }
-            } catch (IllegalAccessException | InvocationTargetException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public void methodSetterTumorart(PatientModelAttribute attributName, Object zellenWert, Patient patient) {
-        Method[] setterMethods = getSetterMethod(attributName);
-        for (Method setterMethod : setterMethods) {
-            try {
-                //setter darf nur einen parameter haben
-                if (zellenWert == null || setterMethod.getParameterTypes()[0].equals(zellenWert.getClass())) {
-                    setterMethod.invoke(patient.getFaelle().stream().findFirst().get().getKlassifikation().getTumorArt(), zellenWert);
-                }
-                if (setterMethod.getParameterTypes()[0].equals(Integer.class) && zellenWert.getClass().equals(BigDecimal.class)) {
-                    BigDecimal temp = (BigDecimal) zellenWert;
-                    setterMethod.invoke(patient.getFaelle().stream().findFirst().get().getKlassifikation().getTumorArt(), temp.intValue());
-                }
-                if (setterMethod.getParameterTypes()[0].equals(String.class) && zellenWert.getClass().equals(BigDecimal.class)) {
-                    BigDecimal temp = (BigDecimal) zellenWert;
-                    setterMethod.invoke(patient.getFaelle().stream().findFirst().get().getKlassifikation().getTumorArt(), temp.intValue() + "");
-                }
-            } catch (IllegalAccessException | InvocationTargetException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public void methodSetterKlassifikation(PatientModelAttribute attributName, Object zellenWert, Patient patient) {
-        Method[] setterMethods = getSetterMethod(attributName);
-        for (Method setterMethod : setterMethods) {
-            try {
-                //setter darf nur einen parameter haben
-                if (zellenWert == null || setterMethod.getParameterTypes()[0].equals(zellenWert.getClass())) {
-                    setterMethod.invoke(patient.getFaelle().stream().findFirst().get().getKlassifikation(), zellenWert);
-                }
-                if (setterMethod.getParameterTypes()[0].equals(Integer.class) && zellenWert.getClass().equals(BigDecimal.class)) {
-                    BigDecimal temp = (BigDecimal) zellenWert;
-                    setterMethod.invoke(patient.getFaelle().stream().findFirst().get().getKlassifikation(), temp.intValue());
-                }
-                if (setterMethod.getParameterTypes()[0].equals(String.class) && zellenWert.getClass().equals(BigDecimal.class)) {
-                    BigDecimal temp = (BigDecimal) zellenWert;
-                    setterMethod.invoke(patient.getFaelle().stream().findFirst().get().getKlassifikation(), temp.intValue() + "");
-                }
-            } catch (IllegalAccessException | InvocationTargetException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public void methodSetterFallID(PatientModelAttribute attributName, Object zellenWert, Patient patient) {
-        Method[] setterMethods = getSetterMethod(attributName);
-        for (Method setterMethod : setterMethods) {
-            try {
-                //setter darf nur einen parameter haben
-                if (attributName == PatientModelAttribute.ENUMMER && zellenWert != "") {
-                    patient.getFaelle().stream().findFirst().get().getFallID().geteNummer().setValue(zellenWert.toString());
-                }
-                if (zellenWert == null || setterMethod.getParameterTypes()[0].equals(zellenWert.getClass())) {
-                    setterMethod.invoke(patient.getFaelle().stream().findFirst().get().getFallID(), zellenWert);
-                }
-                if (setterMethod.getParameterTypes()[0].equals(Integer.class) && zellenWert.getClass().equals(BigDecimal.class)) {
-                    BigDecimal temp = (BigDecimal) zellenWert;
-                    setterMethod.invoke(patient.getFaelle().stream().findFirst().get().getFallID(), temp.intValue());
-                }
-                if (setterMethod.getParameterTypes()[0].equals(String.class) && zellenWert.getClass().equals(BigDecimal.class)) {
-                    BigDecimal temp = (BigDecimal) zellenWert;
-                    setterMethod.invoke(patient.getFaelle().stream().findFirst().get().getFallID(), temp.intValue() + "");
-                }
-            } catch (IllegalAccessException | InvocationTargetException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public void methodSetterFall(PatientModelAttribute attributName, Object zellenWert, Patient patient) {
-        Method[] setterMethods = getSetterMethod(attributName);
-        for (Method setterMethod : setterMethods) {
-            try {
-                //setter darf nur einen parameter haben
-                if (zellenWert == null || setterMethod.getParameterTypes()[0].equals(zellenWert.getClass())) {
-                    setterMethod.invoke(patient.getFaelle().stream().findFirst().get(), zellenWert);
-                }
-                if (setterMethod.getParameterTypes()[0].equals(Integer.class) && zellenWert.getClass().equals(BigDecimal.class)) {
-                    BigDecimal temp = (BigDecimal) zellenWert;
-                    setterMethod.invoke(patient.getFaelle().stream().findFirst().get(), temp.intValue());
-                }
-                if (setterMethod.getParameterTypes()[0].equals(String.class) && zellenWert.getClass().equals(BigDecimal.class)) {
-                    BigDecimal temp = (BigDecimal) zellenWert;
-
-                    setterMethod.invoke(patient.getFaelle().stream().findFirst().get(), temp.intValue() + "");
-                }
-
-            } catch (IllegalAccessException | InvocationTargetException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     public Object methodGetterFall(PatientModelAttribute patientAttribut, Patient patientAusDatenbank, Patient patient) {
@@ -297,7 +92,7 @@ public class PatientAttributMethodenService {
                         String eNummer = patientAusDatenbank.getFaelle().stream().findAny().get().getFallID().geteNummer().getValue();
                         return s.getFallID().geteNummer().getValue().equals(eNummer);
                     }).findFirst().get());
-        } catch (IllegalAccessException | InvocationTargetException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -316,7 +111,7 @@ public class PatientAttributMethodenService {
                         String eNummer = patientAusDatenbank.getFaelle().stream().findAny().get().getFallID().geteNummer().getValue();
                         return s.getFallID().geteNummer().getValue().equals(eNummer);
                     }).findFirst().get().getKlassifikation().getTumorArt());
-        } catch (IllegalAccessException | InvocationTargetException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -335,37 +130,213 @@ public class PatientAttributMethodenService {
                         String eNummer = patientAusDatenbank.getFaelle().stream().findAny().get().getFallID().geteNummer().getValue();
                         return s.getFallID().geteNummer().getValue().equals(eNummer);
                     }).findFirst().get().getKlassifikation());
-        } catch (IllegalAccessException | InvocationTargetException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public void methodSetterKlassifikationFallBekannt(PatientModelAttribute patientAttribut, Object dbValue, Patient patientAusDatenbank, Patient patientAusExcel) {
-        Method[] setterMethods = getSetterMethod(patientAttribut);
-        if (dbValue == null) dbValue = "";
+    public void methodSetterPatient(PatientModelAttribute modelAttribute, Object dbValue, Patient patient) {
+        Method[] setterMethods = getSetterMethod(modelAttribute);
+        if (dbValue == "") dbValue = null;
         for (Method setterMethod : setterMethods) {
             try {
                 //setter darf nur einen parameter haben
                 if (dbValue == null || setterMethod.getParameterTypes()[0].equals(dbValue.getClass())) {
-                    setterMethod.invoke(patientAusDatenbank.getFaelle().stream().filter(f -> f.getFallID().geteNummer().getValue().equals(patientAusExcel.getFaelle().stream().findFirst().get().getFallID().geteNummer().getValue()))
-                            .filter(g -> g.getFallID().getBefundTyp().equals(patientAusExcel.getFaelle().stream()
-                                    .findFirst().get().getFallID().getBefundTyp())).findFirst().get().getKlassifikation(), dbValue);
-                }
-                if (setterMethod.getParameterTypes()[0].equals(Integer.class) && dbValue.getClass().equals(BigDecimal.class)) {
+                    setterMethod.invoke(patient, new Object[]{dbValue});
+                } else if (setterMethod.getParameterTypes()[0].equals(Integer.class) && dbValue.getClass().equals(BigDecimal.class)) {
                     BigDecimal temp = (BigDecimal) dbValue;
-                    setterMethod.invoke(patientAusDatenbank.getFaelle().stream().filter(f -> f.getFallID().geteNummer().getValue().equals(patientAusExcel.getFaelle().stream().findFirst().get().getFallID().geteNummer().getValue()))
-                            .filter(g -> g.getFallID().getBefundTyp().equals(patientAusExcel.getFaelle().stream()
-                                    .findFirst().get().getFallID().getBefundTyp())).findFirst().get().getKlassifikation(), temp.intValue());
-                }
-                if (setterMethod.getParameterTypes()[0].equals(String.class) && dbValue.getClass().equals(BigDecimal.class)) {
+                    setterMethod.invoke(patient, temp.intValue());
+                } else if (setterMethod.getParameterTypes()[0].equals(String.class) && dbValue.getClass().equals(BigDecimal.class)) {
                     BigDecimal temp = (BigDecimal) dbValue;
-                    setterMethod.invoke(patientAusDatenbank.getFaelle()
-                            .stream()
-                            .filter(f -> f.getFallID().geteNummer().getValue().equals(patientAusExcel.getFaelle().stream().findFirst().get().getFallID().geteNummer().getValue()))
-                            .filter(g -> g.getFallID().getBefundTyp().equals(patientAusExcel.getFaelle().stream()
-                                    .findFirst().get().getFallID().getBefundTyp()))
-                            .findFirst().get().getKlassifikation(), temp.intValue() + "");
+                    setterMethod.invoke(patient, temp.intValue() + "");
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void methodSetterAdresse(PatientModelAttribute modelAttribute, Object dbValue, Patient patient) {
+        Method[] setterMethods = getSetterMethod(modelAttribute);
+        if (dbValue == "") dbValue = null;
+        for (Method setterMethod : setterMethods) {
+            try {
+                //setter darf nur einen parameter haben
+                if (dbValue == null || setterMethod.getParameterTypes()[0].equals(dbValue.getClass())) {
+                    setterMethod.invoke(patient.getAdresse(), new Object[]{dbValue});
+                } else if (setterMethod.getParameterTypes()[0].equals(Integer.class) && dbValue.getClass().equals(BigDecimal.class)) {
+                    BigDecimal temp = (BigDecimal) dbValue;
+                    setterMethod.invoke(patient.getAdresse(), temp.intValue());
+                } else if (setterMethod.getParameterTypes()[0].equals(String.class) && dbValue.getClass().equals(BigDecimal.class)) {
+                    BigDecimal temp = (BigDecimal) dbValue;
+                    setterMethod.invoke(patient.getAdresse(), temp.intValue() + "");
+                }
+            } catch (IllegalAccessException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void methodSetterEE2011(PatientModelAttribute modelAttribute, Object dbValue, Patient patient) {
+        Method[] setterMethods = getSetterMethod(modelAttribute);
+        if (dbValue == "") dbValue = null;
+        for (Method setterMethod : setterMethods) {
+            try {
+                //setter darf nur einen parameter haben
+                if (dbValue == null || setterMethod.getParameterTypes()[0].equals(dbValue.getClass())) {
+                    setterMethod.invoke(patient.getPatientenZusatzdaten().getEe2011(), new Object[]{dbValue});
+                } else if (setterMethod.getParameterTypes()[0].equals(Integer.class) && dbValue.getClass().equals(BigDecimal.class)) {
+                    BigDecimal temp = (BigDecimal) dbValue;
+                    setterMethod.invoke(patient.getPatientenZusatzdaten().getEe2011(), temp.intValue());
+                } else if (setterMethod.getParameterTypes()[0].equals(String.class) && dbValue.getClass().equals(BigDecimal.class)) {
+                    BigDecimal temp = (BigDecimal) dbValue;
+                    setterMethod.invoke(patient.getPatientenZusatzdaten().getEe2011(), temp.intValue() + "");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void methodSetterEE2015(PatientModelAttribute modelAttribute, Object dbValue, Patient patient) {
+        Method[] setterMethods = getSetterMethod(modelAttribute);
+        if (dbValue == "") dbValue = null;
+        for (Method setterMethod : setterMethods) {
+            try {
+                //setter darf nur einen parameter haben
+                if (dbValue == null || setterMethod.getParameterTypes()[0].equals(dbValue.getClass())) {
+                    setterMethod.invoke(patient.getPatientenZusatzdaten().getEe2015(), new Object[]{dbValue});
+                } else if (setterMethod.getParameterTypes()[0].equals(Integer.class) && dbValue.getClass().equals(BigDecimal.class)) {
+                    BigDecimal temp = (BigDecimal) dbValue;
+                    setterMethod.invoke(patient.getPatientenZusatzdaten().getEe2015(), temp.intValue());
+                } else if (setterMethod.getParameterTypes()[0].equals(String.class) && dbValue.getClass().equals(BigDecimal.class)) {
+                    BigDecimal temp = (BigDecimal) dbValue;
+                    setterMethod.invoke(patient.getPatientenZusatzdaten().getEe2015(), temp.intValue() + "");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void methodSetterExprimage(PatientModelAttribute modelAttribute, Object dbValue, Patient patient) {
+        Method[] setterMethods = getSetterMethod(modelAttribute);
+        if (dbValue == "") dbValue = null;
+        for (Method setterMethod : setterMethods) {
+            try {
+                //setter darf nur einen parameter haben
+                if (dbValue == null || setterMethod.getParameterTypes()[0].equals(dbValue.getClass())) {
+                    setterMethod.invoke(patient.getPatientenZusatzdaten().getExprimage(), new Object[]{dbValue});
+                } else if (setterMethod.getParameterTypes()[0].equals(Integer.class) && dbValue.getClass().equals(BigDecimal.class)) {
+                    BigDecimal temp = (BigDecimal) dbValue;
+                    setterMethod.invoke(patient.getPatientenZusatzdaten().getExprimage(), temp.intValue());
+                } else if (setterMethod.getParameterTypes()[0].equals(String.class) && dbValue.getClass().equals(BigDecimal.class)) {
+                    BigDecimal temp = (BigDecimal) dbValue;
+                    setterMethod.invoke(patient.getPatientenZusatzdaten().getExprimage(), temp.intValue() + "");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void methodSetterFall(PatientModelAttribute attributName, Object dbValue, Patient patient) {
+        Method[] setterMethods = getSetterMethod(attributName);
+        if (dbValue == "") dbValue = null;
+        for (Method setterMethod : setterMethods) {
+            try {
+                //setter darf nur einen parameter haben
+                if (dbValue == null || setterMethod.getParameterTypes()[0].equals(dbValue.getClass())) {
+                    setterMethod.invoke(patient.getFaelle().stream().findFirst().get(), new Object[]{dbValue});
+                } else if (setterMethod.getParameterTypes()[0].equals(Integer.class) && dbValue.getClass().equals(BigDecimal.class)) {
+                    BigDecimal temp = (BigDecimal) dbValue;
+                    setterMethod.invoke(patient.getFaelle().stream().findFirst().get(), temp.intValue());
+                } else if (setterMethod.getParameterTypes()[0].equals(String.class) && dbValue.getClass().equals(BigDecimal.class)) {
+                    BigDecimal temp = (BigDecimal) dbValue;
+
+                    setterMethod.invoke(patient.getFaelle().stream().findFirst().get(), temp.intValue() + "");
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void methodSetterFallBekannt(PatientModelAttribute patientAttribut, Object dbValue, Patient patientAusDatenbank, Patient patientAusExcel) {
+        Method[] setterMethods = getSetterMethod(patientAttribut);
+        if (dbValue == "") dbValue = null;
+        for (Method setterMethod : setterMethods) {
+            try {
+                //setter darf nur einen parameter haben
+                if (patientAusDatenbank.getFaelle().stream().findFirst().get().getFallID().geteNummer() == null) {
+                    if (setterMethod.getParameterTypes()[0].equals(dbValue.getClass())) {
+                        setterMethod.invoke(patientAusDatenbank.getFaelle().stream().filter(f -> f.getFallID().geteNummer().getValue().equals(patientAusExcel.getFaelle().stream().findFirst().get().getFallID().geteNummer().getValue()))
+                                .filter(g -> g.getFallID().getBefundTyp().equals(patientAusExcel.getFaelle().stream()
+                                        .findFirst().get().getFallID().getBefundTyp())).findFirst().get(), new Object[]{dbValue});
+                    } else if (setterMethod.getParameterTypes()[0].equals(Integer.class) && dbValue.getClass().equals(BigDecimal.class)) {
+                        BigDecimal temp = (BigDecimal) dbValue;
+                        setterMethod.invoke(patientAusDatenbank.getFaelle().stream().filter(f -> f.getFallID().geteNummer().getValue().equals(patientAusExcel.getFaelle().stream().findFirst().get().getFallID().geteNummer().getValue()))
+                                .filter(g -> g.getFallID().getBefundTyp().equals(patientAusExcel.getFaelle().stream()
+                                        .findFirst().get().getFallID().getBefundTyp())).findFirst().get(), temp.intValue());
+                    } else if (setterMethod.getParameterTypes()[0].equals(String.class) && dbValue.getClass().equals(BigDecimal.class)) {
+                        BigDecimal temp = (BigDecimal) dbValue;
+                        setterMethod.invoke(patientAusDatenbank.getFaelle()
+                                .stream()
+                                .filter(f -> f.getFallID().geteNummer().getValue().equals(patientAusExcel.getFaelle().stream().findFirst().get().getFallID().geteNummer().getValue()))
+                                .filter(g -> g.getFallID().getBefundTyp().equals(patientAusExcel.getFaelle().stream()
+                                        .findFirst().get().getFallID().getBefundTyp()))
+                                .findFirst().get(), temp.intValue() + "");
+                    }
+                } else {
+                    methodSetterFall(patientAttribut, dbValue, patientAusExcel);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void methodSetterFallID(PatientModelAttribute attributName, Object dbValue, Patient patient) {
+        Method[] setterMethods = getSetterMethod(attributName);
+        if (dbValue == "") dbValue = null;
+        for (Method setterMethod : setterMethods) {
+            try {
+                //setter darf nur einen parameter haben
+                if (attributName == PatientModelAttribute.ENUMMER && dbValue != "") {
+                    patient.getFaelle().stream().findFirst().get().getFallID().geteNummer().setValue(dbValue.toString());
+                } else if (dbValue == null || setterMethod.getParameterTypes()[0].equals(dbValue.getClass())) {
+                    setterMethod.invoke(patient.getFaelle().stream().findFirst().get().getFallID(), new Object[]{dbValue});
+                } else if (setterMethod.getParameterTypes()[0].equals(Integer.class) && dbValue.getClass().equals(BigDecimal.class)) {
+                    BigDecimal temp = (BigDecimal) dbValue;
+                    setterMethod.invoke(patient.getFaelle().stream().findFirst().get().getFallID(), temp.intValue());
+                } else if (setterMethod.getParameterTypes()[0].equals(String.class) && dbValue.getClass().equals(BigDecimal.class)) {
+                    BigDecimal temp = (BigDecimal) dbValue;
+                    setterMethod.invoke(patient.getFaelle().stream().findFirst().get().getFallID(), temp.intValue() + "");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void methodSetterTumorart(PatientModelAttribute attributName, Object dbValue, Patient patient) {
+        Method[] setterMethods = getSetterMethod(attributName);
+        if (dbValue == "") dbValue = null;
+        for (Method setterMethod : setterMethods) {
+            try {
+                //setter darf nur einen parameter haben
+                if (dbValue == null || setterMethod.getParameterTypes()[0].equals(dbValue.getClass())) {
+                    setterMethod.invoke(patient.getFaelle().stream().findFirst().get().getKlassifikation().getTumorArt(), new Object[]{dbValue});
+                } else if (setterMethod.getParameterTypes()[0].equals(Integer.class) && dbValue.getClass().equals(BigDecimal.class)) {
+                    BigDecimal temp = (BigDecimal) dbValue;
+                    setterMethod.invoke(patient.getFaelle().stream().findFirst().get().getKlassifikation().getTumorArt(), temp.intValue());
+                } else if (setterMethod.getParameterTypes()[0].equals(String.class) && dbValue.getClass().equals(BigDecimal.class)) {
+                    BigDecimal temp = (BigDecimal) dbValue;
+                    setterMethod.invoke(patient.getFaelle().stream().findFirst().get().getKlassifikation().getTumorArt(), temp.intValue() + "");
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -375,26 +346,28 @@ public class PatientAttributMethodenService {
 
     public void methodSetterTumorartFallBekannt(PatientModelAttribute patientAttribut, Object dbValue, Patient patientAusDatenbank, Patient patientAusExcel) {
         Method[] setterMethods = getSetterMethod(patientAttribut);
-        if (dbValue == null) dbValue = "";
+        if (dbValue == "") dbValue = null;
         for (Method setterMethod : setterMethods) {
             try {
                 //setter darf nur einen parameter haben
-                if (dbValue == null || setterMethod.getParameterTypes()[0].equals(dbValue.getClass())) {
-                    setterMethod.invoke(patientAusDatenbank.getFaelle().stream().filter(f -> f.getFallID().geteNummer().getValue().equals(patientAusExcel.getFaelle().stream().findFirst().get().getFallID().geteNummer().getValue()))
-                            .filter(g -> g.getFallID().getBefundTyp().equals(patientAusExcel.getFaelle().stream()
-                                    .findFirst().get().getFallID().getBefundTyp())).findFirst().get().getKlassifikation(), dbValue);
-                }
-                if (setterMethod.getParameterTypes()[0].equals(Integer.class) && dbValue.getClass().equals(BigDecimal.class)) {
-                    BigDecimal temp = (BigDecimal) dbValue;
-                    setterMethod.invoke(patientAusDatenbank.getFaelle().stream().filter(f -> f.getFallID().geteNummer().getValue().equals(patientAusExcel.getFaelle().stream().findFirst().get().getFallID().geteNummer().getValue()))
-                            .filter(g -> g.getFallID().getBefundTyp().equals(patientAusExcel.getFaelle().stream()
-                                    .findFirst().get().getFallID().getBefundTyp())).findFirst().get().getKlassifikation(), temp.intValue());
-                }
-                if (setterMethod.getParameterTypes()[0].equals(String.class) && dbValue.getClass().equals(BigDecimal.class)) {
-                    BigDecimal temp = (BigDecimal) dbValue;
-                    setterMethod.invoke(patientAusDatenbank.getFaelle().stream().filter(f -> f.getFallID().geteNummer().getValue().equals(patientAusExcel.getFaelle().stream().findFirst().get().getFallID().geteNummer().getValue()))
-                            .filter(g -> g.getFallID().getBefundTyp().equals(patientAusExcel.getFaelle().stream()
-                                    .findFirst().get().getFallID().getBefundTyp())).findFirst().get().getKlassifikation().getTumorArt(), temp.intValue() + "");
+                if (patientAusDatenbank.getFaelle().stream().findFirst().get().getFallID().geteNummer() == null) {
+                    if (dbValue == null || setterMethod.getParameterTypes()[0].equals(dbValue.getClass())) {
+                        setterMethod.invoke(patientAusDatenbank.getFaelle().stream().filter(f -> f.getFallID().geteNummer().getValue().equals(patientAusExcel.getFaelle().stream().findFirst().get().getFallID().geteNummer().getValue()))
+                                .filter(g -> g.getFallID().getBefundTyp().equals(patientAusExcel.getFaelle().stream()
+                                        .findFirst().get().getFallID().getBefundTyp())).findFirst().get().getKlassifikation().getTumorArt(), new Object[]{dbValue});
+                    } else if (setterMethod.getParameterTypes()[0].equals(Integer.class) && dbValue.getClass().equals(BigDecimal.class)) {
+                        BigDecimal temp = (BigDecimal) dbValue;
+                        setterMethod.invoke(patientAusDatenbank.getFaelle().stream().filter(f -> f.getFallID().geteNummer().getValue().equals(patientAusExcel.getFaelle().stream().findFirst().get().getFallID().geteNummer().getValue()))
+                                .filter(g -> g.getFallID().getBefundTyp().equals(patientAusExcel.getFaelle().stream()
+                                        .findFirst().get().getFallID().getBefundTyp())).findFirst().get().getKlassifikation().getTumorArt(), temp.intValue());
+                    } else if (setterMethod.getParameterTypes()[0].equals(String.class) && dbValue.getClass().equals(BigDecimal.class)) {
+                        BigDecimal temp = (BigDecimal) dbValue;
+                        setterMethod.invoke(patientAusDatenbank.getFaelle().stream().filter(f -> f.getFallID().geteNummer().getValue().equals(patientAusExcel.getFaelle().stream().findFirst().get().getFallID().geteNummer().getValue()))
+                                .filter(g -> g.getFallID().getBefundTyp().equals(patientAusExcel.getFaelle().stream()
+                                        .findFirst().get().getFallID().getBefundTyp())).findFirst().get().getKlassifikation().getTumorArt(), temp.intValue() + "");
+                    }
+                } else {
+                    methodSetterTumorart(patientAttribut, dbValue, patientAusExcel);
                 }
             } catch (IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();
@@ -402,32 +375,76 @@ public class PatientAttributMethodenService {
         }
     }
 
-    public void methodSetterFallBekannt(PatientModelAttribute patientAttribut, Object dbValue, Patient patientAusDatenbank, Patient patientAusExcel) {
-        Method[] setterMethods = getSetterMethod(patientAttribut);
-        if (dbValue == null) dbValue = "";
+    public void methodSetterKlassifikation(PatientModelAttribute attributName, Object dbValue, Patient patient) {
+        Method[] setterMethods = getSetterMethod(attributName);
+        if (dbValue == "") dbValue = null;
         for (Method setterMethod : setterMethods) {
             try {
                 //setter darf nur einen parameter haben
-                if (setterMethod.getParameterTypes()[0].equals(dbValue.getClass())) {
-                    setterMethod.invoke(patientAusDatenbank.getFaelle().stream().filter(f -> f.getFallID().geteNummer().getValue().equals(patientAusExcel.getFaelle().stream().findFirst().get().getFallID().geteNummer().getValue()))
-                            .filter(g -> g.getFallID().getBefundTyp().equals(patientAusExcel.getFaelle().stream()
-                                    .findFirst().get().getFallID().getBefundTyp())).findFirst().get(), dbValue);
-                }
-                if (setterMethod.getParameterTypes()[0].equals(Integer.class) && dbValue.getClass().equals(BigDecimal.class)) {
+                if (dbValue == null || setterMethod.getParameterTypes()[0].equals(dbValue.getClass())) {
+                    setterMethod.invoke(patient.getFaelle().stream().findFirst().get().getKlassifikation(), new Object[]{dbValue});
+                } else if (setterMethod.getParameterTypes()[0].equals(Integer.class) && dbValue.getClass().equals(BigDecimal.class)) {
                     BigDecimal temp = (BigDecimal) dbValue;
-                    setterMethod.invoke(patientAusDatenbank.getFaelle().stream().filter(f -> f.getFallID().geteNummer().getValue().equals(patientAusExcel.getFaelle().stream().findFirst().get().getFallID().geteNummer().getValue()))
-                            .filter(g -> g.getFallID().getBefundTyp().equals(patientAusExcel.getFaelle().stream()
-                                    .findFirst().get().getFallID().getBefundTyp())).findFirst().get(), temp.intValue());
-                }
-                if (setterMethod.getParameterTypes()[0].equals(String.class) && dbValue.getClass().equals(BigDecimal.class)) {
+                    setterMethod.invoke(patient.getFaelle().stream().findFirst().get().getKlassifikation(), temp.intValue());
+                } else if (setterMethod.getParameterTypes()[0].equals(String.class) && dbValue.getClass().equals(BigDecimal.class)) {
                     BigDecimal temp = (BigDecimal) dbValue;
-                    setterMethod.invoke(patientAusDatenbank.getFaelle()
-                            .stream()
-                            .filter(f -> f.getFallID().geteNummer().getValue().equals(patientAusExcel.getFaelle().stream().findFirst().get().getFallID().geteNummer().getValue()))
-                            .filter(g -> g.getFallID().getBefundTyp().equals(patientAusExcel.getFaelle().stream()
-                                    .findFirst().get().getFallID().getBefundTyp()))
-                            .findFirst().get(), temp.intValue() + "");
+                    setterMethod.invoke(patient.getFaelle().stream().findFirst().get().getKlassifikation(), temp.intValue() + "");
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void methodSetterKlassifikationFallBekannt(PatientModelAttribute patientAttribut, Object dbValue, Patient patientAusDatenbank, Patient patientAusExcel) {
+        Method[] setterMethods = getSetterMethod(patientAttribut);
+        if (dbValue == "") dbValue = null;
+        for (Method setterMethod : setterMethods) {
+            try {
+                if (patientAusDatenbank.getFaelle().stream().findFirst().get().getFallID().geteNummer() == null) {
+                    //setter darf nur einen parameter haben
+                    if (dbValue == null || setterMethod.getParameterTypes()[0].equals(dbValue.getClass())) {
+                        setterMethod.invoke(patientAusDatenbank.getFaelle().stream().filter(f -> f.getFallID().geteNummer().getValue().equals(patientAusExcel.getFaelle().stream().findFirst().get().getFallID().geteNummer().getValue()))
+                                .filter(g -> g.getFallID().getBefundTyp().equals(patientAusExcel.getFaelle().stream()
+                                        .findFirst().get().getFallID().getBefundTyp())).findFirst().get().getKlassifikation(), new Object[]{dbValue});
+                    } else if (setterMethod.getParameterTypes()[0].equals(Integer.class) && dbValue.getClass().equals(BigDecimal.class)) {
+                        BigDecimal temp = (BigDecimal) dbValue;
+                        setterMethod.invoke(patientAusDatenbank.getFaelle().stream().filter(f -> f.getFallID().geteNummer().getValue().equals(patientAusExcel.getFaelle().stream().findFirst().get().getFallID().geteNummer().getValue()))
+                                .filter(g -> g.getFallID().getBefundTyp().equals(patientAusExcel.getFaelle().stream()
+                                        .findFirst().get().getFallID().getBefundTyp())).findFirst().get().getKlassifikation(), temp.intValue());
+                    } else if (setterMethod.getParameterTypes()[0].equals(String.class) && dbValue.getClass().equals(BigDecimal.class)) {
+                        BigDecimal temp = (BigDecimal) dbValue;
+                        setterMethod.invoke(patientAusDatenbank.getFaelle()
+                                .stream()
+                                .filter(f -> f.getFallID().geteNummer().getValue().equals(patientAusExcel.getFaelle().stream().findFirst().get().getFallID().geteNummer().getValue()))
+                                .filter(g -> g.getFallID().getBefundTyp().equals(patientAusExcel.getFaelle().stream()
+                                        .findFirst().get().getFallID().getBefundTyp()))
+                                .findFirst().get().getKlassifikation(), temp.intValue() + "");
+                    }
+                } else {
+                    methodSetterKlassifikation(patientAttribut, dbValue, patientAusDatenbank);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void methodSetterFallIDBekannt(PatientModelAttribute patientAttribut, Patient patientAusExcel, Patient patientAusDatenbank) {
+        Method[] setterMethods = getSetterMethod(patientAttribut);
+        for (Method setterMethod : setterMethods) {
+            try {
+                if (patientAttribut == PatientModelAttribute.ENUMMER) {
+                    patientAusDatenbank.getFaelle().stream().findFirst().get().getFallID().geteNummer().setValue(
+                            patientAusExcel.getFaelle().stream().findFirst().get().getFallID().geteNummer().getValue()
+                    );
+                }
+                if (patientAttribut == PatientModelAttribute.BEFUNDTYP) {
+                    patientAusDatenbank.getFaelle().stream().findFirst().get().getFallID().setBefundTyp(
+                            patientAusExcel.getFaelle().stream().findFirst().get().getFallID().getBefundTyp()
+                    );
+                }
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
