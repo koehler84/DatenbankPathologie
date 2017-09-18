@@ -47,48 +47,48 @@ public class PatientAttributAuswahl {
 	}
 
 
-	public Patient setValueFromExcelToDbPatient(PatientModelAttribute patientAttribut, Patient patientAusExcel, Patient patientAusDatenbank) {
-		Object dbValue;
+    public Patient setValueFromExcelToDbPatient(PatientModelAttribute patientAttribut, Patient patientAusExcel, Patient patient) {
+        Object dbValue;
 		switch (patientAttribut.getWrappingClass().getSimpleName().toUpperCase()) {
 			case "PATIENT":
 				dbValue = patientAttributMethodenService.methodGetterPatient(patientAttribut, patientAusExcel);
-				patientAttributMethodenService.methodSetterPatient(patientAttribut, dbValue, patientAusDatenbank);
-				break;
+                patientAttributMethodenService.methodSetterPatient(patientAttribut, dbValue, patient);
+                break;
 			case "ADRESSE":
 				dbValue = patientAttributMethodenService.methodGetterAdresse(patientAttribut, patientAusExcel);
-				patientAttributMethodenService.methodSetterAdresse(patientAttribut, dbValue, patientAusDatenbank);
-				break;
+                patientAttributMethodenService.methodSetterAdresse(patientAttribut, dbValue, patient);
+                break;
 			case "EE2011":
 				dbValue = patientAttributMethodenService.methodGetterEE2011(patientAttribut, patientAusExcel);
-				patientAttributMethodenService.methodSetterEE2011(patientAttribut, dbValue, patientAusDatenbank);
-				break;
+                patientAttributMethodenService.methodSetterEE2011(patientAttribut, dbValue, patient);
+                break;
 			case "EE2015":
 				dbValue = patientAttributMethodenService.methodGetterEE2015(patientAttribut, patientAusExcel);
-				patientAttributMethodenService.methodSetterEE2015(patientAttribut, dbValue, patientAusDatenbank);
-				break;
+                patientAttributMethodenService.methodSetterEE2015(patientAttribut, dbValue, patient);
+                break;
 			case "EXPRIMAGE":
 				dbValue = patientAttributMethodenService.methodGetterExprimage(patientAttribut, patientAusExcel);
-				patientAttributMethodenService.methodSetterExprimage(patientAttribut, dbValue, patientAusDatenbank);
-				break;
+                patientAttributMethodenService.methodSetterExprimage(patientAttribut, dbValue, patient);
+                break;
 			case "FALL":
-				dbValue = patientAttributMethodenService.methodGetterFall(patientAttribut, patientAusExcel, patientAusDatenbank);
-                patientAttributMethodenService.methodSetterFallBekannt(patientAttribut, dbValue, patientAusDatenbank, patientAusExcel);
+                dbValue = patientAttributMethodenService.methodGetterFall(patientAttribut, patientAusExcel, patient);
+                patientAttributMethodenService.methodSetterFallBekannt(patientAttribut, dbValue, patient, patientAusExcel);
                 break;
             case "FALLID":
-                patientAttributMethodenService.methodSetterFallIDBekannt(patientAttribut, patientAusExcel, patientAusDatenbank);
+                patientAttributMethodenService.methodSetterFallIDBekannt(patientAttribut, patientAusExcel, patient);
                 break;
             case "KLASSIFIKATION":
-				dbValue = patientAttributMethodenService.methodGetterKlassifikation(patientAttribut, patientAusExcel, patientAusDatenbank);
-				patientAttributMethodenService.methodSetterKlassifikationFallBekannt(patientAttribut, dbValue, patientAusDatenbank, patientAusExcel);
+                dbValue = patientAttributMethodenService.methodGetterKlassifikation(patientAttribut, patientAusExcel, patient);
+                patientAttributMethodenService.methodSetterKlassifikationFallBekannt(patientAttribut, dbValue, patient, patientAusExcel);
 
 				break;
 			case "TUMORART":
-				dbValue = patientAttributMethodenService.methodGetterTumorart(patientAttribut, patientAusExcel, patientAusDatenbank);
-				patientAttributMethodenService.methodSetterTumorartFallBekannt(patientAttribut, dbValue, patientAusDatenbank, patientAusExcel);
+                dbValue = patientAttributMethodenService.methodGetterTumorart(patientAttribut, patientAusExcel, patient);
+                patientAttributMethodenService.methodSetterTumorartFallBekannt(patientAttribut, dbValue, patient, patientAusExcel);
 
 				break;
 		}
-		return patientAusDatenbank;
+        return patient;
 
 	}
 

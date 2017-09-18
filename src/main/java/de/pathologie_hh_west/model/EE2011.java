@@ -1,6 +1,7 @@
 package de.pathologie_hh_west.model;
 
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -8,7 +9,7 @@ import java.time.LocalDate;
  * Created by VaniR on 11.07.2017.
  */
 @Embeddable
-public class EE2011 {
+public class EE2011 implements Serializable {
     private String ee2011Status;
     private LocalDate ee2011Datum;
     private Integer ee2011Rezidiv_Metastase;

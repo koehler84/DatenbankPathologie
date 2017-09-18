@@ -292,7 +292,7 @@ public class PatientAttributMethodenService {
                                 .findFirst().get(), temp.intValue() + "");
                     }
                 } else {
-                    methodSetterFall(patientAttribut, dbValue, patientAusExcel);
+                    methodSetterFall(patientAttribut, dbValue, patientAusDatenbank);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -434,17 +434,30 @@ public class PatientAttributMethodenService {
         Method[] setterMethods = getSetterMethod(patientAttribut);
         for (Method setterMethod : setterMethods) {
             try {
-                if (patientAttribut == PatientModelAttribute.ENUMMER) {
-                    patientAusDatenbank.getFaelle().stream().findFirst().get().getFallID().geteNummer().setValue(
-                            patientAusExcel.getFaelle().stream().findFirst().get().getFallID().geteNummer().getValue()
-                    );
+                if (patientAusDatenbank.getFaelle().stream().findFirst().get().getFallID().geteNummer() == null) {
+                    if (patientAttribut == PatientModelAttribute.ENUMMER) {
+                        patientAusDatenbank.getFaelle().stream().filter(f -> f.getFallID().geteNummer().getValue().equals(patientAusExcel.getFaelle().stream().findFirst().get().getFallID().geteNummer().getValue()))
+                                .filter(g -> g.getFallID().getBefundTyp().equals(patientAusExcel.getFaelle().stream()
+                                        .findFirst().get().getFallID().getBefundTyp()))
+                                .findFirst().get().getFallID().geteNummer().setValue(
+                                patientAusExcel.getFaelle().stream().findFirst().get().getFallID().geteNummer().getValue()
+                        );
+                    }
+                    if (patientAttribut == PatientModelAttribute.BEFUNDTYP) {
+                        patientAusDatenbank.getFaelle().stream().filter(f -> f.getFallID().geteNummer().getValue().equals(patientAusExcel.getFaelle().stream().findFirst().get().getFallID().geteNummer().getValue()))
+                                .filter(g -> g.getFallID().getBefundTyp().equals(patientAusExcel.getFaelle().stream()
+                                        .findFirst().get().getFallID().getBefundTyp()))
+                                .findFirst().get().getFallID().setBefundTyp(
+                                patientAusExcel.getFaelle().stream().findFirst().get().getFallID().getBefundTyp()
+                        );
+                    }
+                } else if ((patientAttribut == PatientModelAttribute.ENUMMER)) {
+                    methodSetterFallID(patientAttribut, patientAusExcel.getFaelle().stream()
+                            .findFirst().get().getFallID().geteNummer().getValue(), patientAusDatenbank);
+                } else if (patientAttribut == PatientModelAttribute.BEFUNDTYP) {
+                    methodSetterFallID(patientAttribut, patientAusExcel.getFaelle().stream()
+                            .findFirst().get().getFallID().getBefundTyp(), patientAusDatenbank);
                 }
-                if (patientAttribut == PatientModelAttribute.BEFUNDTYP) {
-                    patientAusDatenbank.getFaelle().stream().findFirst().get().getFallID().setBefundTyp(
-                            patientAusExcel.getFaelle().stream().findFirst().get().getFallID().getBefundTyp()
-                    );
-                }
-
             } catch (Exception e) {
                 e.printStackTrace();
             }

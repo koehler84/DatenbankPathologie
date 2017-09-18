@@ -1,13 +1,13 @@
 package de.pathologie_hh_west.model;
 
 import javax.persistence.Embeddable;
-import java.math.BigDecimal;
+import java.io.Serializable;
 
 /**
  * Created by VaniR on 10.07.2017.
  */
 @Embeddable
-public class Adresse {
+public class Adresse implements Serializable {
     private String strasse;
     private String hausnummer;
     private String plz;
@@ -33,16 +33,8 @@ public class Adresse {
         this.hausnummer = hausnummer;
     }
 
-    public void setHausnummer(BigDecimal hausnummer) {
-        this.hausnummer = hausnummer.intValueExact() + "";
-    }
-
     public String getPlz() {
         return plz;
-    }
-
-    public void setPLZ(BigDecimal plz) {
-        this.plz = plz.intValueExact() + "";
     }
 
     public void setPlz(String plz) {

@@ -1,13 +1,14 @@
 package de.pathologie_hh_west.model;
 
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 import java.util.regex.Pattern;
 
 /**
  * Created by VaniR on 10.07.2017.
  */
 @Embeddable
-public class ENummer {
+public class ENummer implements Serializable {
     private String value;
 
     //TODO Utilityfunktionen wie das speichern ob alte oder neue nummer war, jahr der erstellung extrahieren etc.

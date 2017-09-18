@@ -92,6 +92,24 @@ public class FallID implements Serializable, Comparable {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof FallID)) return false;
+
+        FallID fallID = (FallID) o;
+
+        if (!geteNummer().getValue().equals(fallID.geteNummer().getValue())) return false;
+        return getBefundTyp() == fallID.getBefundTyp();
+    }
+
+    @Override
+    public int hashCode() {
+        int result = geteNummer().getValue() != null ? geteNummer().getValue().hashCode() : 0;
+        result = 31 * result + getBefundTyp().hashCode();
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "FallID{" +
                 "eNummer=" + eNummer.getValue() +

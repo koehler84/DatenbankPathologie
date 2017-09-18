@@ -1,12 +1,13 @@
 package de.pathologie_hh_west.model;
 
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 
 /**
  * Created by VaniR on 10.07.2017.
  */
 @Embeddable
-public class TumorArt {
+public class TumorArt implements Serializable {
     private String tumorArtString;
     private boolean invasiv;
     private boolean inSitu;
@@ -88,59 +89,61 @@ public class TumorArt {
 
     //TODO Setter fuer alle Tumorarten auf einmal (binaere Zahl? String Array? String und patternMatch?
     public void setTumorArtString(String tumorArt) {
-        if (tumorArt.matches(".*in situ")) {
-            setInSitu(true);
-        }
-        if (tumorArt.matches(".*invasiv")) {
-            setInvasiv(true);
-        }
-        if (tumorArt.matches(".*duktal") || tumorArt.matches(".*duktal,.*")) {
-            setDuktal(true);
-        }
-        if (tumorArt.matches(".*lipidreich.*")) {
-            setLipidreich(true);
-        }
-        if (tumorArt.matches(".*sekretorisch.*")) {
-            setSekretorisch(true);
-        }
-        if (tumorArt.matches(".*adenoid-zystisch.*")) {
-            setAdenoidZystisch(true);
-        }
-        if (tumorArt.matches(".*glykogenreich.*")) {
-            setGlykogenreich(true);
-        }
-        if (tumorArt.matches(".*kribriform.*")) {
-            setKribriform(true);
-        }
-        if (tumorArt.matches(".*mikropapillär.*")) {
-            setMikropapillaer(true);
-        }
-        if (tumorArt.matches(".*lobulär.*")) {
-            setLobulaer(true);
-        }
-        if (tumorArt.matches(".*muzinös.*")) {
-            setMuzinoes(true);
-        }
-        if (tumorArt.matches(".*papillär,.*") || tumorArt.matches(".*papillär")) {
-            setPapillaer(true);
-        }
-        if (tumorArt.matches(".*pleomorph.*")) {
-            setPleomorph(true);
-        }
-        if (tumorArt.matches(".*tubulär.*")) {
-            setTubulaer(true);
-        }
-        if (tumorArt.matches(".*medullär.*")) {
-            setMedullaer(true);
-        }
-        if (tumorArt.matches(".*metaplastisch.*")) {
-            setMetaplastisch(true);
-        }
-        if (tumorArt.matches(".*intrazystisch.*")) {
-            setIntrazystisch(true);
-        }
-        if (tumorArt.matches(".* intraduktales papilläres karzinom mit invasion.*")) {
-            setIntrazystisch(true);
+        if (tumorArt != null) {
+            if (tumorArt.matches(".*in situ")) {
+                setInSitu(true);
+            }
+            if (tumorArt.matches(".*invasiv")) {
+                setInvasiv(true);
+            }
+            if (tumorArt.matches(".*duktal") || tumorArt.matches(".*duktal,.*")) {
+                setDuktal(true);
+            }
+            if (tumorArt.matches(".*lipidreich.*")) {
+                setLipidreich(true);
+            }
+            if (tumorArt.matches(".*sekretorisch.*")) {
+                setSekretorisch(true);
+            }
+            if (tumorArt.matches(".*adenoid-zystisch.*")) {
+                setAdenoidZystisch(true);
+            }
+            if (tumorArt.matches(".*glykogenreich.*")) {
+                setGlykogenreich(true);
+            }
+            if (tumorArt.matches(".*kribriform.*")) {
+                setKribriform(true);
+            }
+            if (tumorArt.matches(".*mikropapillär.*")) {
+                setMikropapillaer(true);
+            }
+            if (tumorArt.matches(".*lobulär.*")) {
+                setLobulaer(true);
+            }
+            if (tumorArt.matches(".*muzinös.*")) {
+                setMuzinoes(true);
+            }
+            if (tumorArt.matches(".*papillär,.*") || tumorArt.matches(".*papillär")) {
+                setPapillaer(true);
+            }
+            if (tumorArt.matches(".*pleomorph.*")) {
+                setPleomorph(true);
+            }
+            if (tumorArt.matches(".*tubulär.*")) {
+                setTubulaer(true);
+            }
+            if (tumorArt.matches(".*medullär.*")) {
+                setMedullaer(true);
+            }
+            if (tumorArt.matches(".*metaplastisch.*")) {
+                setMetaplastisch(true);
+            }
+            if (tumorArt.matches(".*intrazystisch.*")) {
+                setIntrazystisch(true);
+            }
+            if (tumorArt.matches(".* intraduktales papilläres karzinom mit invasion.*")) {
+                setIntrazystisch(true);
+            }
         }
     }
 

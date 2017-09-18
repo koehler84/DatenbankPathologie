@@ -2,12 +2,13 @@ package de.pathologie_hh_west.model;
 
 import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
+import java.io.Serializable;
 
 /**
  * Created by VaniR on 10.07.2017.
  */
 @Embeddable
-public class Klassifikation {
+public class Klassifikation implements Serializable {
     private String g;
     private String t;
     private String n;

@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
@@ -11,7 +12,7 @@ import java.time.LocalDate;
  * Created by VaniR on 10.07.2017.
  */
 @Entity
-public class Fall {
+public class Fall implements Serializable {
     @EmbeddedId
     private FallID fallID;
     @Column(length = 1000000)
@@ -67,4 +68,18 @@ public class Fall {
         this.klassifikation = klassifikation;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Fall)) return false;
+
+        Fall fall = (Fall) o;
+
+        return getFallID().equals(fall.getFallID());
+    }
+
+    @Override
+    public int hashCode() {
+        return getFallID().hashCode();
+    }
 }

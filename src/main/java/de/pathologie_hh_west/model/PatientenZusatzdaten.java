@@ -1,12 +1,13 @@
 package de.pathologie_hh_west.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by VaniR on 11.07.2017.
  */
 @Entity
-public class PatientenZusatzdaten {
+public class PatientenZusatzdaten implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "dummy_id")

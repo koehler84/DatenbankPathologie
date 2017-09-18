@@ -2,13 +2,14 @@ package de.pathologie_hh_west.model;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
  * Created by VaniR on 11.07.2017.
  */
 @Embeddable
-public class EE2015 {
+public class EE2015 implements Serializable {
 
     private String ee2015Pseudonym2;
     private String ee2015Status;

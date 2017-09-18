@@ -1,13 +1,14 @@
 package de.pathologie_hh_west.model;
 
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
  * Created by VaniR on 11.07.2017.
  */
 @Embeddable
-public class Exprimage {
+public class Exprimage implements Serializable {
     private String expNotizen;
     private String expChemo;
     private String expTamoxifen;

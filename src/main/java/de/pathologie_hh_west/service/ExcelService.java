@@ -2,6 +2,7 @@ package de.pathologie_hh_west.service;
 
 import de.pathologie_hh_west.data.PatientRepository;
 import de.pathologie_hh_west.model.*;
+import de.pathologie_hh_west.support.DeepCopy;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -63,11 +64,8 @@ public class ExcelService {
 
     public Patient getPatientWithDBCheck(Set<IndexMapper> excelIndexPatientMapping, Integer currentRow, XSSFSheet sheet) {
         Patient patientAusExcel = patientDataFromExcel(excelIndexPatientMapping, currentRow, sheet);
-        Patient patient = patientAusExcel;
-        if (patientAusExcel.getFaelle().stream().findFirst().get().getFallID().geteNummer().getValue().equalsIgnoreCase("A/2006/208763")) {
-            System.out.println();
-        }
-        if (patientAusExcel.getVorname() == null || patientAusExcel.getNachname() == null || patientAusExcel.getGeburtsDatum() == null) {
+		Patient patient = (Patient) DeepCopy.copy(patientAusExcel);
+		if (patientAusExcel.getVorname() == null || patientAusExcel.getNachname() == null || patientAusExcel.getGeburtsDatum() == null) {
             throw new IllegalArgumentException("Kein eindeutiger Patient, es fehlt Vorname, Nachname oder Geburtsdatum");
         }
         Patient patientAusDatenbank = patientRepository.findByNachnameAndVornameAndGeburtsDatum(patientAusExcel.getNachname(), patientAusExcel.getVorname(), patientAusExcel.getGeburtsDatum());
@@ -90,49 +88,42 @@ public class ExcelService {
                 patientAusDatenbank.getPatientenZusatzdaten().setEe2015(new EE2015());
 
 
-            patient = patientAusDatenbank;
-            if (!patientAusDatenbank.getFaelle().stream()
-                    .filter(f -> f.getFallID().geteNummer().getValue().equals(patientAusExcel.getFaelle().stream()
+			patient = (Patient) DeepCopy.copy(patientAusDatenbank);
+
+			patient.setFaelle(new HashSet<Fall>());
+			if (patientAusDatenbank.getFaelle().stream()
+					.filter(f -> f.getFallID().geteNummer().getValue().equals(patientAusExcel.getFaelle().stream()
                             .findFirst().get().getFallID().geteNummer().getValue()))
                     .filter(g -> g.getFallID().getBefundTyp().equals(patientAusExcel.getFaelle().stream()
                             .findFirst().get().getFallID().getBefundTyp()))
                     .findFirst()
                     .isPresent()) {
-                patient.setFaelle(new HashSet<Fall>());
-                patient.getFaelle().add(new Fall());
+				patient.getFaelle().add(patientAusDatenbank.getFaelle().stream()
+						.filter(f -> f.getFallID().geteNummer().getValue().equals(patientAusExcel.getFaelle().stream()
+								.findFirst().get().getFallID().geteNummer().getValue()))
+						.filter(g -> g.getFallID().getBefundTyp().equals(patientAusExcel.getFaelle().stream()
+								.findFirst().get().getFallID().getBefundTyp()))
+						.findFirst().get());
+			} else {
+				patient.getFaelle().add(new Fall());
+			}
 
-            }
+
 
             for (IndexMapper im : excelIndexPatientMapping) {
                 if (!im.getOverwriteExcelValue()) {
                     patient = patientAttributAuswahl.setValueFromExcelToDbPatient(im.getPatientAttribut(), patientAusExcel, patient);
                 }
             }
-            //TODO:FEHLER nur gleiche fälle vergleichen keine falschen
-//			for (Fall fallDatenbank : patientAusDatenbank.getFaelle()) {
-//				for (Fall fallExcel : patientAusExcel.getFaelle()) {
-//					if (fallDatenbank.getFallID().geteNummer().getValue().equalsIgnoreCase(fallExcel.getFallID().geteNummer().getValue())
-//							&& fallDatenbank.getFallID().getBefundTyp().equals(fallExcel.getFallID().getBefundTyp())) {
-//						for (IndexMapper im : excelIndexPatientMapping) {
-//							//TODO: || patientAttributAuswahl.isDbValueNull(im.getPatientAttribut(), patientAusDatenbank)
-//							if (!im.getOverwriteExcelValue() && im.getPatientAttribut() != PatientModelAttribute.FALLID
-//									&& im.getPatientAttribut() != PatientModelAttribute.BEFUNDTYP) {
-//								patient = patientAttributAuswahl.setValueFromExcelToDbPatient(im.getPatientAttribut(), patientAusExcel, patientAusDatenbank);
-//							}
-//						}
-//					} else {
-//						Fall fallNew = new Fall();
-//						fallNew.setFallID(patientAusExcel.getFaelle().stream().findFirst().get().getFallID());
-//						patientAusDatenbank.getFaelle().add(fallNew);
-//						for (IndexMapper im : excelIndexPatientMapping) {
-//
-//							patient = patientAttributAuswahl.setValueFromExcelToDbPatient(im.getPatientAttribut(), patientAusExcel, patientAusDatenbank);
-//						}
-//					}
-//				}
-//			}
-        }
-        return patient;
+		}
+		try {
+			Fall test1 = patient.getFaelle().stream().findFirst().get();
+			Fall test2 = patientAusDatenbank.getFaelle().stream().findFirst().get();
+			System.out.println(test1.equals(test2) + " " + test1.hashCode() + " | " + test2.hashCode());
+		} catch (Exception e) {
+
+		}
+		return patient;
 	}
 
     private Patient patientDataFromExcel(Set<IndexMapper> excelIndexPatientMapping, Integer currentRow, XSSFSheet sheet) {

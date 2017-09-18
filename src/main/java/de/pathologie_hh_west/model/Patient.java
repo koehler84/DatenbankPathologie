@@ -3,6 +3,7 @@ package de.pathologie_hh_west.model;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -16,8 +17,7 @@ import java.util.Set;
 @Table(
         uniqueConstraints = @UniqueConstraint(columnNames = {"geburtsDatum", "vorname", "nachname"})
 )
-//@Transactional(isolation = Isolation.SERIALIZABLE)
-public class Patient {
+public class Patient implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "IdOrGenerated")
     @GenericGenerator(name = "IdOrGenerated",
