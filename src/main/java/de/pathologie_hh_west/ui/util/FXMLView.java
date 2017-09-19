@@ -60,10 +60,20 @@ public enum FXMLView {
 		String getTitle() {
 			return "Patient";
 		}
-		
+
 		@Override
 		String getFXMLFile() {
 			return "/ui/fxml/patientview/MainView.fxml";
+		}
+	}, DELETEPATIENT_DIALOG {
+		@Override
+		String getTitle() {
+			return "Patient löschen";
+		}
+
+		@Override
+		String getFXMLFile() {
+			return "/ui/fxml/deletepatient/DeletePatient.fxml";
 		}
 	};
 	

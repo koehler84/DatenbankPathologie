@@ -29,6 +29,8 @@ public class MainWindowController implements Initializable {
 	
 	@FXML private MenuBar menuBar;
 	@FXML private MenuItem mnFallView;
+	@FXML
+	private MenuItem mnDeletePatient;
 	@FXML private MenuItem mnExcelEinlesen;
 	@FXML private GridPane mainContainer;
 	private SpringFXMLLoader springFXMLLoader;
@@ -52,7 +54,16 @@ public class MainWindowController implements Initializable {
 				e.printStackTrace();
 			}
 		});
-		
+
+		mnDeletePatient.addEventHandler(ActionEvent.ANY, event -> {
+			String stageName = "deletePatientStage";
+			Stage stage = new Stage();
+			stage.setResizable(false);
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stageManager.registerStage(stageName, stage);
+			stageManager.switchScene(stageName, FXMLView.DELETEPATIENT_DIALOG);
+		});
+
 		mnExcelEinlesen.addEventHandler(ActionEvent.ANY, event -> {
 			String stageName = "openExcelStage";
 			Stage stage = new Stage();

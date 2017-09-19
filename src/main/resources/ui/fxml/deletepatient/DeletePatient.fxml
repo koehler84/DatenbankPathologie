@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<GridPane xmlns:fx="http://javafx.com/fxml/1" minWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40"
+          fx:controller="de.pathologie_hh_west.ui.deletepatient.DeletePatientController">
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="0.0"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints minHeight="0.0" vgrow="SOMETIMES"/>
+        <RowConstraints vgrow="NEVER"/>
+    </rowConstraints>
+    <children>
+        <ButtonBar prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: grey;" GridPane.rowIndex="1">
+            <buttons>
+                <Button fx:id="btnDelete" mnemonicParsing="false" text="Löschen"/>
+            </buttons>
+            <GridPane.margin>
+                <Insets/>
+            </GridPane.margin>
+            <padding>
+                <Insets bottom="15.0" right="15.0" top="15.0"/>
+            </padding>
+        </ButtonBar>
+        <VBox prefHeight="200.0" prefWidth="100.0">
+            <children>
+                <RadioButton fx:id="rbSingle" mnemonicParsing="false" text="Einzelnen Fall löschen">
+                    <toggleGroup>
+                        <ToggleGroup fx:id="tgDeleteType"/>
+                    </toggleGroup>
+                </RadioButton>
+                <HBox alignment="CENTER" spacing="15.0">
+                    <children>
+                        <VBox spacing="5.0">
+                            <children>
+                                <Label text="Vorname"/>
+                                <TextField fx:id="tfFirstname"/>
+                            </children>
+                        </VBox>
+                        <VBox spacing="5.0">
+                            <children>
+                                <Label text="Nachname"/>
+                                <TextField fx:id="tfLastname"/>
+                            </children>
+                        </VBox>
+                        <VBox spacing="5.0">
+                            <children>
+                                <Label text="Geburtsdatum"/>
+                                <DatePicker fx:id="dbDateOfBirth"/>
+                            </children>
+                        </VBox>
+                    </children>
+                    <padding>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
+                    </padding>
+                </HBox>
+                <RadioButton fx:id="rbMulti" mnemonicParsing="false" text="Löschen aus Excel"
+                             toggleGroup="$tgDeleteType"/>
+                <HBox alignment="CENTER" spacing="15.0">
+                    <children>
+                        <Label fx:id="lblFile" prefWidth="380.0" text="Bitte Datei auswählen ..."/>
+                        <Button fx:id="btnChooseFile" mnemonicParsing="false" text="Datei auswählen"/>
+                    </children>
+                    <padding>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
+                    </padding>
+                </HBox>
+            </children>
+            <padding>
+                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
+            </padding>
+        </VBox>
+    </children>
+</GridPane>

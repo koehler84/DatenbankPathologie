@@ -1,20 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
-
-<AnchorPane prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.pathologie_hh_west.ui.MainWindowController">
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: grey;"
+            xmlns="http://javafx.com/javafx/8.0.40" fx:controller="de.pathologie_hh_west.ui.MainWindowController">
    <children>
       <MenuBar fx:id="menuBar" prefHeight="25.0" prefWidth="900.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <menus>
             <Menu mnemonicParsing="false" text="Datei">
                <items>
                   <MenuItem fx:id="mnExcelEinlesen" mnemonicParsing="false" text="Excel einlesen" />
+                   <MenuItem fx:id="mnDeletePatient" mnemonicParsing="false" text="Patient löschen"/>
                </items>
             </Menu>
           <Menu mnemonicParsing="false" text="Ansicht">
